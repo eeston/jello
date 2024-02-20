@@ -92,7 +92,7 @@ const stylesheet = createStyleSheet((theme) => ({
   buttonContainer: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-evenly",
     alignContent: "center",
     paddingVertical: theme.spacing.md,
   },

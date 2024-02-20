@@ -1,4 +1,4 @@
-import { TouchableOpacity } from "react-native";
+import { Dimensions, Pressable } from "react-native";
 import { SFSymbol } from "react-native-sfsymbols";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
@@ -24,7 +24,7 @@ export const MusicButton = ({ type, onPress }: MusicButtonProps) => {
   const { styles, theme } = useStyles(stylesheet);
 
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <Pressable style={styles.container} onPress={onPress}>
       <SFSymbol
         name={buttonTypes[type].icon}
         color={theme.colors.primary}
@@ -33,28 +33,31 @@ export const MusicButton = ({ type, onPress }: MusicButtonProps) => {
         style={styles.symbol}
       />
       <Text style={styles.text}>{buttonTypes[type].title}</Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 
-const stylesheet = createStyleSheet((theme) => ({
-  container: {
-    width: 150,
-    paddingVertical: 12,
-    backgroundColor: theme.colors.buttonSecondaryBackground,
-    borderRadius: 10,
-    borderWidth: 0,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  symbol: {
-    marginRight: 16,
-  },
-  text: {
-    fontWeight: "500",
-    color: theme.colors.primary,
-    textAlign: "center",
-    fontSize: 18,
-  },
-}));
+const stylesheet = createStyleSheet((theme) => {
+  const size = Dimensions.get("window").width / 2.4; // maybe this is repsonsive between screen sizes??
+  return {
+    container: {
+      width: size,
+      paddingVertical: theme.spacing.sm,
+      backgroundColor: theme.colors.buttonSecondaryBackground,
+      borderRadius: theme.spacing.sm,
+      borderWidth: 0,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    symbol: {
+      marginHorizontal: theme.spacing.md,
+    },
+    text: {
+      fontWeight: "500",
+      color: theme.colors.primary,
+      textAlign: "center",
+      fontSize: 18,
+    },
+  };
+});
