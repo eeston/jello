@@ -23,11 +23,8 @@ export const generateRntpTracks = async ({
   const jelloTracks: RntpTrack[] = [];
 
   for (const track of tracks) {
-    const artwork = albumDetails?.Id ?? track?.AlbumId;
-    const artworkUrl = generateTrackArtworkUrl({ id: artwork, api });
-    // const artworkUrl = albumDetails?.Id
-    //   ? generateTrackArtworkUrl({ id: albumDetails.Id, api })
-    //   : generateTrackArtworkUrl({ id: track?.AlbumId, api });
+    const artworkId = albumDetails?.Id ?? track?.AlbumId;
+    const artworkUrl = generateTrackArtworkUrl({ id: artworkId, api });
     const url = generateTrackUrl({ trackId: track?.Id as string, api, userId });
     const artworkBlurHash = extractPrimaryHash(track?.ImageBlurHashes);
     const duration = ticksToSeconds(track?.RunTimeTicks ?? 0);
@@ -35,7 +32,7 @@ export const generateRntpTracks = async ({
     let colours = {};
     try {
       // TODO: this is kinda slow
-      colours = await getColors(artwork, {
+      colours = await getColors(artworkUrl, {
         cache: true,
         key: artworkUrl,
         quality: "lowest",
