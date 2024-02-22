@@ -87,6 +87,7 @@ export const ServerScreen = ({ navigation }) => {
             autoCapitalize="none"
             autoCorrect={false}
             editable={!isLoadingJellyfinServers}
+            testID="server-input"
           />
         </View>
       </View>
@@ -96,6 +97,7 @@ export const ServerScreen = ({ navigation }) => {
           isLoading={isLoadingJellyfinServers}
           onPress={onPressNext}
           title="Check connection..."
+          testID="check-connection-button"
         />
       </View>
       <View style={styles.buttonContainer}>

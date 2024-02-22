@@ -85,6 +85,7 @@ export const LoginScreen = ({ navigation }) => {
             autoComplete="username"
             autoCorrect={false}
             editable={!isAuthenticatingUser}
+            testID="username-input"
           />
         </View>
         {!isDemoServer && (
@@ -110,6 +111,7 @@ export const LoginScreen = ({ navigation }) => {
           title="Login"
           isLoading={isAuthenticatingUser}
           disabled={isButtonDisabled()}
+          testID="login-button"
         />
       </View>
     </SafeAreaView>

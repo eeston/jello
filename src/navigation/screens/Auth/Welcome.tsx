@@ -38,6 +38,7 @@ export const WelcomeScreen = ({ navigation }) => {
           onPress={onPressButton}
           color={theme.colors.text}
           size={50}
+          testID="continue-button"
         />
         <SFSymbol
           name="forward.fill"

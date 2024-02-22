@@ -6,6 +6,7 @@ type PressableSFSymbolProps = {
   onPress: () => void;
   color: string;
   size: number;
+  testID?: string;
 };
 
 export const PressableSFSymbol = ({
@@ -13,6 +14,7 @@ export const PressableSFSymbol = ({
   onPress,
   color,
   size,
+  testID,
 }: PressableSFSymbolProps) => {
   // const { styles } = useStyles(stylesheet);
 
@@ -20,6 +22,7 @@ export const PressableSFSymbol = ({
     <Pressable
       onPress={onPress}
       style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1.0 }]}
+      testID={testID}
     >
       <SFSymbol
         name={name}

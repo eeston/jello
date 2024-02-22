@@ -1,4 +1,4 @@
-import { ActivityIndicator, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Pressable } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 import { Text } from "./Themed";
@@ -8,6 +8,7 @@ type ButtonProps = {
   onPress: () => void;
   isLoading?: boolean;
   disabled?: boolean;
+  testID?: string;
 };
 
 export const Button = ({
@@ -15,14 +16,16 @@ export const Button = ({
   isLoading,
   onPress,
   disabled,
+  testID,
 }: ButtonProps) => {
   const { styles } = useStyles(stylesheet);
 
   return (
-    <TouchableOpacity
+    <Pressable
       disabled={disabled}
       style={styles.container}
       onPress={onPress}
+      testID={testID}
     >
       {isLoading ? (
         <ActivityIndicator
@@ -33,7 +36,7 @@ export const Button = ({
       ) : (
         <Text style={styles.title}>{title}</Text>
       )}
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 
