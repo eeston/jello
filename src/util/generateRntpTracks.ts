@@ -1,7 +1,7 @@
 import { Api } from "@jellyfin/sdk";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client";
 import { getColors } from "react-native-image-colors";
-import { IOSImageColors } from "react-native-image-colors/build/types";
+import { type IOSImageColors } from "react-native-image-colors/build/types";
 import { AddTrack as RntpTrack } from "react-native-track-player";
 
 import { extractPrimaryHash } from "./extractPrimaryHash";
@@ -24,19 +24,23 @@ export const generateRntpTracks = async ({
 
   for (const track of tracks) {
     const artworkId = albumDetails?.Id ?? track?.AlbumId;
-    const artworkUrl = generateTrackArtworkUrl({ id: artworkId, api });
+    const artworkUrl = artworkId
+      ? generateTrackArtworkUrl({ id: artworkId, api })
+      : undefined;
     const url = generateTrackUrl({ trackId: track?.Id as string, api, userId });
     const artworkBlurHash = extractPrimaryHash(track?.ImageBlurHashes);
     const duration = ticksToSeconds(track?.RunTimeTicks ?? 0);
 
     let colours = {};
     try {
-      // TODO: this is kinda slow
-      colours = await getColors(artworkUrl, {
-        cache: true,
-        key: artworkUrl,
-        quality: "lowest",
-      });
+      if (artworkUrl) {
+        // TODO: this is kinda slow
+        colours = await getColors(artworkUrl, {
+          cache: true,
+          key: artworkUrl,
+          quality: "lowest",
+        });
+      }
     } catch (err) {
       // TODO: what to do?
       console.log("Error getting colors", err);

@@ -3,5 +3,5 @@
   "compilerOptions": {
     "strict": true,
   },
-  "include": ["**/*.ts", "**/*.tsx", "jest.config.ts"],
+  "include": ["**/*.ts", "**/*.tsx", "jest.config.ts", "jest.setup.ts"],
 }
