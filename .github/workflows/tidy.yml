@@ -1,0 +1,13 @@
+name: Tidy
+
+on: [pull_request, push]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install
+        run: npm install
+      - name: Tidy
+        run: npm run tidy:check
