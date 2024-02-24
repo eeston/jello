@@ -1,14 +1,14 @@
 import React, { ReactElement } from "react";
 import {
   StyleProp,
-  TouchableOpacity,
-  TouchableOpacityProps,
+  Pressable,
+  PressableProps,
   View,
   ViewStyle,
 } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
-interface ListItemProps extends TouchableOpacityProps {
+interface ListItemProps extends PressableProps {
   height?: number;
   containerStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<ViewStyle>;
@@ -30,13 +30,13 @@ export const ListItem = (props: ListItemProps) => {
     RightComponent,
     style,
     containerStyle,
-    ...TouchableOpacityProps
+    ...PressableProps
   } = props;
 
   return (
     <View style={containerStyle}>
-      <TouchableOpacity
-        {...TouchableOpacityProps}
+      <Pressable
+        {...PressableProps}
         style={[styles.touchable, style, { height }]}
       >
         <ListItemFragment side="left" size={height} Component={LeftComponent} />
@@ -45,7 +45,7 @@ export const ListItem = (props: ListItemProps) => {
           size={height}
           Component={RightComponent}
         />
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 };
