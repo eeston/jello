@@ -9,4 +9,4 @@ This is a work in progress and I've only tested this on my own network. There wi
 
 ## Getting Started
 
-Jello is available on [TestFlight](https://testflight.apple.com/join/VdrBFmbL) (currently in review)
+Jello is available on [TestFlight](https://testflight.apple.com/join/VdrBFmbL)
