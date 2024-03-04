@@ -2,7 +2,15 @@ import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Image } from "expo-image";
-import { Animated, SafeAreaView, View } from "react-native";
+import { DebouncedFunc } from "lodash";
+import { useState, useEffect, useRef } from "react";
+import {
+  Animated,
+  NativeSyntheticEvent,
+  SafeAreaView,
+  TextInputFocusEventData,
+  View,
+} from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 import { useFetchPlaylists } from "../../../api/playlists";
@@ -10,8 +18,10 @@ import { ListItem } from "../../../components/ListItem";
 import { LoadingOverlay } from "../../../components/Loading";
 import { Text } from "../../../components/Themed";
 import { useFadeIn } from "../../../hooks/useFadeInView";
+import { useSearchBar } from "../../../hooks/useSearchBar";
 import { useApi } from "../../../store/useJelloAuth";
 import { extractPrimaryHash } from "../../../util/extractPrimaryHash";
+import { filterItems } from "../../../util/filterItems";
 import { generateTrackArtworkUrl } from "../../../util/generateTrackArtworkUrl";
 import { LibraryTabParamList } from "../../navigators/LibraryTabNavigator";
 
@@ -22,11 +32,30 @@ export const PlaylistsListScreen = ({ navigation }: Props) => {
   const playlists = useFetchPlaylists(api);
   const headerHeight = useHeaderHeight();
   const { styles, theme } = useStyles(stylesheet);
+  const [filteredItemsList, setFilteredItemsList] = useState<BaseItemDto[]>([]);
+  const debouncedFilterItems = useRef<null | DebouncedFunc<
+    (textInput: string) => void
+  >>(null);
+
+  if (playlists?.data?.Items ?? [].length > 0) {
+    debouncedFilterItems.current = filterItems({
+      items: playlists?.data?.Items,
+      setFilteredItemsList,
+    });
+  }
+
+  const onChangeText = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
+    debouncedFilterItems.current?.cancel();
+    debouncedFilterItems.current?.(e.nativeEvent.text);
+  };
+
+  useSearchBar({ navigation, onChangeText, placeholder: "Find in Playlists" });
+
+  useEffect(() => {
+    setFilteredItemsList(playlists?.data?.Items);
+  }, [playlists?.data?.Items]);
 
   const opacity = useFadeIn([playlists]);
-  if (playlists.isPending) {
-    return <LoadingOverlay />;
-  }
 
   const onPressPlaylistItem = (playlistId: string) => {
     return navigation.navigate("PlaylistDetails", { playlistId });
@@ -52,6 +81,10 @@ export const PlaylistsListScreen = ({ navigation }: Props) => {
     />
   );
 
+  if (playlists.isPending) {
+    return <LoadingOverlay />;
+  }
+
   return (
     <SafeAreaView style={[styles.container, { marginTop: -headerHeight }]}>
       <Animated.FlatList
@@ -61,7 +94,7 @@ export const PlaylistsListScreen = ({ navigation }: Props) => {
         ]}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
-        data={playlists.data?.Items}
+        data={filteredItemsList}
         renderItem={renderItem}
       />
     </SafeAreaView>

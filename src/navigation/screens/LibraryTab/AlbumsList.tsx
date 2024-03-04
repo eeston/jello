@@ -1,16 +1,25 @@
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useCallback } from "react";
-import { Animated, SafeAreaView, View } from "react-native";
+import { DebouncedFunc } from "lodash";
+import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  Animated,
+  NativeSyntheticEvent,
+  SafeAreaView,
+  TextInputFocusEventData,
+  View,
+} from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 import { useFetchAlbums } from "../../../api/albums";
 import { AlbumCard } from "../../../components/AlbumCard";
 import { LoadingOverlay } from "../../../components/Loading";
 import { useFadeIn } from "../../../hooks/useFadeInView";
+import { useSearchBar } from "../../../hooks/useSearchBar";
 import { useApi } from "../../../store/useJelloAuth";
 import { extractPrimaryHash } from "../../../util/extractPrimaryHash";
+import { filterItems } from "../../../util/filterItems";
 import { generateTrackArtworkUrl } from "../../../util/generateTrackArtworkUrl";
 import { LibraryTabParamList } from "../../navigators/LibraryTabNavigator";
 
@@ -21,6 +30,30 @@ export const AlbumsListScreen = ({ navigation }: Props) => {
   const api = useApi((state) => state.api);
   const albums = useFetchAlbums(api);
   const headerHeight = useHeaderHeight();
+  const [filteredItemsList, setFilteredItemsList] = useState<BaseItemDto[]>([]);
+  const debouncedFilterItems = useRef<null | DebouncedFunc<
+    (textInput: string) => void
+  >>(null);
+
+  if (albums?.data?.Items ?? [].length > 0) {
+    debouncedFilterItems.current = filterItems({
+      items: albums?.data?.Items,
+      setFilteredItemsList,
+    });
+  }
+
+  const onChangeText = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
+    debouncedFilterItems.current?.cancel();
+    debouncedFilterItems.current?.(e.nativeEvent.text);
+  };
+
+  useSearchBar({ navigation, onChangeText, placeholder: "Find in Albums" });
+
+  useEffect(() => {
+    setFilteredItemsList(albums.data?.Items);
+  }, [albums.data?.Items]);
+
+  const opacity = useFadeIn([albums]);
 
   const onPressAlbumItem = useCallback(
     (albumId: string) => {
@@ -42,8 +75,6 @@ export const AlbumsListScreen = ({ navigation }: Props) => {
     [api, onPressAlbumItem],
   );
 
-  const opacity = useFadeIn([albums]);
-
   if (albums.isPending) {
     return <LoadingOverlay />;
   }
@@ -55,7 +86,7 @@ export const AlbumsListScreen = ({ navigation }: Props) => {
         // ListHeaderComponent={<AlbumsHeader />} TODO: hmmmm...
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
-        data={albums.data?.Items}
+        data={filteredItemsList}
         renderItem={renderItem}
         numColumns={2}
         columnWrapperStyle={styles.columnWrapper}

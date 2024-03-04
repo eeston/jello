@@ -2,8 +2,15 @@ import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Image } from "expo-image";
-import { memo, useCallback } from "react";
-import { View, SafeAreaView, Animated } from "react-native";
+import { DebouncedFunc } from "lodash";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
+import {
+  Animated,
+  NativeSyntheticEvent,
+  SafeAreaView,
+  TextInputFocusEventData,
+  View,
+} from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 import { useFetchArtists } from "../../../api/artists";
@@ -13,8 +20,10 @@ import { Separator } from "../../../components/Separator";
 import { Text } from "../../../components/Themed";
 import { ROW_HEIGHT } from "../../../constants";
 import { useFadeIn } from "../../../hooks/useFadeInView";
+import { useSearchBar } from "../../../hooks/useSearchBar";
 import { useApi } from "../../../store/useJelloAuth";
 import { extractPrimaryHash } from "../../../util/extractPrimaryHash";
+import { filterItems } from "../../../util/filterItems";
 import { generateTrackArtworkUrl } from "../../../util/generateTrackArtworkUrl";
 import { LibraryTabParamList } from "../../navigators/LibraryTabNavigator";
 
@@ -25,6 +34,30 @@ export const ArtistsListScreen = ({ navigation }: Props) => {
   const artists = useFetchArtists(api);
   const headerHeight = useHeaderHeight();
   const { styles, theme } = useStyles(stylesheet);
+  const [filteredItemsList, setFilteredItemsList] = useState<BaseItemDto[]>([]);
+  const debouncedFilterItems = useRef<null | DebouncedFunc<
+    (textInput: string) => void
+  >>(null);
+
+  if (artists?.data?.Items ?? [].length > 0) {
+    debouncedFilterItems.current = filterItems({
+      items: artists?.data?.Items,
+      setFilteredItemsList,
+    });
+  }
+
+  const onChangeText = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
+    debouncedFilterItems.current?.cancel();
+    debouncedFilterItems.current?.(e.nativeEvent.text);
+  };
+
+  useSearchBar({ navigation, onChangeText, placeholder: "Find in Artists" });
+
+  useEffect(() => {
+    setFilteredItemsList(artists.data?.Items);
+  }, [artists.data?.Items]);
+
+  const opacity = useFadeIn([artists]);
 
   const onPressArtistItem = useCallback(
     (artistId: string) => {
@@ -32,12 +65,6 @@ export const ArtistsListScreen = ({ navigation }: Props) => {
     },
     [navigation],
   );
-
-  const opacity = useFadeIn([artists]);
-
-  if (artists.isPending) {
-    return <LoadingOverlay />;
-  }
 
   const renderItem = ({ item }: { item: BaseItemDto }) => (
     <ListItem
@@ -68,6 +95,10 @@ export const ArtistsListScreen = ({ navigation }: Props) => {
 
   const SeparatorComponent = memo(() => <Separator marginLeft={75} />);
 
+  if (artists.isPending) {
+    return <LoadingOverlay />;
+  }
+
   return (
     <SafeAreaView style={{ flex: 1, marginTop: -headerHeight }}>
       {/* https://stackoverflow.com/questions/44384773/react-native-100-items-flatlist-very-slow-performance */}
@@ -75,7 +106,7 @@ export const ArtistsListScreen = ({ navigation }: Props) => {
         style={{ paddingTop: headerHeight + theme.spacing.sm, opacity }}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
-        data={artists.data?.Items}
+        data={filteredItemsList}
         renderItem={renderItem}
         initialNumToRender={5}
         maxToRenderPerBatch={10}
