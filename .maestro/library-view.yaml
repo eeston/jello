@@ -1,0 +1,12 @@
+appId: dev.easton.jello
+---
+- launchApp:
+    appId: "dev.easton.jello"
+- tapOn:
+    id: "library-tab"
+- assertVisible: "Library"
+- assertVisible: "Playlists Forward" # how to just assert "Playlists"?
+- assertVisible: "Artists Forward"
+- assertVisible: "Albums Forward"
+- assertVisible: "Genres Forward"
+- assertVisible: "Recently Added"

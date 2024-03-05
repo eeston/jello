@@ -1,0 +1,49 @@
+appId: dev.easton.jello
+---
+- launchApp:
+    appId: "dev.easton.jello"
+
+# Playlists
+# no playlists on the demo server to search
+
+# Artists
+- tapOn:
+    id: "library-tab"
+- tapOn:
+    id: "artists-row"
+- assertVisible: "Artists"
+- assertVisible: "Binaerpilot" # specific to the demo server
+- tapOn: "Find in Artists" # tapOn id not possible?
+- inputText: "demo"
+- assertNotVisible: "Binaerpilot"
+- tapOn: "Cancel"
+
+# Albums
+- tapOn:
+    id: "library-tab"
+- tapOn:
+    id: "albums-row"
+- assertVisible: "Albums"
+- assertVisible: "Promo Binaerpilot" # specific to the demo server
+- assertVisible: "You Can't Stop Da Funk Binaerpilot" # specific to the demo server
+- tapOn: "Find in Albums" # tapOn id not possible?
+- inputText: "demo"
+- assertNotVisible: "Promo Binaerpilot" # specific to the demo server
+- assertNotVisible: "You Can't Stop Da Funk Binaerpilot" # specific to the demo server
+- tapOn: Clear text
+- inputText: "Promo"
+- assertVisible: "Promo Binaerpilot" # specific to the demo server
+- assertNotVisible: "You Can't Stop Da Funk Binaerpilot" # specific to the demo server
+- tapOn: "Cancel"
+
+# Genres
+- tapOn:
+    id: "library-tab"
+- tapOn:
+    id: "genres-row"
+- assertVisible: "Genres"
+- assertVisible: "Electronic" # specific to the demo server
+- tapOn: "Find in Genres" # tapOn id not possible?
+- inputText: "demo"
+- assertNotVisible: "Electronic"
+- tapOn: "Cancel"

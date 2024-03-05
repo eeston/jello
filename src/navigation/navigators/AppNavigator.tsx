@@ -62,9 +62,7 @@ export const AppNavigator = (_: Props) => {
         name="ListenNowTab"
         component={ListenNowTabNavigator}
         options={{
-          headerTransparent: true,
-          // headerLargeTitle: true, // not on tabs?
-          // headerTitle: "Listen Now",
+          tabBarTestID: "listen-now-tab",
           headerShown: false,
           tabBarLabel: "Listen Now",
           tabBarIcon: ({ focused }) => (
@@ -81,6 +79,7 @@ export const AppNavigator = (_: Props) => {
         name="LibraryTab"
         component={LibraryTabNavigator}
         options={{
+          tabBarTestID: "library-tab",
           headerShown: false,
           tabBarLabel: "Library",
           tabBarIcon: ({ focused }) => (

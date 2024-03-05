@@ -33,14 +33,34 @@ type ItemType = {
   title: string;
   icon: string;
   screen: "PlaylistsList" | "ArtistsList" | "AlbumsList" | "GenresList";
+  testID: string;
 };
 
 const items: ItemType[] = [
-  { title: "Playlists", icon: "music.note.list", screen: "PlaylistsList" },
-  { title: "Artists", icon: "music.mic", screen: "ArtistsList" },
-  { title: "Albums", icon: "square.stack", screen: "AlbumsList" },
-  // { title: "Songs", icon: "music-note", url: "SongsList" },
-  { title: "Genres", icon: "guitars", screen: "GenresList" },
+  {
+    title: "Playlists",
+    icon: "music.note.list",
+    screen: "PlaylistsList",
+    testID: "playlists-row",
+  },
+  {
+    title: "Artists",
+    icon: "music.mic",
+    screen: "ArtistsList",
+    testID: "artists-row",
+  },
+  {
+    title: "Albums",
+    icon: "square.stack",
+    screen: "AlbumsList",
+    testID: "albums-row",
+  },
+  {
+    title: "Genres",
+    icon: "guitars",
+    screen: "GenresList",
+    testID: "genres-row",
+  },
 ];
 type Props = NativeStackScreenProps<LibraryTabParamList, "LibraryDetails">;
 
@@ -59,7 +79,7 @@ export const LibraryDetailsScreen = ({ route, navigation }: Props) => {
 
   const renderItem = ({ item }: { item: (typeof items)[0] }) => {
     return (
-      <View style={styles.renderItemWrapper}>
+      <View style={styles.renderItemWrapper} testID={item.testID}>
         <SFSymbol
           name={item.icon}
           color={theme.colors.primary}

@@ -1,0 +1,9 @@
+appId: dev.easton.jello
+---
+- launchApp:
+    appId: "dev.easton.jello"
+- tapOn:
+    id: "listen-now-tab"
+- assertVisible: "Listen Now"
+- assertVisible: "Recently Played"
+- assertVisible: "Frequently Played"

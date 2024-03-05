@@ -20,6 +20,7 @@ export const useSearchBar = ({
         hideWhenScrolling: false,
         autoCapitalize: "none",
         onChangeText,
+        testID: "search-input",
       },
     });
   }, [navigation, onChangeText, placeholder]);

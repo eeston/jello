@@ -1,0 +1,4 @@
+executionOrder:
+  continueOnFailure: false
+  flowsOrder:
+    - auth-happy # this flow should be executed before any others
