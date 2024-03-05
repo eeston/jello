@@ -55,7 +55,9 @@ export const generateRntpTracks = async ({
 
     const jelloTrack: RntpTrack = {
       album: track?.Album ?? "Unknown Album",
+      albumId: track?.AlbumId,
       artist: track?.AlbumArtist ?? "Unknown Artist",
+      artistId: track?.AlbumArtists?.[0]?.Id,
       artwork: artworkUrl,
       artworkBackground,
       artworkBlurHash,

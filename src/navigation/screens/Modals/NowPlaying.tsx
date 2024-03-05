@@ -1,9 +1,11 @@
+import { useNavigation } from "@react-navigation/native";
 import { BlurView } from "expo-blur";
 import { Image } from "expo-image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AirplayButton, showRoutePicker } from "react-airplay";
 import { ActivityIndicator, Animated, Pressable, View } from "react-native";
 import { Slider } from "react-native-awesome-slider";
+import { ContextMenuButton } from "react-native-ios-context-menu";
 import LinearGradient from "react-native-linear-gradient";
 import { useDerivedValue, useSharedValue } from "react-native-reanimated";
 import TrackPlayer, {
@@ -28,6 +30,7 @@ const bufferToggle = false;
 
 export const NowPlayingModal = () => {
   const { styles, theme } = useStyles(stylesheet);
+  const navigation = useNavigation();
 
   const { position, buffered } = useProgress();
   const playerState = usePlaybackState();
@@ -136,10 +139,54 @@ export const NowPlayingModal = () => {
 
           {/* SONG DETAILS / PROGRESS BAR */}
           <View style={styles.songDetailsContainer}>
-            <View>
-              <TitleScroll text={currentTrack?.title} />
+            <TitleScroll text={currentTrack?.title} />
+            <ContextMenuButton
+              style={styles.contextMenuButton}
+              menuConfig={{
+                menuTitle: "", // no title required
+                menuItems: [
+                  currentTrack?.albumId && {
+                    actionKey: `ALBUM.${currentTrack.albumId}`,
+                    actionTitle: "Go to Album",
+                    actionSubtitle: currentTrack?.album,
+                    icon: {
+                      type: "IMAGE_SYSTEM",
+                      imageValue: {
+                        systemName: "square.stack",
+                      },
+                    },
+                  },
+                  currentTrack?.artistId && {
+                    actionKey: `ARTIST.${currentTrack.artistId}`,
+                    actionTitle: "Go to Artist",
+                    actionSubtitle: currentTrack?.artist,
+                    icon: {
+                      type: "IMAGE_SYSTEM",
+                      imageValue: {
+                        systemName: "music.mic",
+                      },
+                    },
+                  },
+                ],
+              }}
+              onPressMenuItem={({ nativeEvent }) => {
+                const [view, id] = nativeEvent.actionKey.split(".");
+                navigation.goBack(); // close the modal
+                if (view === "ALBUM") {
+                  return navigation.navigate("LibraryTab", {
+                    screen: "AlbumDetails",
+                    params: { albumId: id },
+                  });
+                } else if (view === "ARTIST") {
+                  return navigation.navigate("LibraryTab", {
+                    screen: "ArtistDetails",
+                    params: { artistId: id },
+                  });
+                }
+              }}
+            >
               <Text style={styles.songArtist}>{currentTrack?.artist}</Text>
-            </View>
+            </ContextMenuButton>
 
             {/* temporary block of code to track buffer progress */}
             {bufferToggle && (
@@ -282,7 +329,13 @@ const stylesheet = createStyleSheet((theme) => ({
     fontSize: 20,
     color: "rgba(255,255,255,0.8)",
   },
-  songArtist: { fontSize: 20, color: "rgba(255,255,255,0.5)" },
+  songArtist: {
+    fontSize: 20,
+    color: "rgba(255,255,255,0.5)",
+  },
+  contextMenuButton: {
+    alignSelf: "flex-start",
+  },
   songTimeContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
