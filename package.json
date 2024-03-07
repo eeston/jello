@@ -2,7 +2,7 @@
   "name": "jello",
   "main": "index.ts",
   "author": "John Easton <john@easton.dev>",
-  "version": "0.0.45",
+  "version": "0.0.46",
   "scripts": {
     "start": "npm run ios",
     "prebuild": "expo prebuild -p ios --clean",
@@ -18,8 +18,7 @@
     "ios": "expo run:ios",
     "test:unit": "jest",
     "test:e2e": "maestro test .maestro",
-    "commit": "npx git-cz",
-    "android": "expo run:android"
+    "commit": "npx git-cz"
   },
   "dependencies": {
     "@jellyfin/sdk": "^0.8.2",
