@@ -48,7 +48,7 @@ export const LibraryTabNavigator = ({ navigation }: Props) => {
   };
 
   return (
-    <LibraryTab.Navigator>
+    <LibraryTab.Navigator initialRouteName="LibraryDetails">
       <LibraryTab.Screen
         name="LibraryDetails"
         component={LibraryDetailsScreen}

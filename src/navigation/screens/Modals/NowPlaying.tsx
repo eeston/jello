@@ -1,13 +1,17 @@
-import { useNavigation } from "@react-navigation/native";
 import { BlurView } from "expo-blur";
 import { Image } from "expo-image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AirplayButton, showRoutePicker } from "react-airplay";
 import { ActivityIndicator, Animated, Pressable, View } from "react-native";
 import { Slider } from "react-native-awesome-slider";
-import { ContextMenuButton } from "react-native-ios-context-menu";
+import {
+  ContextMenuButton,
+  MenuActionConfig,
+  OnPressMenuItemEvent,
+} from "react-native-ios-context-menu";
 import LinearGradient from "react-native-linear-gradient";
 import { useDerivedValue, useSharedValue } from "react-native-reanimated";
+import { SFSymbol } from "react-native-sfsymbols";
 import TrackPlayer, {
   State,
   useActiveTrack,
@@ -28,9 +32,8 @@ const shouldShowLoading = [State.Loading, State.Buffering];
 // temporary toggle to show the buffer progress for testing
 const bufferToggle = false;
 
-export const NowPlayingModal = () => {
+export const NowPlayingModal = ({ navigation }) => {
   const { styles, theme } = useStyles(stylesheet);
-  const navigation = useNavigation();
 
   const { position, buffered } = useProgress();
   const playerState = usePlaybackState();
@@ -82,6 +85,28 @@ export const NowPlayingModal = () => {
   const onPressNextSong = useCallback(() => {
     TrackPlayer.skipToNext();
   }, []);
+
+  const onPressMenuItem = ({
+    nativeEvent,
+  }: {
+    nativeEvent: MenuActionConfig;
+  }) => {
+    const [view, id] = nativeEvent.actionKey.split(".");
+    navigation.goBack(); // close the modal
+    if (view === "ALBUM") {
+      return navigation.navigate("LibraryTab", {
+        screen: "AlbumDetails",
+        params: { albumId: id },
+        initial: false,
+      });
+    } else if (view === "ARTIST") {
+      return navigation.navigate("LibraryTab", {
+        screen: "ArtistDetails",
+        params: { artistId: id },
+        initial: false,
+      });
+    }
+  };
 
   const colors = useMemo(
     () => [
@@ -138,102 +163,122 @@ export const NowPlayingModal = () => {
           </View>
 
           {/* SONG DETAILS / PROGRESS BAR */}
-          <View style={styles.songDetailsContainer}>
-            <TitleScroll text={currentTrack?.title} />
-            <ContextMenuButton
-              style={styles.contextMenuButton}
-              menuConfig={{
-                menuTitle: "", // no title required
-                menuItems: [
-                  currentTrack?.albumId && {
-                    actionKey: `ALBUM.${currentTrack.albumId}`,
-                    actionTitle: "Go to Album",
-                    actionSubtitle: currentTrack?.album,
-                    icon: {
-                      type: "IMAGE_SYSTEM",
-                      imageValue: {
-                        systemName: "square.stack",
+          <View>
+            <View style={styles.songDetailsContainer}>
+              <View>
+                <TitleScroll text={currentTrack?.title} />
+                <ContextMenuButton
+                  style={styles.contextMenuButton}
+                  menuConfig={{
+                    menuTitle: "", // no title required
+                    menuItems: [
+                      currentTrack?.albumId && {
+                        actionKey: `ALBUM.${currentTrack.albumId}`,
+                        actionTitle: "Go to Album",
+                        actionSubtitle: currentTrack?.album,
+                        icon: {
+                          type: "IMAGE_SYSTEM",
+                          imageValue: {
+                            systemName: "square.stack",
+                          },
+                        },
                       },
-                    },
-                  },
-                  currentTrack?.artistId && {
-                    actionKey: `ARTIST.${currentTrack.artistId}`,
-                    actionTitle: "Go to Artist",
-                    actionSubtitle: currentTrack?.artist,
-                    icon: {
-                      type: "IMAGE_SYSTEM",
-                      imageValue: {
-                        systemName: "music.mic",
+                      currentTrack?.artistId && {
+                        actionKey: `ARTIST.${currentTrack.artistId}`,
+                        actionTitle: "Go to Artist",
+                        actionSubtitle: currentTrack?.artist,
+                        icon: {
+                          type: "IMAGE_SYSTEM",
+                          imageValue: {
+                            systemName: "music.mic",
+                          },
+                        },
                       },
-                    },
-                  },
-                ],
-              }}
-              onPressMenuItem={({ nativeEvent }) => {
-                const [view, id] = nativeEvent.actionKey.split(".");
-                navigation.goBack(); // close the modal
-                if (view === "ALBUM") {
-                  return navigation.navigate("LibraryTab", {
-                    screen: "AlbumDetails",
-                    params: { albumId: id },
-                  });
-                } else if (view === "ARTIST") {
-                  return navigation.navigate("LibraryTab", {
-                    screen: "ArtistDetails",
-                    params: { artistId: id },
-                  });
-                }
-              }}
-            >
-              <Text style={styles.songArtist}>{currentTrack?.artist}</Text>
-            </ContextMenuButton>
-
-            {/* temporary block of code to track buffer progress */}
-            {bufferToggle && (
-              <Slider
-                progress={trackBufferProgress}
-                minimumValue={trackProgressMin}
-                maximumValue={trackProgressMax}
-                theme={{
-                  maximumTrackTintColor: "rgba(255, 255, 255, 0.4)",
-                  minimumTrackTintColor: "rgba(255, 255, 255, 0.8)",
+                    ],
+                  }}
+                  onPressMenuItem={onPressMenuItem}
+                >
+                  <Text style={styles.songArtist}>{currentTrack?.artist}</Text>
+                </ContextMenuButton>
+              </View>
+              <ContextMenuButton
+                style={{
+                  padding: 12,
+                  borderRadius: 16,
+                  backgroundColor: "rgba(255,255,255,0.2)",
                 }}
-              />
-            )}
-            {/* temporary block of code to track buffer progress */}
-
-            <Animated.View
-              style={[
-                styles.animatedProgressContainer,
-                {
-                  transform: [
-                    { scaleX: sliderScale.x },
-                    { scaleY: sliderScale.y },
+                menuConfig={{
+                  menuTitle: "", // no title required
+                  menuItems: [
+                    currentTrack?.albumId && {
+                      actionKey: `ALBUM.${currentTrack.albumId}`,
+                      actionTitle: "Go to Album",
+                      icon: {
+                        type: "IMAGE_SYSTEM",
+                        imageValue: {
+                          systemName: "music.note.house", // correct icon?
+                        },
+                      },
+                    },
                   ],
-                },
-              ]}
-            >
-              <Slider
-                progress={trackProgressProgress}
-                minimumValue={trackProgressMin}
-                maximumValue={trackProgressMax}
-                renderThumb={() => null}
-                renderBubble={() => null}
-                theme={{
-                  maximumTrackTintColor: "rgba(255, 255, 255, 0.4)",
-                  minimumTrackTintColor: "rgba(255, 255, 255, 0.8)",
                 }}
-                // TODO: how to animate the borderRadius to match the animated container
-                containerStyle={{ borderRadius: 8, height: 8 }}
-                onSlidingStart={handleSlidingStart}
-                onSlidingComplete={handleSlidingComplete}
-              />
-            </Animated.View>
-            <View style={styles.songTimeContainer}>
-              <Text style={styles.songTicker}>{secondsToMmSs(position)}</Text>
-              <Text style={styles.songTicker}>
-                - {secondsToMmSs(currentTrack?.duration - position)}
-              </Text>
+                onPressMenuItem={onPressMenuItem}
+              >
+                <SFSymbol
+                  name="ellipsis"
+                  color="rgba(255,255,255,0.8)"
+                  size={16}
+                />
+              </ContextMenuButton>
+            </View>
+            <View style={styles.songProgressContainer}>
+              {/* temporary block of code to track buffer progress */}
+              {bufferToggle && (
+                <Slider
+                  progress={trackBufferProgress}
+                  minimumValue={trackProgressMin}
+                  maximumValue={trackProgressMax}
+                  theme={{
+                    maximumTrackTintColor: "rgba(255, 255, 255, 0.4)",
+                    minimumTrackTintColor: "rgba(255, 255, 255, 0.8)",
+                  }}
+                />
+              )}
+              {/* temporary block of code to track buffer progress */}
+
+              <Animated.View
+                style={[
+                  styles.animatedProgressContainer,
+                  {
+                    transform: [
+                      { scaleX: sliderScale.x },
+                      { scaleY: sliderScale.y },
+                    ],
+                  },
+                ]}
+              >
+                <Slider
+                  progress={trackProgressProgress}
+                  minimumValue={trackProgressMin}
+                  maximumValue={trackProgressMax}
+                  renderThumb={() => null}
+                  renderBubble={() => null}
+                  theme={{
+                    maximumTrackTintColor: "rgba(255, 255, 255, 0.4)",
+                    minimumTrackTintColor: "rgba(255, 255, 255, 0.8)",
+                  }}
+                  // TODO: how to animate the borderRadius to match the animated container
+                  containerStyle={{ borderRadius: 8, height: 8 }}
+                  onSlidingStart={handleSlidingStart}
+                  onSlidingComplete={handleSlidingComplete}
+                />
+              </Animated.View>
+              <View style={styles.songTimeContainer}>
+                <Text style={styles.songTicker}>{secondsToMmSs(position)}</Text>
+                <Text style={styles.songTicker}>
+                  - {secondsToMmSs(currentTrack?.duration - position)}
+                </Text>
+              </View>
             </View>
           </View>
 
@@ -321,6 +366,9 @@ const stylesheet = createStyleSheet((theme) => ({
     width: 320,
   },
   songDetailsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingTop: theme.spacing.md,
     paddingHorizontal: theme.spacing.md,
   },
@@ -336,6 +384,10 @@ const stylesheet = createStyleSheet((theme) => ({
   contextMenuButton: {
     alignSelf: "flex-start",
   },
+  songProgressContainer: {
+    // TODO: come back and fix vertical padding
+    paddingHorizontal: theme.spacing.md,
+  },
   songTimeContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -346,7 +398,6 @@ const stylesheet = createStyleSheet((theme) => ({
     fontWeight: "bold",
   },
   controlsContainer: {
-    paddingTop: theme.spacing.md,
     paddingVertical: theme.spacing.md,
     paddingHorizontal: theme.spacing.xxxl,
     flexDirection: "row",
