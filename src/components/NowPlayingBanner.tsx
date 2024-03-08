@@ -73,6 +73,7 @@ export const NowPlayingBanner = () => {
                 color={theme.colors.text}
                 onPress={onPressPlayPause}
                 size={24}
+                disabled={!currentTrack}
               />
             )}
             <PressableSFSymbol
@@ -80,6 +81,7 @@ export const NowPlayingBanner = () => {
               color={theme.colors.text}
               size={24}
               onPress={onPressNextSong}
+              disabled={!currentTrack}
             />
           </View>
         </View>
