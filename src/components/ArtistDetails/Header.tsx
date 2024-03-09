@@ -1,20 +1,43 @@
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client";
 import { Image } from "expo-image";
 import { View } from "react-native";
-import { useStyles, createStyleSheet } from "react-native-unistyles";
+import { createStyleSheet, useStyles } from "react-native-unistyles";
 
+import { useFetchUser } from "../../api/user";
+import { usePlayTracks } from "../../hooks/usePlayTracks";
 import { useApi } from "../../store/useJelloAuth";
 import { extractPrimaryHash } from "../../util/extractPrimaryHash";
 import { generateTrackArtworkUrl } from "../../util/generateTrackArtworkUrl";
+import { MusicButton } from "../MusicButton";
 import { Text } from "../Themed";
+
+type ArtistHeaderProps = {
+  artistDetails: BaseItemDto;
+  artistSongs: BaseItemDto[];
+};
 
 export const ArtistHeader = ({
   artistDetails,
-}: {
-  artistDetails: BaseItemDto;
-}) => {
+  artistSongs,
+}: ArtistHeaderProps) => {
   const { styles } = useStyles(stylesheet);
   const api = useApi((state) => state.api);
+  const playTracks = usePlayTracks();
+  const user = useFetchUser(api);
+
+  const onPressPlayArtist = () => {
+    playTracks({ tracks: artistSongs, api, userId: user.data?.Id });
+  };
+
+  const onPressShuffleArtist = () => {
+    playTracks({
+      tracks: artistSongs,
+      api,
+      userId: user.data?.Id,
+      shuffle: true,
+    });
+  };
+
   return (
     <View>
       <View style={styles.headerImageContainer}>
@@ -28,8 +51,8 @@ export const ArtistHeader = ({
         <Text style={styles.headerTitle}>{artistDetails?.Name}</Text>
       </View>
       <View style={styles.buttonContainer}>
-        {/* <MusicButton type="play" />
-          <MusicButton type="shuffle" /> */}
+        <MusicButton onPress={onPressPlayArtist} type="play" />
+        <MusicButton onPress={onPressShuffleArtist} type="shuffle" />
       </View>
     </View>
   );

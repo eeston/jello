@@ -7,7 +7,6 @@ import { Slider } from "react-native-awesome-slider";
 import {
   ContextMenuButton,
   MenuActionConfig,
-  OnPressMenuItemEvent,
 } from "react-native-ios-context-menu";
 import LinearGradient from "react-native-linear-gradient";
 import { useDerivedValue, useSharedValue } from "react-native-reanimated";

@@ -83,6 +83,28 @@ export const useFetchAlbumSongs = (
   return albumSongs;
 };
 
+export const useFetchArtistSongs = (api: Api, artistId: string) => {
+  // TODO: would be nicer to fetch by album so the cache can be shared with useFetchAlbumSongs
+  const user = useFetchUser(api);
+  const artistSongs = useQuery({
+    queryKey: ["artistSongs", artistId],
+    queryFn: async () => {
+      const result = await getItemsApi(api).getItems({
+        userId: user?.data?.Id,
+        parentId: artistId,
+        includeItemTypes: [BaseItemKind.Audio],
+        sortBy: [ItemSortBy.ProductionYear, ItemSortBy.SortName],
+        sortOrder: [SortOrder.Ascending],
+        recursive: true,
+      });
+      return result.data;
+    },
+    enabled: !!user.isSuccess,
+  });
+
+  return artistSongs;
+};
+
 export const useFetchMoreArtistAlbums = (
   api: Api,
   artistId: string,

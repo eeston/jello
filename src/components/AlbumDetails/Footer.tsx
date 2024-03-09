@@ -16,13 +16,12 @@ import { AlbumCard } from "../AlbumCard";
 import { Separator } from "../Separator";
 import { Text } from "../Themed";
 
-export const AlbumFooter = ({
-  albumDetails,
-  albumSongs,
-}: {
+type AlbumFooterProps = {
   albumDetails?: BaseItemDto;
   albumSongs?: BaseItemDto[];
-}) => {
+};
+
+export const AlbumFooter = ({ albumDetails, albumSongs }: AlbumFooterProps) => {
   const { styles } = useStyles(stylesheet);
   const api = useApi((state) => state.api);
   const moreAlbums = useFetchMoreArtistAlbums(

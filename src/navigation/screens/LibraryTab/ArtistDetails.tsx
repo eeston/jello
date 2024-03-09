@@ -5,6 +5,7 @@ import { useCallback } from "react";
 import { Animated, SafeAreaView, View } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
+import { useFetchArtistSongs } from "../../../api/albums";
 import {
   useFetchArtistAlbums,
   useFetchArtistDetails,
@@ -27,6 +28,8 @@ export const ArtistDetailsScreen = ({ route, navigation }: Props) => {
   const api = useApi((state) => state.api);
   const artistDetails = useFetchArtistDetails(api, artistId);
   const artistAlbums = useFetchArtistAlbums(api, artistId);
+  const artistSongs = useFetchArtistSongs(api, artistId);
+
   const headerHeight = useHeaderHeight();
 
   const onPressArtistItem = useCallback(
@@ -51,7 +54,11 @@ export const ArtistDetailsScreen = ({ route, navigation }: Props) => {
 
   const opacity = useFadeIn([artistDetails, artistAlbums]);
 
-  if (artistDetails.isPending || artistAlbums.isPending) {
+  if (
+    artistDetails.isPending ||
+    artistAlbums.isPending ||
+    artistSongs.isPending
+  ) {
     return <LoadingOverlay />;
   }
 
@@ -59,7 +66,10 @@ export const ArtistDetailsScreen = ({ route, navigation }: Props) => {
     <SafeAreaView style={[styles.container, { marginTop: -headerHeight }]}>
       <Animated.FlatList
         ListHeaderComponent={
-          <ArtistHeader artistDetails={artistDetails.data} />
+          <ArtistHeader
+            artistDetails={artistDetails.data}
+            artistSongs={artistSongs.data?.Items}
+          />
         }
         ListFooterComponent={<View style={styles.listFooterContainer} />}
         data={artistAlbums.data?.Items}
