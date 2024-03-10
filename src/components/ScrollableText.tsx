@@ -17,13 +17,14 @@ const SCROLL_DELAY = 2000;
 const SCROLL_GAP = 50;
 const SCROLL_SPEED = 40;
 
-interface TitleScrollProps {
+type TitleScrollProps = {
   text: string;
-}
+  type: "title" | "subtitle";
+};
 
 // TODO: don't think I will use this anywhere else but maybe work
 // on making it a little more reuseable
-export const TitleScroll = ({ text }: TitleScrollProps) => {
+export const TitleScroll = ({ text, type }: TitleScrollProps) => {
   const [contentFits, setContentFits] = useState(true);
   const [textWidth, setTextWidth] = useState(0);
   const animatedValue = useRef(new Animated.Value(0)).current;
@@ -32,6 +33,8 @@ export const TitleScroll = ({ text }: TitleScrollProps) => {
   const textRef = useRef(null);
   const timeoutId = useRef<NodeJS.Timeout | null>(null);
   const { styles } = useStyles(stylesheet);
+
+  const textStyle = type === "title" ? styles.textTitle : styles.textSubtitle;
 
   useEffect(() => {
     animatedValue.stopAnimation();
@@ -115,7 +118,7 @@ export const TitleScroll = ({ text }: TitleScrollProps) => {
     <View style={styles.container}>
       <Text
         numberOfLines={1}
-        style={[styles.text, { opacity: contentFits ? 1 : 0 }]}
+        style={[textStyle, { opacity: contentFits ? 1 : 0 }]}
       >
         {text}
       </Text>
@@ -133,7 +136,7 @@ export const TitleScroll = ({ text }: TitleScrollProps) => {
           ref={textRef}
           numberOfLines={1}
           style={[
-            styles.text,
+            textStyle,
             {
               transform: [{ translateX: animatedValue }],
               opacity: !contentFits ? 1 : 0,
@@ -150,7 +153,7 @@ export const TitleScroll = ({ text }: TitleScrollProps) => {
             <Animated.Text
               numberOfLines={1}
               style={[
-                styles.text,
+                textStyle,
                 {
                   transform: [{ translateX: animatedValue }],
                   opacity: !contentFits ? 1 : 0,
@@ -171,10 +174,14 @@ const stylesheet = createStyleSheet((theme) => ({
   container: {
     overflow: "hidden",
   },
-  text: {
+  textTitle: {
     fontWeight: "bold",
     fontSize: 20,
     color: "rgba(255,255,255,0.8)",
+  },
+  textSubtitle: {
+    fontSize: 20,
+    color: "rgba(255,255,255,0.5)",
   },
   fadeLeft: {
     position: "absolute",

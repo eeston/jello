@@ -164,8 +164,8 @@ export const NowPlayingModal = ({ navigation }) => {
           {/* SONG DETAILS / PROGRESS BAR */}
           <View>
             <View style={styles.songDetailsContainer}>
-              <View>
-                <TitleScroll text={currentTrack?.title} />
+              <View style={{ maxWidth: "90%" }}>
+                <TitleScroll text={currentTrack?.title} type="title" />
                 <ContextMenuButton
                   style={styles.contextMenuButton}
                   menuConfig={{
@@ -197,15 +197,11 @@ export const NowPlayingModal = ({ navigation }) => {
                   }}
                   onPressMenuItem={onPressMenuItem}
                 >
-                  <Text style={styles.songArtist}>{currentTrack?.artist}</Text>
+                  <TitleScroll text={currentTrack?.artist} type="subtitle" />
                 </ContextMenuButton>
               </View>
               <ContextMenuButton
-                style={{
-                  padding: 12,
-                  borderRadius: 16,
-                  backgroundColor: "rgba(255,255,255,0.2)",
-                }}
+                style={styles.optionsButton}
                 menuConfig={{
                   menuTitle: "", // no title required
                   menuItems: [
@@ -371,15 +367,6 @@ const stylesheet = createStyleSheet((theme) => ({
     paddingTop: theme.spacing.md,
     paddingHorizontal: theme.spacing.md,
   },
-  songTitle: {
-    fontWeight: "bold",
-    fontSize: 20,
-    color: "rgba(255,255,255,0.8)",
-  },
-  songArtist: {
-    fontSize: 20,
-    color: "rgba(255,255,255,0.5)",
-  },
   contextMenuButton: {
     alignSelf: "flex-start",
   },
@@ -390,6 +377,11 @@ const stylesheet = createStyleSheet((theme) => ({
   songTimeContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+  optionsButton: {
+    padding: theme.spacing.sm,
+    borderRadius: theme.spacing.sm,
+    backgroundColor: "rgba(255,255,255,0.2)",
   },
   songTicker: {
     color: "rgba(255,255,255,0.5)",
