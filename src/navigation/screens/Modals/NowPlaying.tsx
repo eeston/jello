@@ -1,15 +1,14 @@
+import Slider from "@react-native-community/slider";
 import { BlurView } from "expo-blur";
 import { Image } from "expo-image";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef } from "react";
 import { AirplayButton, showRoutePicker } from "react-airplay";
 import { ActivityIndicator, Animated, Pressable, View } from "react-native";
-import { Slider } from "react-native-awesome-slider";
 import {
   ContextMenuButton,
   MenuActionConfig,
 } from "react-native-ios-context-menu";
 import LinearGradient from "react-native-linear-gradient";
-import { useDerivedValue, useSharedValue } from "react-native-reanimated";
 import { SFSymbol } from "react-native-sfsymbols";
 import TrackPlayer, {
   State,
@@ -19,6 +18,7 @@ import TrackPlayer, {
 } from "react-native-track-player";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
+import { TempBufferSlider } from "./_tempBufferSlider";
 import { PressableSFSymbol } from "../../../components/PressableSFSymbol";
 import { TitleScroll } from "../../../components/ScrollableText";
 import { Text } from "../../../components/Themed";
@@ -28,9 +28,6 @@ import { secondsToMmSs } from "../../../util/time";
 const shouldShowPlaying = [State.Playing, State.Loading, State.Buffering];
 const shouldShowLoading = [State.Loading, State.Buffering];
 
-// temporary toggle to show the buffer progress for testing
-const bufferToggle = false;
-
 export const NowPlayingModal = ({ navigation }) => {
   const { styles, theme } = useStyles(stylesheet);
 
@@ -39,30 +36,6 @@ export const NowPlayingModal = ({ navigation }) => {
   const currentTrack = useActiveTrack();
 
   const albumArtworkScale = useRef(new Animated.Value(1)).current;
-  const sliderScale = useRef(new Animated.ValueXY({ x: 1, y: 1 })).current;
-
-  const [isSlidingTrackProgress, setIsSlidingTrackProgress] = useState(false);
-
-  const trackProgressProgress = useDerivedValue(() => {
-    if (!isSlidingTrackProgress) {
-      return Number(position.toFixed(0));
-    }
-  }, [position]);
-
-  const trackBufferProgress = useSharedValue<number>(
-    Number(buffered.toFixed(0)),
-  );
-
-  const trackProgressMin = useSharedValue<number>(0);
-  const trackProgressMax = useSharedValue<number>(currentTrack?.duration ?? 0);
-
-  useEffect(() => {
-    trackBufferProgress.value = Number(buffered.toFixed(0));
-  }, [buffered]);
-
-  useEffect(() => {
-    trackProgressMax.value = currentTrack?.duration ?? 0;
-  }, [currentTrack]);
 
   useSpringAnimation(
     albumArtworkScale,
@@ -116,22 +89,10 @@ export const NowPlayingModal = ({ navigation }) => {
     [currentTrack, theme.colors.background],
   );
 
-  useEffect(() => {
-    Animated.spring(sliderScale, {
-      toValue: isSlidingTrackProgress ? { x: 1.1, y: 2 } : { x: 1, y: 1 },
-      useNativeDriver: true,
-    }).start();
-  }, [isSlidingTrackProgress]);
-
-  const handleSlidingStart = useCallback(() => {
-    setIsSlidingTrackProgress(true);
-  }, []);
-
   const handleSlidingComplete = async (seekToTimestamp: number) => {
     // TODO: this doesn't seek too far back/forward
     // buffering is also not working as expected
     await TrackPlayer.seekTo(Math.floor(seekToTimestamp));
-    setIsSlidingTrackProgress(false);
   };
 
   return (
@@ -228,50 +189,26 @@ export const NowPlayingModal = ({ navigation }) => {
             </View>
             <View style={styles.songProgressContainer}>
               {/* temporary block of code to track buffer progress */}
-              {bufferToggle && (
-                <Slider
-                  progress={trackBufferProgress}
-                  minimumValue={trackProgressMin}
-                  maximumValue={trackProgressMax}
-                  theme={{
-                    maximumTrackTintColor: "rgba(255, 255, 255, 0.4)",
-                    minimumTrackTintColor: "rgba(255, 255, 255, 0.8)",
-                  }}
-                />
-              )}
+              <TempBufferSlider
+                min={0}
+                max={currentTrack?.duration ?? 0}
+                value={buffered}
+              />
               {/* temporary block of code to track buffer progress */}
-
-              <Animated.View
-                style={[
-                  styles.animatedProgressContainer,
-                  {
-                    transform: [
-                      { scaleX: sliderScale.x },
-                      { scaleY: sliderScale.y },
-                    ],
-                  },
-                ]}
-              >
-                <Slider
-                  progress={trackProgressProgress}
-                  minimumValue={trackProgressMin}
-                  maximumValue={trackProgressMax}
-                  renderThumb={() => null}
-                  renderBubble={() => null}
-                  theme={{
-                    maximumTrackTintColor: "rgba(255, 255, 255, 0.4)",
-                    minimumTrackTintColor: "rgba(255, 255, 255, 0.8)",
-                  }}
-                  // TODO: how to animate the borderRadius to match the animated container
-                  containerStyle={{ borderRadius: 8, height: 8 }}
-                  onSlidingStart={handleSlidingStart}
-                  onSlidingComplete={handleSlidingComplete}
-                />
-              </Animated.View>
+              <Slider
+                style={{ width: "100%" }}
+                minimumValue={0}
+                maximumValue={currentTrack?.duration ?? 0}
+                minimumTrackTintColor="rgba(255, 255, 255, 0.8)"
+                thumbImage={require("../../../../assets/images/transparent-pixel.png")}
+                value={position}
+                onSlidingComplete={handleSlidingComplete}
+                tapToSeek
+              />
               <View style={styles.songTimeContainer}>
                 <Text style={styles.songTicker}>{secondsToMmSs(position)}</Text>
                 <Text style={styles.songTicker}>
-                  - {secondsToMmSs(currentTrack?.duration - position)}
+                  - {secondsToMmSs((currentTrack?.duration ?? 0) - position)}
                 </Text>
               </View>
             </View>
@@ -371,7 +308,6 @@ const stylesheet = createStyleSheet((theme) => ({
     alignSelf: "flex-start",
   },
   songProgressContainer: {
-    // TODO: come back and fix vertical padding
     paddingHorizontal: theme.spacing.md,
   },
   songTimeContainer: {
