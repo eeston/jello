@@ -20,6 +20,7 @@ import { createStyleSheet, useStyles } from "react-native-unistyles";
 import { useFetchRecentlyAddedAlbums } from "../../../api/albums";
 import { AlbumCard } from "../../../components/AlbumCard";
 import { ListItem } from "../../../components/ListItem";
+import { LoadingOverlay } from "../../../components/Loading";
 import { Separator } from "../../../components/Separator";
 import { Text } from "../../../components/Themed";
 import { useFadeIn } from "../../../hooks/useFadeInView";
@@ -77,6 +78,10 @@ export const LibraryDetailsScreen = ({ route, navigation }: Props) => {
     return navigation.navigate(screen);
   };
 
+  if (recentlyAddedAlbums.isPending) {
+    return <LoadingOverlay />;
+  }
+
   const renderItem = ({ item }: { item: (typeof items)[0] }) => {
     return (
       <View style={styles.renderItemWrapper} testID={item.testID}>
@@ -110,10 +115,10 @@ export const LibraryDetailsScreen = ({ route, navigation }: Props) => {
               <SFSymbol
                 name="chevron.right"
                 weight="semibold"
-                color={theme.colors.text}
+                color={theme.colors.textSecondary}
                 size={14}
                 resizeMode="center"
-                style={{ width: 14 }}
+                style={{ width: 24 }}
               />
             </View>
           }
@@ -122,7 +127,7 @@ export const LibraryDetailsScreen = ({ route, navigation }: Props) => {
     );
   };
 
-  const SeparatorComponent = memo(() => <Separator marginLeft={50} />);
+  const SeparatorComponent = memo(() => <Separator marginLeft={60} />);
 
   return (
     <SafeAreaView style={[styles.container, { marginTop: -headerHeight }]}>
@@ -187,7 +192,7 @@ const RecentlyAdded = ({
 
   return (
     <View style={styles.container}>
-      <Separator marginLeft={50} />
+      <Separator marginLeft={60} />
       <Text style={styles.title}>Recently Added</Text>
       {recentlyAddedAlbums.isPending ? (
         <View
@@ -222,7 +227,8 @@ const recentlyAddedStylesheet = createStyleSheet((theme) => ({
   },
   title: {
     fontSize: 22,
-    padding: theme.spacing.md,
+    paddingHorizontal: theme.spacing.md,
+    paddingTop: theme.spacing.lg,
     fontWeight: "bold",
   },
   columnWrapper: {
