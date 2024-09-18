@@ -38,7 +38,7 @@ export default (_: ConfigContext): ExpoConfig => ({
       "expo-build-properties",
       {
         ios: {
-          deploymentTarget: "13.4", // sync expo-secure-store
+          newArchEnabled: true,
         },
       },
     ],
