@@ -18,6 +18,7 @@ export default function Layout() {
         headerBackTitle: ".",
         headerBackTitleStyle: { fontSize: 1 },
         //
+        headerBlurEffect: UnistylesRuntime.themeName,
         headerShadowVisible: false,
         headerTitleStyle: styles.headerTitle,
         headerTransparent: true,
@@ -26,7 +27,6 @@ export default function Layout() {
       <Stack.Screen
         name="index"
         options={{
-          headerBlurEffect: UnistylesRuntime.themeName,
           headerLargeTitle: true,
           headerTitle: "Home",
         }}
@@ -35,6 +35,7 @@ export default function Layout() {
         name="albums/[id]"
         options={{
           headerBackTitle: " ",
+          headerBlurEffect: undefined,
           headerTintColor: theme.colors.tint,
           headerTitle: "",
         }}

@@ -20,6 +20,7 @@ export default function Layout() {
         headerBackTitle: ".",
         headerBackTitleStyle: { fontSize: 1 },
         //
+        headerBlurEffect: UnistylesRuntime.themeName,
         headerShadowVisible: false,
         headerTitle: "Library",
         headerTitleStyle: styles.headerTitle,
@@ -29,7 +30,6 @@ export default function Layout() {
       <Stack.Screen
         name="index"
         options={{
-          headerBlurEffect: UnistylesRuntime.themeName,
           headerLargeTitle: true,
           headerRight: SettingsButton,
         }}
@@ -39,7 +39,6 @@ export default function Layout() {
       <Stack.Screen
         name="albums/index"
         options={{
-          headerBlurEffect: UnistylesRuntime.themeName,
           headerLargeTitle: false,
           headerTintColor: theme.colors.tint,
           headerTitle: "",
@@ -48,6 +47,7 @@ export default function Layout() {
       <Stack.Screen
         name="albums/[id]"
         options={{
+          headerBlurEffect: undefined,
           headerLargeTitle: false,
           headerTintColor: theme.colors.tint,
           headerTitle: "",
@@ -58,7 +58,6 @@ export default function Layout() {
       <Stack.Screen
         name="artists/index"
         options={{
-          headerBlurEffect: UnistylesRuntime.themeName,
           headerLargeTitle: false,
           headerTintColor: theme.colors.tint,
           headerTitle: "",
@@ -67,6 +66,7 @@ export default function Layout() {
       <Stack.Screen
         name="artists/[id]"
         options={{
+          headerBlurEffect: undefined,
           headerLargeTitle: false,
           headerTintColor: theme.colors.tint,
           headerTitle: "",
@@ -77,7 +77,6 @@ export default function Layout() {
       <Stack.Screen
         name="genres/index"
         options={{
-          headerBlurEffect: UnistylesRuntime.themeName,
           headerLargeTitle: false,
           headerTintColor: theme.colors.tint,
           headerTitle: "",
@@ -86,7 +85,6 @@ export default function Layout() {
       <Stack.Screen
         name="genres/[id]"
         options={{
-          headerBlurEffect: UnistylesRuntime.themeName,
           headerLargeTitle: false,
           headerTintColor: theme.colors.tint,
           headerTitle: "",
@@ -97,7 +95,6 @@ export default function Layout() {
       <Stack.Screen
         name="playlists/index"
         options={{
-          headerBlurEffect: UnistylesRuntime.themeName,
           headerLargeTitle: false,
           headerTintColor: theme.colors.tint,
           headerTitle: "",
@@ -106,6 +103,7 @@ export default function Layout() {
       <Stack.Screen
         name="playlists/[id]"
         options={{
+          headerBlurEffect: undefined,
           headerLargeTitle: false,
           headerTintColor: theme.colors.tint,
           headerTitle: "",
