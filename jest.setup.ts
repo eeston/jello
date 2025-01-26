@@ -6,8 +6,8 @@ NativeModules.Unistyles = {
 
 global.__UNISTYLES__ = {
   enabledPlugins: [],
-  useBreakpoints: jest.fn(),
-  useAdaptiveThemes: jest.fn(),
-  useTheme: jest.fn(),
   themeName: "light",
+  useAdaptiveThemes: jest.fn(),
+  useBreakpoints: jest.fn(),
+  useTheme: jest.fn(),
 };

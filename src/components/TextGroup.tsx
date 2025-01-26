@@ -1,10 +1,10 @@
 import { Pressable, StyleProp, View, ViewStyle } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
-import { Text } from "./Themed";
+import { ThemedText } from "./ThemedText";
 
 type TextGroupProps = {
-  rows: { leftText: string; rightText?: string; onPress?: () => void }[];
+  rows: { leftText: string; onPress?: () => void; rightText?: string }[];
 };
 
 export const TextGroup = ({ rows }: TextGroupProps) => {
@@ -15,23 +15,23 @@ export const TextGroup = ({ rows }: TextGroupProps) => {
     const isLast = i === rows.length - 1;
 
     const borderRadii: StyleProp<ViewStyle> = {
-      borderTopRightRadius: isFirst ? 10 : 0,
-      borderTopLeftRadius: isFirst ? 10 : 0,
-      borderBottomRightRadius: isLast ? 10 : 0,
       borderBottomLeftRadius: isLast ? 10 : 0,
+      borderBottomRightRadius: isLast ? 10 : 0,
+      borderTopLeftRadius: isFirst ? 10 : 0,
+      borderTopRightRadius: isFirst ? 10 : 0,
     };
 
     return (
       <Pressable
         key={i}
+        onPress={row.onPress}
         style={({ pressed }) => [
           { opacity: row.onPress && pressed ? 0.5 : 1.0 },
         ]}
-        onPress={row.onPress}
       >
         <View style={[styles.row, { ...borderRadii }]}>
-          <Text style={styles.textLeft}>{row.leftText}</Text>
-          <Text style={styles.textRight}>{row.rightText}</Text>
+          <ThemedText style={styles.textLeft}>{row.leftText}</ThemedText>
+          <ThemedText style={styles.textRight}>{row.rightText}</ThemedText>
         </View>
       </Pressable>
     );
@@ -44,16 +44,16 @@ const stylesheet = createStyleSheet((theme) => ({
     paddingBottom: theme.spacing.lg,
   },
   row: {
-    padding: theme.spacing.sm,
-    backgroundColor: theme.colors.backgroundSecondary,
+    backgroundColor: "#292C33",
     flexDirection: "row",
     justifyContent: "space-between",
+    padding: theme.spacing.sm,
   },
   textLeft: {
-    color: theme.colors.text,
+    // color: theme.colors.text,
   },
   textRight: {
-    color: theme.colors.textSecondary,
+    // color: theme.colors.textSecondary,
     fontSize: 12,
   },
 }));

@@ -13,8 +13,8 @@ export const LoadingOverlay = () => {
 
 const stylesheet = createStyleSheet((theme) => ({
   container: {
-    flex: 1,
     alignItems: "center",
+    flex: 1,
     flexDirection: "column",
     justifyContent: "space-around",
     zIndex: 100,

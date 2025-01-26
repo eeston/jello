@@ -3,49 +3,45 @@ import { ConfigContext, ExpoConfig } from "expo/config";
 import { name, version } from "./package.json";
 
 export default (_: ConfigContext): ExpoConfig => ({
-  name: "Jello",
-  slug: name,
-  scheme: name,
-  version,
-  orientation: "portrait",
-  userInterfaceStyle: "automatic",
   assetBundlePatterns: ["**/*"],
-  platforms: ["ios"],
-  ios: {
-    icon: "./assets/images/icon.png",
-    supportsTablet: false,
-    infoPlist: {
-      UIBackgroundModes: ["audio"],
-    },
-    bundleIdentifier: "dev.easton.jello",
-    config: {
-      usesNonExemptEncryption: false,
-    },
-    splash: {
-      // image: "./assets/images/splash.png",
-      // resizeMode: "contain",
-      backgroundColor: "#FFFFFF",
-      dark: {
-        // image: "./assets/images/splash.png",
-        // resizeMode: "contain",
-        backgroundColor: "#000000",
-      },
-    },
-    // backgroundColor: "#000000",
+  experiments: {
+    reactCompiler: true,
+    typedRoutes: true,
   },
-  plugins: [
-    [
-      "expo-build-properties",
-      {
-        ios: {
-          newArchEnabled: true,
-        },
-      },
-    ],
-  ],
   extra: {
     eas: {
       projectId: "d948484f-3720-473b-ad8d-5efe058b766c",
     },
   },
+  ios: {
+    bundleIdentifier: "dev.easton.jello",
+    config: {
+      usesNonExemptEncryption: false,
+    },
+    icon: "./assets/images/icon.png",
+    infoPlist: {
+      UIBackgroundModes: ["audio"],
+    },
+    splash: {
+      // resizeMode: "contain",
+      backgroundColor: "#FFFFFF",
+      dark: {
+        // resizeMode: "contain",
+        backgroundColor: "#000000",
+        image: "./assets/images/splash.png",
+      },
+      image: "./assets/images/splash.png",
+    },
+    supportsTablet: false,
+    // backgroundColor: "#000000",
+  },
+  name: "Jello",
+  newArchEnabled: false, // https://github.com/doublesymmetry/react-native-track-player/pull/2395
+  orientation: "portrait",
+  platforms: ["ios"],
+  plugins: ["expo-secure-store", "expo-router", "expo-build-properties"],
+  scheme: name,
+  slug: name,
+  userInterfaceStyle: "automatic",
+  version,
 });

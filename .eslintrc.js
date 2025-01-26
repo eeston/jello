@@ -1,6 +1,9 @@
 module.exports = {
-  root: true,
-  extends: ["universe/native", "universe/shared/typescript-analysis"],
+  extends: [
+    "universe/native",
+    "universe/shared/typescript-analysis",
+    "plugin:perfectionist/recommended-natural",
+  ],
   overrides: [
     {
       files: ["*.ts", "*.tsx", "*.d.ts"],
@@ -10,6 +13,7 @@ module.exports = {
     },
   ],
   plugins: ["eslint-plugin-react-compiler"],
+  root: true,
   rules: {
     "react-compiler/react-compiler": "error",
   },

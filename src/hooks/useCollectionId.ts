@@ -1,9 +1,9 @@
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client";
+import { useAuth } from "@src/store/AuthContext";
 import * as SecureStore from "expo-secure-store";
 import { useEffect, useState } from "react";
 
 import { STORE_SELECTED_MUSIC_LIBRARY } from "../constants";
-import { useApi } from "../store/useJelloAuth";
 
 export const processCollections = (collections: BaseItemDto[]) => {
   const musicCollections = collections.filter(
@@ -20,7 +20,7 @@ export const processCollections = (collections: BaseItemDto[]) => {
 export const useCheckCollectionId = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const api = useApi((state) => state.api);
+  const { api } = useAuth();
 
   useEffect(() => {
     const checkCollectionId = async () => {
@@ -54,5 +54,5 @@ export const useCheckCollectionId = () => {
     checkCollectionId();
   }, [api?.accessToken]);
 
-  return { loading, error };
+  return { error, loading };
 };

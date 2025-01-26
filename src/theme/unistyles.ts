@@ -5,8 +5,8 @@ import lightTheme from "./light";
 
 // if you defined themes
 type AppThemes = {
-  light: typeof lightTheme;
   dark: typeof darkTheme;
+  light: typeof lightTheme;
 };
 
 // override library types
@@ -15,8 +15,8 @@ declare module "react-native-unistyles" {
 }
 
 UnistylesRegistry.addThemes({
-  light: lightTheme,
   dark: darkTheme,
+  light: lightTheme,
   // register other themes with unique names
 }).addConfig({
   // you can pass here optional config described below

@@ -1,151 +1,190 @@
-import { useNavigation } from "@react-navigation/native";
+import { ThemedText } from "@src/components/ThemedText";
+import { useTrackedActiveTrack } from "@src/hooks/useTrackedActiveTrack";
+import { useAudioStore } from "@src/store/audioStore";
 import { BlurView } from "expo-blur";
 import { Image } from "expo-image";
-import { useCallback } from "react";
+import { Link } from "expo-router";
+import { SymbolView } from "expo-symbols";
 import { ActivityIndicator, Pressable, View } from "react-native";
-import TrackPlayer, {
-  State,
-  useActiveTrack,
-  usePlaybackState,
-} from "react-native-track-player";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import TrackPlayer, { useIsPlaying } from "react-native-track-player";
 import {
   UnistylesRuntime,
   createStyleSheet,
   useStyles,
 } from "react-native-unistyles";
 
-import { PressableSFSymbol } from "./PressableSFSymbol";
-import { Text } from "./Themed";
-
-const shouldShowLoading = [State.Loading, State.Buffering];
+const PlayIndicator = ({
+  isLoading,
+  isPlaying,
+}: {
+  isLoading: boolean;
+  isPlaying: boolean;
+}) => {
+  const { theme } = useStyles();
+  if (isLoading) {
+    return <ActivityIndicator />;
+  } else {
+    return (
+      <SymbolView
+        name={isPlaying ? "pause.fill" : "play.fill"}
+        resizeMode="scaleAspectFit"
+        size={24}
+        tintColor={theme.colors.primary}
+      />
+    );
+  }
+};
 
 export const NowPlayingBanner = () => {
   const { styles, theme } = useStyles(stylesheet);
-  const navigation = useNavigation();
-  const playerState = usePlaybackState();
-  const currentTrack = useActiveTrack();
+  const insets = useSafeAreaInsets();
+  const { playing: isPlaying } = useIsPlaying();
+  const currentTrack = useTrackedActiveTrack();
 
-  const isPlaying = playerState.state === State.Playing;
-  const onPressPlayPause = useCallback(() => {
-    TrackPlayer.setPlayWhenReady(!isPlaying);
-  }, [playerState.state]);
+  const { isLoading } = useAudioStore();
 
-  const onPressNextSong = useCallback(() => {
-    TrackPlayer.skipToNext();
-  }, []);
+  const bottomPosition = insets.bottom + 57;
 
-  const onPressBanner = useCallback(() => {
-    if (currentTrack) {
-      return navigation.navigate("NowPlayingModal");
+  const handleOnPressPlayPause = () => {
+    if (isPlaying) {
+      return TrackPlayer.pause();
+    } else {
+      return TrackPlayer.play();
     }
-  }, [currentTrack, navigation]);
+  };
+
+  const handleOnPressNext = () => {
+    TrackPlayer.skipToNext();
+  };
 
   return (
-    <View style={styles.shadowContainer}>
-      <BlurView
-        intensity={90}
-        tint={UnistylesRuntime.themeName}
-        style={styles.container}
-      >
-        <View style={styles.innerContainer}>
-          <Pressable onPress={onPressBanner} style={styles.pressableContainer}>
-            {currentTrack?.artworkBlurHash ? (
+    <Link
+      asChild
+      disabled={!currentTrack}
+      href="/(authed)/nowPlaying"
+      style={[styles.container, { bottom: bottomPosition }]}
+    >
+      <Pressable style={[styles.container, { bottom: bottomPosition }]}>
+        <BlurView
+          intensity={100}
+          style={styles.content}
+          tint={UnistylesRuntime.themeName}
+        >
+          <View style={styles.miniPlayerContent}>
+            {currentTrack?.artworkBlur || currentTrack?.artwork ? (
               <Image
-                style={styles.albumArtwork}
-                source={currentTrack?.artwork}
-                placeholder={currentTrack?.artworkBlurHash}
-                contentFit="cover"
-                transition={300}
+                placeholder={{
+                  blurhash: currentTrack?.artworkBlur,
+                }}
+                source={{ uri: currentTrack?.artwork }}
+                style={styles.artwork}
+                transition={theme.timing.medium}
               />
             ) : (
-              <View style={styles.albumArtwork} />
+              <View
+                style={[
+                  styles.artwork,
+                  {
+                    alignItems: "center",
+                    backgroundColor: "lightgrey",
+                    justifyContent: "center",
+                  },
+                ]}
+              >
+                <SymbolView
+                  name="music.note"
+                  resizeMode="scaleAspectFit"
+                  tintColor="grey"
+                />
+              </View>
             )}
-            <Text numberOfLines={1} style={styles.title}>
-              {currentTrack?.title ?? "Not Playing"}
-            </Text>
-          </Pressable>
-          <View style={styles.buttonContainer}>
-            {shouldShowLoading.includes(playerState.state) ? (
-              <ActivityIndicator animating color={theme.colors.text} />
-            ) : (
-              <PressableSFSymbol
-                name={isPlaying ? "pause.fill" : "play.fill"}
-                color={theme.colors.text}
-                onPress={onPressPlayPause}
-                size={24}
-                disabled={!currentTrack}
-              />
-            )}
-            <PressableSFSymbol
-              name="forward.fill"
-              color={theme.colors.text}
-              size={24}
-              onPress={onPressNextSong}
-              disabled={!currentTrack}
-            />
+            <View style={styles.textContainer}>
+              <ThemedText
+                numberOfLines={1}
+                style={styles.title}
+                type="defaultSemiBold"
+              >
+                {currentTrack?.title ?? "Not Playing"}
+              </ThemedText>
+              {currentTrack?.artist && (
+                <ThemedText numberOfLines={1} style={styles.title}>
+                  {currentTrack?.artist}
+                </ThemedText>
+              )}
+            </View>
+            <View style={styles.controls}>
+              <Pressable
+                disabled={isLoading}
+                onPress={handleOnPressPlayPause}
+                style={styles.controlButton}
+              >
+                <PlayIndicator isLoading={isLoading} isPlaying={!!isPlaying} />
+              </Pressable>
+              <Pressable
+                disabled={isLoading}
+                onPress={handleOnPressNext}
+                style={styles.controlButton}
+              >
+                <SymbolView
+                  name="forward.fill"
+                  resizeMode="scaleAspectFit"
+                  size={32}
+                  tintColor={theme.colors.primary}
+                />
+              </Pressable>
+            </View>
           </View>
-        </View>
-      </BlurView>
-    </View>
+        </BlurView>
+      </Pressable>
+    </Link>
   );
 };
 
 const stylesheet = createStyleSheet((theme) => ({
-  shadowContainer: {
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 25,
+  artwork: {
+    borderRadius: theme.spacing.xs,
+    height: 40,
+    width: 40,
   },
   container: {
+    height: 56,
+    left: 0,
+    position: "absolute",
+    right: 0,
+    zIndex: 50,
+    ...theme.shadow.sm,
+  },
+  content: {
+    alignItems: "center",
+    borderRadius: theme.spacing.sm,
+    flex: 1,
+    flexDirection: "row",
+    marginHorizontal: theme.spacing.xs,
+    overflow: "hidden",
+    zIndex: 1000,
+  },
+  controlButton: {
+    padding: theme.spacing.xs,
+  },
+  controls: {
+    alignItems: "center",
     backgroundColor: "transparent",
     flexDirection: "row",
-    borderRadius: theme.spacing.sm,
-    marginHorizontal: theme.spacing.xs,
-    height: theme.spacing.xxl + theme.spacing.xs,
-    // width: "100%",
-    overflow: "hidden",
-
-    //
-    // shadowColor: isDark ? "white" : "grey",
   },
-
-  innerContainer: {
-    // is this required?
-    width: "100%",
-    flexDirection: "row",
+  miniPlayerContent: {
     alignItems: "center",
-  },
-  pressableContainer: {
+    flex: 1,
     flexDirection: "row",
-    alignItems: "center",
-    flex: 3,
+    height: "100%",
+    paddingHorizontal: theme.spacing.xs,
   },
-  albumArtwork: {
-    marginLeft: theme.spacing.xs,
-    marginVertical: theme.spacing.xs,
-    backgroundColor: "grey",
-    // backgroundColor: "#0553",
-    borderRadius: theme.spacing.xs,
-    height: theme.spacing.xxl - theme.spacing.xxs,
-    width: theme.spacing.xxl - theme.spacing.xxs,
+  textContainer: {
+    backgroundColor: "transparent",
+    flex: 1,
+    marginLeft: theme.spacing.sm,
   },
   title: {
-    height: "100%",
-    // overflow: "scroll",
-    fontWeight: "500",
-    fontSize: 16,
-    paddingLeft: theme.spacing.sm,
-    paddingRight: theme.spacing.xl,
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    flex: 1,
-    width: "100%",
-    // justifyContent: "flex-end",
-    justifyContent: "space-around",
-    marginHorizontal: theme.spacing.sm,
+    lineHeight: 20,
   },
 }));

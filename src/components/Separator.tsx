@@ -1,11 +1,12 @@
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 type SeparatorProps = {
-  marginLeft: number;
+  marginLeft?: number;
+  marginRight?: number;
 };
 
-export const Separator = ({ marginLeft }: SeparatorProps) => {
+export const Separator = ({ marginLeft = 0 }: SeparatorProps) => {
   const { styles } = useStyles(stylesheet);
 
   return <View style={[styles.container, { marginLeft }]} />;
@@ -13,7 +14,7 @@ export const Separator = ({ marginLeft }: SeparatorProps) => {
 
 const stylesheet = createStyleSheet((theme) => ({
   container: {
-    borderWidth: 0.5,
-    borderColor: theme.colors.border,
+    borderColor: theme.colors.secondary,
+    borderWidth: StyleSheet.hairlineWidth,
   },
 }));

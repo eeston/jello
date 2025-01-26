@@ -1,39 +1,51 @@
+import { ThemedText } from "@src/components/ThemedText";
+import { BlurView } from "expo-blur";
+import * as Haptics from "expo-haptics";
+import { SFSymbol, SymbolView } from "expo-symbols";
 import { Dimensions, Pressable } from "react-native";
-import { SFSymbol } from "react-native-sfsymbols";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
-
-import { Text } from "./Themed";
 
 const buttonTypes = {
   play: {
+    icon: "play.fill" as SFSymbol,
     title: "Play",
-    icon: "play.fill",
   },
   shuffle: {
+    icon: "shuffle" as SFSymbol,
     title: "Shuffle",
-    icon: "shuffle",
   },
 };
 
 type MusicButtonProps = {
-  type: "play" | "shuffle";
   onPress: () => void;
+  type: "play" | "shuffle";
 };
 
-export const MusicButton = ({ type, onPress }: MusicButtonProps) => {
-  const { styles, theme } = useStyles(stylesheet);
+export const MusicButton = ({ onPress, type }: MusicButtonProps) => {
+  const { styles } = useStyles(stylesheet);
+
+  const handleOnPress = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    onPress();
+  };
 
   return (
-    <Pressable style={styles.container} onPress={onPress}>
-      <SFSymbol
-        name={buttonTypes[type].icon}
-        color={theme.colors.primary}
-        size={16}
-        resizeMode="center"
-        style={styles.symbol}
-      />
-      <Text style={styles.text}>{buttonTypes[type].title}</Text>
-    </Pressable>
+    <BlurView style={styles.container} tint="light">
+      <Pressable
+        onPress={handleOnPress}
+        style={({ pressed }) => [styles.inner, { opacity: pressed ? 0.5 : 1 }]}
+      >
+        <SymbolView
+          name={buttonTypes[type].icon}
+          resizeMode="scaleAspectFit"
+          size={18}
+          tintColor="white"
+        />
+        <ThemedText style={styles.text} type="defaultSemiBold">
+          {buttonTypes[type].title}
+        </ThemedText>
+      </Pressable>
+    </BlurView>
   );
 };
 
@@ -41,23 +53,19 @@ const stylesheet = createStyleSheet((theme) => {
   const size = Dimensions.get("window").width / 2.4; // maybe this is repsonsive between screen sizes??
   return {
     container: {
-      width: size,
+      borderRadius: theme.spacing.xs,
+      overflow: "hidden",
       paddingVertical: theme.spacing.sm,
-      backgroundColor: theme.colors.buttonSecondaryBackground,
-      borderRadius: theme.spacing.sm,
-      borderWidth: 0,
-      flexDirection: "row",
+      width: size,
+    },
+    inner: {
       alignItems: "center",
+      flexDirection: "row",
+      gap: 8,
       justifyContent: "center",
     },
-    symbol: {
-      marginHorizontal: theme.spacing.md,
-    },
     text: {
-      fontWeight: "500",
-      color: theme.colors.primary,
-      textAlign: "center",
-      fontSize: 18,
+      color: "white",
     },
   };
 });

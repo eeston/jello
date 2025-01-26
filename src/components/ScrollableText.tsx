@@ -19,7 +19,7 @@ const SCROLL_SPEED = 40;
 
 type TitleScrollProps = {
   text: string;
-  type: "title" | "subtitle";
+  type: "subtitle" | "title";
 };
 
 // TODO: don't think I will use this anywhere else but maybe work
@@ -27,6 +27,7 @@ type TitleScrollProps = {
 export const TitleScroll = ({ text, type }: TitleScrollProps) => {
   const [contentFits, setContentFits] = useState(true);
   const [textWidth, setTextWidth] = useState(0);
+  // eslint-disable-next-line react-compiler/react-compiler
   const animatedValue = useRef(new Animated.Value(0)).current;
   const animation = useRef<Animated.CompositeAnimation | null>(null);
   const containerRef = useRef(null);
@@ -68,9 +69,9 @@ export const TitleScroll = ({ text, type }: TitleScrollProps) => {
 
     const scrollToValue = -textWidth - SCROLL_GAP;
     animation.current = Animated.timing(animatedValue, {
-      toValue: scrollToValue,
       duration: Math.abs(scrollToValue) * SCROLL_SPEED,
       easing: Easing.linear,
+      toValue: scrollToValue,
       useNativeDriver: true,
     });
     animation.current.start(({ finished }) => {
@@ -123,23 +124,23 @@ export const TitleScroll = ({ text, type }: TitleScrollProps) => {
         {text}
       </Text>
       <ScrollView
-        ref={containerRef}
         horizontal
+        onContentSizeChange={calculateTextSize}
+        ref={containerRef}
         scrollEnabled={!contentFits}
         scrollEventThrottle={16}
         showsHorizontalScrollIndicator={false}
         style={StyleSheet.absoluteFillObject}
-        onContentSizeChange={calculateTextSize}
       >
         {/* text that gets scrolled */}
         <Animated.Text
-          ref={textRef}
           numberOfLines={1}
+          ref={textRef}
           style={[
             textStyle,
             {
-              transform: [{ translateX: animatedValue }],
               opacity: !contentFits ? 1 : 0,
+              transform: [{ translateX: animatedValue }],
               width: null,
             },
           ]}
@@ -155,8 +156,8 @@ export const TitleScroll = ({ text, type }: TitleScrollProps) => {
               style={[
                 textStyle,
                 {
-                  transform: [{ translateX: animatedValue }],
                   opacity: !contentFits ? 1 : 0,
+                  transform: [{ translateX: animatedValue }],
                   width: null,
                 },
               ]}
@@ -174,25 +175,25 @@ const stylesheet = createStyleSheet((theme) => ({
   container: {
     overflow: "hidden",
   },
-  textTitle: {
-    fontWeight: "bold",
-    fontSize: 20,
-    color: "rgba(255,255,255,0.8)",
-  },
-  textSubtitle: {
-    fontSize: 20,
-    color: "rgba(255,255,255,0.5)",
-  },
   fadeLeft: {
-    position: "absolute",
-    left: 0,
     height: "100%",
+    left: 0,
+    position: "absolute",
     width: 50,
   },
   fadeRight: {
+    height: "100%",
     position: "absolute",
     right: 0,
-    height: "100%",
     width: 50,
+  },
+  textSubtitle: {
+    color: "rgba(255,255,255,0.5)",
+    fontSize: 20,
+  },
+  textTitle: {
+    color: "rgba(255,255,255,0.8)",
+    fontSize: 20,
+    fontWeight: "bold",
   },
 }));

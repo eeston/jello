@@ -1,35 +1,35 @@
 import React, { ReactElement } from "react";
 import {
-  StyleProp,
   Pressable,
   PressableProps,
+  StyleProp,
   View,
   ViewStyle,
 } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 interface ListItemProps extends PressableProps {
-  height?: number;
-  containerStyle?: StyleProp<ViewStyle>;
-  style?: StyleProp<ViewStyle>;
-  RightComponent?: ReactElement;
   LeftComponent?: ReactElement;
+  RightComponent?: ReactElement;
+  containerStyle?: StyleProp<ViewStyle>;
+  height?: number;
+  style?: StyleProp<ViewStyle>;
 }
 
 interface ListItemActionProps {
   Component?: ReactElement;
-  size: number;
   side: "left" | "right";
+  size: number;
 }
 
 export const ListItem = (props: ListItemProps) => {
   const { styles } = useStyles(stylesheet);
   const {
-    height = 48,
     LeftComponent,
     RightComponent,
-    style,
     containerStyle,
+    height = 48,
+    style,
     ...PressableProps
   } = props;
 
@@ -37,13 +37,18 @@ export const ListItem = (props: ListItemProps) => {
     <View style={containerStyle}>
       <Pressable
         {...PressableProps}
-        style={[styles.touchable, style, { height }]}
+        style={({ pressed }) => [
+          styles.touchable,
+          style,
+          { height },
+          { opacity: pressed ? 0.5 : 1 },
+        ]}
       >
-        <ListItemFragment side="left" size={height} Component={LeftComponent} />
+        <ListItemFragment Component={LeftComponent} side="left" size={height} />
         <ListItemFragment
+          Component={RightComponent}
           side="right"
           size={height}
-          Component={RightComponent}
         />
       </Pressable>
     </View>

@@ -4,9 +4,8 @@ import {
   BaseItemKind,
 } from "@jellyfin/sdk/lib/generated-client";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api";
+import { useFetchUser } from "@src/api/useFetchUser";
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
-
-import { useFetchUser } from "./user";
 
 export const useFetchCollections = (
   api: Api,
@@ -14,15 +13,15 @@ export const useFetchCollections = (
   const user = useFetchUser(api);
 
   const collections = useQuery({
-    queryKey: ["collections"],
+    enabled: !!user.isSuccess,
     queryFn: async () => {
       const result = await getItemsApi(api).getItems({
-        recursive: true,
         includeItemTypes: [BaseItemKind.CollectionFolder],
+        recursive: true,
       });
       return result.data;
     },
-    enabled: !!user.isSuccess,
+    queryKey: ["collections"],
   });
 
   return collections;

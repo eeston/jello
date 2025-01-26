@@ -1,57 +1,83 @@
-import { ActivityIndicator, Pressable } from "react-native";
+import * as Haptics from "expo-haptics";
+import React, { PropsWithChildren } from "react";
+import { ActivityIndicator, Pressable, View } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
-import { Text } from "./Themed";
+import { ThemedText } from "./ThemedText";
 
-type ButtonProps = {
-  title: string;
-  onPress: () => void;
+interface ButtonProps extends React.ComponentProps<typeof Pressable> {
+  color?: "red";
+  isDisabled?: boolean;
   isLoading?: boolean;
-  disabled?: boolean;
-  testID?: string;
-};
+  onPress?: () => void;
+  style?: object;
+  textStyle?: object;
+  title?: string;
+}
 
-export const Button = ({
-  title,
-  isLoading,
+export const Button: React.FC<PropsWithChildren<ButtonProps>> = ({
+  color = "red",
+  isDisabled = false,
+  isLoading = false,
   onPress,
-  disabled,
-  testID,
-}: ButtonProps) => {
+  style = {},
+  textStyle = {},
+  title,
+  ...props
+}) => {
   const { styles } = useStyles(stylesheet);
+
+  const handleOnPress = () => {
+    if (!isLoading && !isDisabled && onPress) {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      onPress();
+    }
+  };
 
   return (
     <Pressable
-      disabled={disabled}
-      style={styles.container}
-      onPress={onPress}
-      testID={testID}
+      disabled={isDisabled || isLoading}
+      onPress={handleOnPress}
+      style={({ pressed }) => [
+        styles.button,
+        (isLoading || isDisabled) && styles.isDisabled,
+        style,
+        { opacity: pressed ? 0.5 : 1 },
+      ]}
+      {...props}
     >
       {isLoading ? (
-        <ActivityIndicator
-          size={17} // try to match the text size
-          animating
-          color="white"
-        />
+        <ActivityIndicator color="white" size="small" />
       ) : (
-        <Text style={styles.title}>{title}</Text>
+        <View style={styles.contentContainer}>
+          <ThemedText style={[styles.text, textStyle]} type="defaultSemiBold">
+            {title}
+          </ThemedText>
+        </View>
       )}
     </Pressable>
   );
 };
 
 const stylesheet = createStyleSheet((theme) => ({
-  container: {
-    paddingVertical: theme.spacing.sm,
-    backgroundColor: theme.colors.primary,
+  button: {
+    alignItems: "center",
+    backgroundColor: theme.colors.tint,
     borderRadius: theme.spacing.sm,
-    borderWidth: 0,
+    justifyContent: "center",
+    padding: theme.spacing.sm,
+  },
+  contentContainer: {
+    alignItems: "center",
     flexDirection: "row",
     justifyContent: "center",
+    width: "100%",
   },
-  title: {
-    fontWeight: "500",
+  isDisabled: {
+    opacity: 0.5,
+  },
+  text: {
     color: "white",
-    textAlign: "center",
+    lineHeight: undefined,
   },
 }));

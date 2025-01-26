@@ -1,60 +1,75 @@
+import { ThemedText } from "@src/components/ThemedText";
 import { Image } from "expo-image";
-import { Pressable, Dimensions } from "react-native";
+import { Pressable, View } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
-import { Text } from "./Themed";
-
 type AlbumCardProps = {
-  title: string;
-  subTitle: string | number;
   imageHash: string;
   imageUrl: string;
-  onPress: () => void;
+  large?: boolean;
+  /**
+   * Not actually required if we use `<Link />` from `expo-router` and set the `asChild` prop
+   */
+  onPress?: () => void;
+  subTitle: number | string;
+  title: string;
 };
 
-export const AlbumCard = ({
-  title,
-  subTitle,
-  imageUrl,
-  imageHash,
-  onPress,
-}: AlbumCardProps) => {
-  const { styles } = useStyles(stylesheet);
+export enum AlbumCardSize {
+  large = 300,
+  small = 160,
+}
 
+export const AlbumCard = ({
+  imageHash,
+  imageUrl,
+  large,
+  onPress,
+  subTitle,
+  title,
+}: AlbumCardProps) => {
+  const { styles, theme } = useStyles(stylesheet);
   return (
-    <Pressable style={styles.container} onPress={onPress}>
+    <Pressable onPress={onPress} style={styles.container(large)}>
       <Image
-        style={styles.image}
-        source={imageUrl}
-        placeholder={imageHash}
-        transition={300}
+        contentFit="fill"
+        placeholder={{ blurhash: imageHash }}
         recyclingKey={imageUrl}
+        source={imageUrl}
+        style={styles.image(large)}
+        transition={theme.timing.medium}
       />
 
-      <Text numberOfLines={1} style={styles.title}>
-        {title}
-      </Text>
-      <Text numberOfLines={1} style={styles.subtitle}>
-        {subTitle}
-      </Text>
+      <View style={styles.textContainer}>
+        <ThemedText numberOfLines={1} type="defaultSemiBold">
+          {title}
+        </ThemedText>
+        <ThemedText numberOfLines={1} style={styles.subtitle} type="default">
+          {subTitle}
+        </ThemedText>
+      </View>
     </Pressable>
   );
 };
 
 const stylesheet = createStyleSheet((theme) => {
-  const size = Dimensions.get("window").width / 2.4;
   return {
-    container: {
-      width: size,
-    },
-    image: {
+    container: (large) => ({
+      width: large ? 300 : 160,
+    }),
+    image: (large) => ({
       borderRadius: theme.spacing.xs,
-      width: size,
-      height: size,
+      height: large ? 300 : 160,
+      width: large ? 300 : 160,
+    }),
+    subtitle: {
+      color: theme.colors.secondary,
+      fontSize: 14,
+      lineHeight: 14,
     },
-    title: {
-      paddingTop: theme.spacing.xs,
+    textContainer: {
+      paddingBottom: theme.spacing.xxs,
+      paddingTop: theme.spacing.xxxs,
     },
-    subtitle: { color: theme.colors.textSecondary },
   };
 });
