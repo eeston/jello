@@ -29,6 +29,7 @@ export default function TabLayout() {
             <SymbolView
               name="house.fill"
               resizeMode="scaleAspectFit"
+              size={32}
               tintColor={focused ? theme.colors.tint : "grey"}
             />
           ),
@@ -42,6 +43,7 @@ export default function TabLayout() {
             <SymbolView
               name="dot.radiowaves.left.and.right"
               resizeMode="scaleAspectFit"
+              size={32}
               tintColor={focused ? theme.colors.tint : "grey"}
             />
           ),
@@ -55,6 +57,7 @@ export default function TabLayout() {
             <SymbolView
               name="play.square.stack.fill" // TODO: this icon isn't quite right
               resizeMode="scaleAspectFit"
+              size={32}
               tintColor={focused ? theme.colors.tint : "grey"}
             />
           ),
