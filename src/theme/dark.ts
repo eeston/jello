@@ -1,4 +1,4 @@
-import { shadow, spacing, timing } from "./common";
+import { shadow, spacing, symbol, timing } from "./common";
 
 export default {
   colors: {
@@ -9,5 +9,6 @@ export default {
   },
   shadow,
   spacing,
+  symbol,
   timing,
 } as const;

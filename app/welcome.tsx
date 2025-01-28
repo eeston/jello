@@ -30,6 +30,7 @@ export default function Page() {
           name="backward.fill"
           resizeMode="scaleAspectFit"
           scale="small"
+          size={theme.symbol.lg}
           tintColor={theme.colors.primary}
         />
         <Link asChild href="/server">
@@ -41,6 +42,7 @@ export default function Page() {
               name="play.fill"
               resizeMode="scaleAspectFit"
               scale="large"
+              size={theme.symbol.lg}
               tintColor={theme.colors.primary}
             />
           </Pressable>
@@ -49,6 +51,7 @@ export default function Page() {
           name="forward.fill"
           resizeMode="scaleAspectFit"
           scale="small"
+          size={theme.symbol.lg}
           tintColor={theme.colors.primary}
         />
       </View>

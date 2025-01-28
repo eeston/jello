@@ -41,3 +41,8 @@ export const timing = {
   medium: 500,
   slow: 1000,
 } as const;
+
+export const symbol = {
+  lg: 40,
+  md: 32,
+} as const;

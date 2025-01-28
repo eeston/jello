@@ -10,7 +10,7 @@ export const NowPlayingMediaControls = ({
 }: {
   isLiveStream: boolean;
 }) => {
-  const { styles } = useStyles(stylesheet);
+  const { styles, theme } = useStyles(stylesheet);
   const currentTrack = useTrackedActiveTrack();
   const { playing: isPlaying } = useIsPlaying();
 
@@ -43,7 +43,7 @@ export const NowPlayingMediaControls = ({
           <SymbolView
             name="backward.fill"
             resizeMode="scaleAspectFit"
-            size={40}
+            size={theme.symbol.lg}
             tintColor={isLiveStream ? "grey" : "white"}
           />
         </Pressable>
@@ -55,7 +55,7 @@ export const NowPlayingMediaControls = ({
           <SymbolView
             name={isPlaying ? "pause.fill" : "play.fill"}
             resizeMode="scaleAspectFit"
-            size={40}
+            size={theme.symbol.lg}
             tintColor="white"
           />
         )}
@@ -65,7 +65,7 @@ export const NowPlayingMediaControls = ({
           <SymbolView
             name="forward.fill"
             resizeMode="scaleAspectFit"
-            size={40}
+            size={theme.symbol.lg}
             tintColor="white"
           />
         </Pressable>

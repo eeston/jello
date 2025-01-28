@@ -14,7 +14,7 @@ export const Separator = ({ marginLeft = 0 }: SeparatorProps) => {
 
 const stylesheet = createStyleSheet((theme) => ({
   container: {
-    borderColor: theme.colors.secondary,
+    borderColor: "rgba(0, 0, 0, 0.1)",
     borderWidth: StyleSheet.hairlineWidth,
   },
 }));

@@ -1,4 +1,5 @@
 import { ThemedText } from "@src/components/ThemedText";
+import { spacing } from "@src/theme/common";
 import { Image } from "expo-image";
 import { Pressable, View } from "react-native";
 import {
@@ -20,10 +21,8 @@ type AlbumCardProps = {
 };
 
 export enum AlbumCardSize {
-  large = UnistylesRuntime.screen.width / 1.2 -
-    UnistylesRuntime.getTheme(UnistylesRuntime.themeName).spacing.lg,
-  small = UnistylesRuntime.screen.width / 2 -
-    UnistylesRuntime.getTheme(UnistylesRuntime.themeName).spacing.lg,
+  large = UnistylesRuntime.screen.width / 1.2 - spacing.lg,
+  small = UnistylesRuntime.screen.width / 2 - spacing.lg,
 }
 
 export const AlbumCard = ({

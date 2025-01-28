@@ -4,6 +4,7 @@ import { AlbumCard } from "@src/components/AlbumCard";
 import { ListItem } from "@src/components/ListItem";
 import { ListPadding } from "@src/components/ListPadding";
 import { LoadingOverlay } from "@src/components/Loading";
+import { Separator } from "@src/components/Separator";
 import { ThemedText } from "@src/components/ThemedText";
 import { useAuth } from "@src/store/AuthContext";
 import { delay } from "@src/util/delay";
@@ -25,6 +26,12 @@ type ItemType = {
 
 const items: ItemType[] = [
   {
+    icon: "music.note.list",
+    screen: "/(authed)/(tabs)/(library)/playlists",
+    testID: "playlists-row",
+    title: "Playlists",
+  },
+  {
     icon: "music.mic",
     screen: "/(authed)/(tabs)/(library)/artists",
     testID: "artists-row",
@@ -37,17 +44,12 @@ const items: ItemType[] = [
     title: "Albums",
   },
   {
-    icon: "music.note.list",
-    screen: "/(authed)/(tabs)/(library)/playlists",
-    testID: "playlists-row",
-    title: "Playlists",
-  },
-  {
     icon: "guitars",
     screen: "/(authed)/(tabs)/(library)/genres",
     testID: "genres-row",
     title: "Genres",
   },
+  // TODO: songs
 ];
 
 export default function LibraryDetails() {
@@ -77,6 +79,7 @@ export default function LibraryDetails() {
               <SymbolView
                 name={item.icon}
                 resizeMode="scaleAspectFit"
+                size={theme.symbol.md}
                 tintColor={theme.colors.tint}
               />
               <ThemedText style={styles.title}>{item.title}</ThemedText>
@@ -87,8 +90,8 @@ export default function LibraryDetails() {
               <SymbolView
                 name="chevron.right"
                 resizeMode="scaleAspectFit"
-                size={20}
-                tintColor={theme.colors.tint}
+                size={14}
+                tintColor={theme.colors.secondary}
                 weight="light"
               />
             </View>
@@ -100,6 +103,7 @@ export default function LibraryDetails() {
 
   return (
     <FlatList
+      ItemSeparatorComponent={() => <Separator marginLeft={40} />}
       ListFooterComponent={
         <RecentlyAdded recentlyAddedAlbums={recentlyAddedAlbums?.data?.Items} />
       }
