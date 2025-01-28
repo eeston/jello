@@ -1,7 +1,11 @@
 import { ThemedText } from "@src/components/ThemedText";
 import { Image } from "expo-image";
 import { Pressable, View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import {
+  UnistylesRuntime,
+  createStyleSheet,
+  useStyles,
+} from "react-native-unistyles";
 
 type AlbumCardProps = {
   imageHash: string;
@@ -16,8 +20,10 @@ type AlbumCardProps = {
 };
 
 export enum AlbumCardSize {
-  large = 300,
-  small = 160,
+  large = UnistylesRuntime.screen.width / 1.2 -
+    UnistylesRuntime.getTheme(UnistylesRuntime.themeName).spacing.lg,
+  small = UnistylesRuntime.screen.width / 2 -
+    UnistylesRuntime.getTheme(UnistylesRuntime.themeName).spacing.lg,
 }
 
 export const AlbumCard = ({
@@ -55,12 +61,12 @@ export const AlbumCard = ({
 const stylesheet = createStyleSheet((theme) => {
   return {
     container: (large) => ({
-      width: large ? 300 : 160,
+      width: large ? AlbumCardSize.large : AlbumCardSize.small,
     }),
     image: (large) => ({
       borderRadius: theme.spacing.xs,
-      height: large ? 300 : 160,
-      width: large ? 300 : 160,
+      height: large ? AlbumCardSize.large : AlbumCardSize.small,
+      width: large ? AlbumCardSize.large : AlbumCardSize.small,
     }),
     subtitle: {
       color: theme.colors.secondary,
