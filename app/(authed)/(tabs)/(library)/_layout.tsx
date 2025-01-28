@@ -13,13 +13,6 @@ export default function Layout() {
     <Stack
       screenOptions={{
         contentStyle: styles.contentContainer,
-        // TODO: workaround...
-        // https://github.com/react-navigation/react-navigation/issues/11946#issuecomment-2506102387
-        // headerBackButtonDisplayMode: "minimal",
-        headerBackButtonDisplayMode: "default",
-        headerBackTitle: ".",
-        headerBackTitleStyle: { fontSize: 1 },
-        //
         headerBlurEffect: UnistylesRuntime.themeName,
         headerShadowVisible: false,
         headerTitle: "Library",
