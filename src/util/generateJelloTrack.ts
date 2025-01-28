@@ -50,13 +50,13 @@ export const generateJelloTrack = (
     // userAgent
     // isLiveStream
     artworkBlur: extractPrimaryHash(jellyfinTrack.ImageBlurHashes),
+    // genre
+    date: jellyfinTrack.PremiereDate ?? "Unknown Date",
     // contentType
     duration: ticksToSeconds(jellyfinTrack.RunTimeTicks),
     id: jellyfinTrack.Id ?? "Unkown ID",
-    index: jellyfinTrack.IndexNumber ?? 0,
     // description
-    // genre
-    // date
+    index: jellyfinTrack.IndexNumber ?? 0,
     title: jellyfinTrack.Name ?? "Unkown Title",
     // pitchAlgorithm
     // headers

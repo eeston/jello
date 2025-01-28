@@ -14,3 +14,17 @@ export const fmtIsoDate = (
     return null;
   }
 };
+
+export const fmtIsoYear = (
+  isoDate?: BaseItemDto["PremiereDate"],
+): null | string => {
+  if (!isoDate) {
+    return null;
+  }
+
+  try {
+    return format(parseISO(isoDate), "yyyy");
+  } catch (error) {
+    return null;
+  }
+};

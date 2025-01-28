@@ -1,6 +1,7 @@
 import { ListItem } from "@src/components/ListItem";
 import { ThemedText } from "@src/components/ThemedText";
 import { ROW_HEIGHT } from "@src/constants";
+import { fmtIsoYear } from "@src/util/date";
 import { JelloTrackItem } from "@src/util/generateJelloTrack";
 import { Image } from "expo-image";
 import { View } from "react-native";
@@ -32,8 +33,13 @@ export const TopTrackListItem = ({
             <ThemedText ellipsizeMode="tail" numberOfLines={1}>
               {track.title}
             </ThemedText>
-            <ThemedText style={styles.textSub} type="defaultSemiBold">
-              {track.artist}
+            <ThemedText
+              ellipsizeMode="tail"
+              numberOfLines={1}
+              style={styles.textSub}
+              type="defaultSemiBold"
+            >
+              {track.album + " • " + fmtIsoYear(track.date)}
             </ThemedText>
           </View>
         </View>
@@ -58,9 +64,11 @@ const stylesheet = createStyleSheet((theme) => ({
   },
   textContainer: {
     marginHorizontal: theme.spacing.md,
+    width: "80%",
   },
   textSub: {
-    color: "grey",
+    color: theme.colors.secondary,
     fontSize: 12,
+    lineHeight: 14,
   },
 }));
