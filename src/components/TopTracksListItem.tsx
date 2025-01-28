@@ -33,14 +33,22 @@ export const TopTrackListItem = ({
             <ThemedText ellipsizeMode="tail" numberOfLines={1}>
               {track.title}
             </ThemedText>
-            <ThemedText
-              ellipsizeMode="tail"
-              numberOfLines={1}
-              style={styles.textSub}
-              type="defaultSemiBold"
-            >
-              {track.album + " • " + fmtIsoYear(track.date)}
-            </ThemedText>
+            <View style={styles.subTextContainer}>
+              <ThemedText
+                ellipsizeMode="tail"
+                numberOfLines={1}
+                style={styles.textSub}
+                type="defaultSemiBold"
+              >
+                {track.album}
+              </ThemedText>
+              <ThemedText
+                style={[styles.textSub, styles.yearText]}
+                type="defaultSemiBold"
+              >
+                {" • " + fmtIsoYear(track.date)}
+              </ThemedText>
+            </View>
           </View>
         </View>
       }
@@ -62,13 +70,21 @@ const stylesheet = createStyleSheet((theme) => ({
     alignItems: "center",
     flexDirection: "row",
   },
+  subTextContainer: {
+    alignItems: "center",
+    flexDirection: "row",
+  },
   textContainer: {
     marginHorizontal: theme.spacing.md,
-    width: "80%",
+    width: "75%",
   },
   textSub: {
     color: theme.colors.secondary,
+    flexShrink: 1,
     fontSize: 12,
     lineHeight: 14,
+  },
+  yearText: {
+    flexShrink: 0,
   },
 }));
