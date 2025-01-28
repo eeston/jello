@@ -12,7 +12,7 @@ import { TrackList } from "@src/components/TrackList";
 import { useAuth } from "@src/store/AuthContext";
 import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
 import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
-import { shuffleArray } from "@src/util/shuffleArray";
+import { playTracks } from "@src/util/playTracks";
 import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
@@ -34,14 +34,10 @@ export default function AlbumDetails() {
   );
 
   const handleOnPressPlay = () => {
-    TrackPlayer.reset();
-    TrackPlayer.add(fetchAlbumSongs?.data?.tracks ?? [], 0);
-    TrackPlayer.play();
+    playTracks({ tracks: fetchAlbumSongs?.data?.tracks });
   };
   const handleOnPressShuffle = () => {
-    TrackPlayer.reset();
-    TrackPlayer.add(shuffleArray(fetchAlbumSongs?.data?.tracks ?? []), 0);
-    TrackPlayer.play();
+    playTracks({ shuffle: true, tracks: fetchAlbumSongs?.data?.tracks });
   };
 
   if (

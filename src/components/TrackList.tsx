@@ -1,5 +1,6 @@
 import { TrackListItem } from "@src/components/TrackListItem";
 import { JelloTrackItem } from "@src/util/generateJelloTrack";
+import { playTracks } from "@src/util/playTracks";
 import { View } from "react-native";
 import TrackPlayer, { useActiveTrack } from "react-native-track-player";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
@@ -21,10 +22,7 @@ export const TrackList = ({
   }
 
   const handleOnPress = (index: number) => {
-    TrackPlayer.reset();
-    TrackPlayer.add(tracks);
-    TrackPlayer.skip(index);
-    TrackPlayer.play();
+    playTracks({ skipToIndex: index, tracks });
   };
 
   return (

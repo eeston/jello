@@ -1,4 +1,5 @@
 import { fetchRadioInfo } from "@src/api/radio";
+import { vibrateLight } from "@src/util/vibrate";
 import TrackPlayer, { Event, State } from "react-native-track-player";
 
 import { syncPlaybackProgress, syncPlaybackStart } from "../api/playback";
@@ -58,7 +59,5 @@ export const playbackService = async () => {
     if (event.state === State.Ended) {
       TrackPlayer.reset();
     }
-
-    // TODO: update radio metadata here
   });
 };

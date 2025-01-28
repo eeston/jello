@@ -11,11 +11,11 @@ import { TopTracksList } from "@src/components/TopTracksList";
 import { useAuth } from "@src/store/AuthContext";
 import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
 import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
+import { playTracks } from "@src/util/playTracks";
 import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
 import { SymbolView } from "expo-symbols";
 import { Pressable, View } from "react-native";
-import TrackPlayer from "react-native-track-player";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 export default function ArtistDetails() {
@@ -32,10 +32,8 @@ export default function ArtistDetails() {
   );
   const fetchArtistTopSongs = useFetchArtistTopSongs(api, artistId);
 
-  const handleOnPress = () => {
-    TrackPlayer.reset();
-    TrackPlayer.add(fetchArtistTopSongs?.data?.tracks ?? [], 0);
-    TrackPlayer.play();
+  const handleOnPressPlay = () => {
+    playTracks({ tracks: fetchArtistTopSongs?.data?.tracks });
   };
 
   if (
@@ -71,7 +69,7 @@ export default function ArtistDetails() {
           <ThemedText style={styles.text} type="title">
             {fetchArtistDetails?.data?.Name}
           </ThemedText>
-          <Pressable onPress={handleOnPress}>
+          <Pressable onPress={handleOnPressPlay}>
             <SymbolView
               colors={["white", "red"]}
               name="play.circle.fill"

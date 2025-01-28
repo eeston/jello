@@ -1,6 +1,7 @@
 import { ThemedText } from "@src/components/ThemedText";
 import { TopTrackListItem } from "@src/components/TopTracksListItem";
 import { JelloTrackItem } from "@src/util/generateJelloTrack";
+import { playTracks } from "@src/util/playTracks";
 import { Dimensions, FlatList, View } from "react-native";
 import TrackPlayer from "react-native-track-player";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
@@ -15,11 +16,8 @@ export const TopTracksList = ({ tracks }: { tracks?: JelloTrackItem[] }) => {
     return null;
   }
 
-  const handleOnPress = (index: number) => {
-    TrackPlayer.reset();
-    TrackPlayer.add(tracks ?? []);
-    TrackPlayer.skip(index);
-    TrackPlayer.play();
+  const handleOnPressPlay = (index: number) => {
+    playTracks({ skipToIndex: index, tracks });
   };
 
   const columns = tracks.reduce((acc, track, index) => {
@@ -38,7 +36,7 @@ export const TopTracksList = ({ tracks }: { tracks?: JelloTrackItem[] }) => {
             <TopTrackListItem
               index={absoluteIndex}
               key={track.Id}
-              onPress={() => handleOnPress(absoluteIndex)}
+              onPress={() => handleOnPressPlay(absoluteIndex)}
               track={track}
             />
           );

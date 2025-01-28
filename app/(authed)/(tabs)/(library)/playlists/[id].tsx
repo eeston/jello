@@ -10,11 +10,10 @@ import { useAuth } from "@src/store/AuthContext";
 import { fmtIsoDate } from "@src/util/date";
 import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
 import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
-import { shuffleArray } from "@src/util/shuffleArray";
+import { playTracks } from "@src/util/playTracks";
 import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
-import TrackPlayer from "react-native-track-player";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 export default function PlaylistDetails() {
@@ -30,14 +29,10 @@ export default function PlaylistDetails() {
     return <LoadingOverlay />;
   }
   const handleOnPressPlay = () => {
-    TrackPlayer.reset();
-    TrackPlayer.add(fetchPlaylistSongs?.data?.tracks ?? [], 0);
-    TrackPlayer.play();
+    playTracks({ tracks: fetchPlaylistSongs?.data?.tracks });
   };
   const handleOnPressShuffle = () => {
-    TrackPlayer.reset();
-    TrackPlayer.add(shuffleArray(fetchPlaylistSongs?.data?.tracks ?? []), 0);
-    TrackPlayer.play();
+    playTracks({ shuffle: true, tracks: fetchPlaylistSongs?.data?.tracks });
   };
 
   return (
