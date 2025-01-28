@@ -1,4 +1,5 @@
 import { DEFAULT_BLUR_HASH } from "@src/util/extractPrimaryHash";
+import { BlurView } from "expo-blur";
 import { Image } from "expo-image";
 import { useEffect } from "react";
 import Animated, {
@@ -34,16 +35,18 @@ export default function NowPlayingBackground({
   }));
 
   return (
-    <Animated.View style={[styles.container, animatedStyle]}>
-      <Image
-        contentFit="cover"
-        placeholder={{
-          blurhash: blurhash ?? DEFAULT_BLUR_HASH,
-        }}
-        style={styles.image}
-        transition={theme.timing.medium}
-      />
-    </Animated.View>
+    <BlurView intensity={30} style={styles.container} tint="dark">
+      <Animated.View style={[styles.container, animatedStyle]}>
+        <Image
+          contentFit="cover"
+          placeholder={{
+            blurhash: blurhash ?? DEFAULT_BLUR_HASH,
+          }}
+          style={styles.image}
+          transition={theme.timing.medium}
+        />
+      </Animated.View>
+    </BlurView>
   );
 }
 
