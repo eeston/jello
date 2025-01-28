@@ -14,7 +14,7 @@
     "fmt:check": "npx prettier .",
     "lint:check": "eslint .",
     "prepare": "husky install",
-    "test:unit": "vitest",
+    "test:unit": "vitest run .",
     "test:e2e": "maestro test .maestro",
     "commit": "npx git-cz",
     "android": "expo run:android",
