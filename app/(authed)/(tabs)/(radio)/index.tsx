@@ -1,6 +1,5 @@
-import { fetchRadioInfo, useFetchRadioMetadata } from "@src/api/radio";
+import { fetchRadioInfo } from "@src/api/radio";
 import { ThemedText } from "@src/components/ThemedText";
-import axios from "axios";
 import { BlurView } from "expo-blur";
 import { Image } from "expo-image";
 import { SymbolView } from "expo-symbols";

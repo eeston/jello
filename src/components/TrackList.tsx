@@ -30,17 +30,15 @@ export const TrackList = ({
   return (
     <View style={styles.container}>
       {tracks?.map((track: JelloTrackItem, index: number) => (
-        <View>
-          <TrackListItem
-            index={index}
-            isCurrentTrack={currentTrack?.id === track.id}
-            isPlaylist={isPlaylist}
-            key={track.id}
-            onPress={() => handleOnPress(index)}
-            track={track}
-            withArtwork={!!withArtwork}
-          />
-        </View>
+        <TrackListItem
+          index={index}
+          isCurrentTrack={currentTrack?.id === track.id}
+          isPlaylist={isPlaylist}
+          key={track.id}
+          onPress={() => handleOnPress(index)}
+          track={track}
+          withArtwork={!!withArtwork}
+        />
       ))}
     </View>
   );
