@@ -16,7 +16,6 @@ import { playTracks } from "@src/util/playTracks";
 import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
-import TrackPlayer from "react-native-track-player";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 export default function AlbumDetails() {

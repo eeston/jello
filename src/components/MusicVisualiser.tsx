@@ -2,15 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { Animated, View } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
-interface Props {
-  backgroundColor?: string;
-  barColor?: string;
-  barCount?: number;
-  barHeight?: number;
-  barWidth?: number;
-  isPlaying: boolean;
-}
-
 const DEFAULT_BAR_COUNT = 6;
 const BASE_DURATION = 500;
 
@@ -21,7 +12,14 @@ export const MusicVisualizer = ({
   barHeight = 12,
   barWidth = 2,
   isPlaying,
-}: Props) => {
+}: {
+  backgroundColor?: string;
+  barColor?: string;
+  barCount?: number;
+  barHeight?: number;
+  barWidth?: number;
+  isPlaying: boolean;
+}) => {
   const { styles } = useStyles(stylesheet);
   // eslint-disable-next-line react-compiler/react-compiler
   const animatedValues = useRef(

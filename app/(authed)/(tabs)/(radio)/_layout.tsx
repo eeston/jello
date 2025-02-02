@@ -6,7 +6,7 @@ import {
 } from "react-native-unistyles";
 
 export default function Layout() {
-  const { styles, theme } = useStyles(stylesheet);
+  const { styles } = useStyles(stylesheet);
 
   return (
     <Stack

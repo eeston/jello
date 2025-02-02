@@ -3,7 +3,6 @@ import { TopTrackListItem } from "@src/components/TopTracksListItem";
 import { JelloTrackItem } from "@src/util/generateJelloTrack";
 import { playTracks } from "@src/util/playTracks";
 import { Dimensions, FlatList, View } from "react-native";
-import TrackPlayer from "react-native-track-player";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 const WINDOW_WIDTH = Dimensions.get("window").width;

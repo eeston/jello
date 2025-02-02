@@ -1,6 +1,5 @@
 import { ThemedText } from "@src/components/ThemedText";
 import { useTrackedActiveTrack } from "@src/hooks/useTrackedActiveTrack";
-import { useAudioStore } from "@src/store/audioStore";
 import { BlurView } from "expo-blur";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
@@ -24,25 +23,23 @@ const PlayIndicator = ({
   const { theme } = useStyles();
   if (isLoading) {
     return <ActivityIndicator />;
-  } else {
-    return (
-      <SymbolView
-        name={isPlaying ? "pause.fill" : "play.fill"}
-        resizeMode="scaleAspectFit"
-        size={24}
-        tintColor={theme.colors.primary}
-      />
-    );
   }
+
+  return (
+    <SymbolView
+      name={isPlaying ? "pause.fill" : "play.fill"}
+      resizeMode="scaleAspectFit"
+      size={24}
+      tintColor={theme.colors.primary}
+    />
+  );
 };
 
 export const NowPlayingBanner = () => {
   const { styles, theme } = useStyles(stylesheet);
   const insets = useSafeAreaInsets();
-  const { playing: isPlaying } = useIsPlaying();
+  const { bufferingDuringPlay: isLoading, playing: isPlaying } = useIsPlaying();
   const currentTrack = useTrackedActiveTrack();
-
-  const { isLoading } = useAudioStore();
 
   const bottomPosition = insets.bottom + 57;
 

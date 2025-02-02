@@ -12,14 +12,12 @@ export const TrackListItem = ({
   isPlaylist,
   onPress,
   track,
-  withArtwork,
 }: {
   index: number;
   isCurrentTrack: boolean;
   isPlaylist?: boolean;
   onPress: () => void;
   track: JelloTrackItem;
-  withArtwork: boolean;
 }) => {
   const { styles } = useStyles(stylesheet);
   const { playing: isPlaying } = useIsPlaying();

@@ -1,5 +1,4 @@
 import { useTrackedActiveTrack } from "@src/hooks/useTrackedActiveTrack";
-import { useAudioStore } from "@src/store/audioStore";
 import { SymbolView } from "expo-symbols";
 import { ActivityIndicator, Pressable, View } from "react-native";
 import TrackPlayer, { useIsPlaying } from "react-native-track-player";
@@ -12,9 +11,7 @@ export const NowPlayingMediaControls = ({
 }) => {
   const { styles, theme } = useStyles(stylesheet);
   const currentTrack = useTrackedActiveTrack();
-  const { playing: isPlaying } = useIsPlaying();
-
-  const { isLoading } = useAudioStore();
+  const { bufferingDuringPlay: isLoading, playing: isPlaying } = useIsPlaying();
 
   const handleOnPressSkipForward = () => {
     if (currentTrack) {

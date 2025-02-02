@@ -2,7 +2,7 @@ import { TrackListItem } from "@src/components/TrackListItem";
 import { JelloTrackItem } from "@src/util/generateJelloTrack";
 import { playTracks } from "@src/util/playTracks";
 import { View } from "react-native";
-import TrackPlayer, { useActiveTrack } from "react-native-track-player";
+import { useActiveTrack } from "react-native-track-player";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 export const TrackList = ({
