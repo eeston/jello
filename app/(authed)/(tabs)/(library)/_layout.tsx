@@ -13,7 +13,10 @@ export default function Layout() {
     <Stack
       screenOptions={{
         contentStyle: styles.contentContainer,
-        headerBlurEffect: UnistylesRuntime.themeName,
+        headerBlurEffect:
+          UnistylesRuntime.themeName === "light"
+            ? "prominent"
+            : UnistylesRuntime.themeName,
         headerShadowVisible: false,
         headerTitle: "Library",
         headerTitleStyle: styles.headerTitle,
@@ -32,9 +35,13 @@ export default function Layout() {
       <Stack.Screen
         name="albums/index"
         options={{
-          headerLargeTitle: false,
+          headerLargeTitle: true,
+          headerSearchBarOptions: {
+            hideNavigationBar: true,
+            hideWhenScrolling: false,
+          },
           headerTintColor: theme.colors.tint,
-          headerTitle: "",
+          headerTitle: "Albums",
         }}
       />
       <Stack.Screen
@@ -58,9 +65,13 @@ export default function Layout() {
       <Stack.Screen
         name="artists/index"
         options={{
-          headerLargeTitle: false,
+          headerLargeTitle: true,
+          headerSearchBarOptions: {
+            hideNavigationBar: true,
+            hideWhenScrolling: false,
+          },
           headerTintColor: theme.colors.tint,
-          headerTitle: "",
+          headerTitle: "Artists",
         }}
       />
       <Stack.Screen
@@ -77,9 +88,13 @@ export default function Layout() {
       <Stack.Screen
         name="genres/index"
         options={{
-          headerLargeTitle: false,
+          headerLargeTitle: true,
+          headerSearchBarOptions: {
+            hideNavigationBar: true,
+            hideWhenScrolling: false,
+          },
           headerTintColor: theme.colors.tint,
-          headerTitle: "",
+          headerTitle: "Genres",
         }}
       />
       <Stack.Screen
@@ -95,9 +110,13 @@ export default function Layout() {
       <Stack.Screen
         name="playlists/index"
         options={{
-          headerLargeTitle: false,
+          headerLargeTitle: true,
+          headerSearchBarOptions: {
+            hideNavigationBar: true,
+            hideWhenScrolling: false,
+          },
           headerTintColor: theme.colors.tint,
-          headerTitle: "",
+          headerTitle: "Playlists",
         }}
       />
       <Stack.Screen
