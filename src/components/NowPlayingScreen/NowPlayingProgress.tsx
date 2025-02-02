@@ -6,14 +6,16 @@ import { useProgress } from "react-native-track-player";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 export const NowPlayingProgress = ({
+  duration,
   isLiveStream,
 }: {
+  duration: number;
   isLiveStream: boolean;
 }) => {
   const { styles } = useStyles(stylesheet);
-  const { duration, position } = useProgress();
+  const { position } = useProgress();
 
-  const progress = (duration ?? 0) > 0 ? (position / (duration ?? 0)) * 100 : 0;
+  const progress = duration > 0 ? (position / duration) * 100 : 0;
 
   if (isLiveStream) {
     return (
@@ -53,7 +55,7 @@ export const NowPlayingProgress = ({
           {secondsToMmSs(position)}
         </ThemedText>
         <ThemedText style={styles.timeText}>
-          -{secondsToMmSs(Math.max(0, duration ?? 0 - position))}
+          -{secondsToMmSs(Math.max(0, duration - position))}
         </ThemedText>
       </View>
     </View>

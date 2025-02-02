@@ -43,7 +43,10 @@ export default function NowPlayingModal() {
         title={currentTrack?.title}
       />
 
-      <NowPlayingProgress isLiveStream={!!currentTrack?.isLiveStream} />
+      <NowPlayingProgress
+        duration={currentTrack?.duration ?? 0}
+        isLiveStream={!!currentTrack?.isLiveStream}
+      />
 
       <NowPlayingMediaControls isLiveStream={!!currentTrack?.isLiveStream} />
       <NowPlayingBottomControls />
