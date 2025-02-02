@@ -4,6 +4,7 @@ import { AlbumCard } from "@src/components/AlbumCard";
 import { ListItem } from "@src/components/ListItem";
 import { ListPadding } from "@src/components/ListPadding";
 import { LoadingOverlay } from "@src/components/Loading";
+import { RightChevron } from "@src/components/RightChevron";
 import { Separator } from "@src/components/Separator";
 import { ThemedText } from "@src/components/ThemedText";
 import { useAuth } from "@src/store/AuthContext";
@@ -85,17 +86,7 @@ export default function LibraryDetails() {
               <ThemedText style={styles.title}>{item.title}</ThemedText>
             </View>
           }
-          RightComponent={
-            <View style={styles.rightItemComponentContainer}>
-              <SymbolView
-                name="chevron.right"
-                resizeMode="scaleAspectFit"
-                size={14}
-                tintColor={theme.colors.secondary}
-                weight="light"
-              />
-            </View>
-          }
+          RightComponent={<RightChevron />}
         />
       </Link>
     );
@@ -134,9 +125,6 @@ const stylesheet = createStyleSheet((theme) => ({
     alignItems: "center",
     flex: 1,
     flexDirection: "row",
-    justifyContent: "center",
-  },
-  rightItemComponentContainer: {
     justifyContent: "center",
   },
   title: {

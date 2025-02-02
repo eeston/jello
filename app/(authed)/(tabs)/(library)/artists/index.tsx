@@ -4,6 +4,8 @@ import { EmptyOverlay } from "@src/components/Empty";
 import { ListItem } from "@src/components/ListItem";
 import { ListPadding } from "@src/components/ListPadding";
 import { LoadingOverlay } from "@src/components/Loading";
+import { RightChevron } from "@src/components/RightChevron";
+import { Separator } from "@src/components/Separator";
 import { ThemedText } from "@src/components/ThemedText";
 import { ROW_HEIGHT } from "@src/constants";
 import { useAuth } from "@src/store/AuthContext";
@@ -53,6 +55,7 @@ export default function ArtistsList() {
               </ThemedText>
             </View>
           }
+          RightComponent={<RightChevron />}
           height={ROW_HEIGHT}
           key={item.Id}
         />
@@ -70,6 +73,7 @@ export default function ArtistsList() {
 
   return (
     <FlatList
+      ItemSeparatorComponent={() => <Separator marginLeft={60} />}
       ListFooterComponent={ListPadding}
       contentContainerStyle={styles.container}
       contentInsetAdjustmentBehavior="automatic"

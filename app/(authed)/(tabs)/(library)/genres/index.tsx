@@ -3,17 +3,18 @@ import { useFetchGenres } from "@src/api/useFetchGenres";
 import { ListItem } from "@src/components/ListItem";
 import { ListPadding } from "@src/components/ListPadding";
 import { LoadingOverlay } from "@src/components/Loading";
+import { RightChevron } from "@src/components/RightChevron";
+import { Separator } from "@src/components/Separator";
 import { ThemedText } from "@src/components/ThemedText";
 import { useAuth } from "@src/store/AuthContext";
 import { Link } from "expo-router";
-import { SymbolView } from "expo-symbols";
 import { FlatList, View } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 export default function GenresList() {
   const { api } = useAuth();
   const genres = useFetchGenres(api);
-  const { styles, theme } = useStyles(stylesheet);
+  const { styles } = useStyles(stylesheet);
 
   const renderItem = ({ item }: { item: BaseItemDto }) => {
     if (!item.Id) {
@@ -34,17 +35,7 @@ export default function GenresList() {
               <ThemedText style={styles.text}>{item.Name}</ThemedText>
             </View>
           }
-          RightComponent={
-            <View style={styles.rightItemContainer}>
-              <SymbolView
-                name="chevron.right"
-                resizeMode="scaleAspectFit"
-                size={20}
-                tintColor={theme.colors.tint}
-                weight="light"
-              />
-            </View>
-          }
+          RightComponent={<RightChevron />}
           key={item.Id}
         />
       </Link>
@@ -57,6 +48,7 @@ export default function GenresList() {
 
   return (
     <FlatList
+      ItemSeparatorComponent={() => <Separator />}
       ListFooterComponent={ListPadding}
       contentContainerStyle={styles.container}
       contentInsetAdjustmentBehavior="automatic"
@@ -77,8 +69,5 @@ const stylesheet = createStyleSheet((theme) => ({
     alignItems: "center",
     flexDirection: "row",
   },
-  rightItemContainer: {
-    justifyContent: "center",
-  },
-  text: { color: theme.colors.primary },
+  text: { color: theme.colors.tint },
 }));

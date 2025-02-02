@@ -3,6 +3,8 @@ import { useFetchPlaylists } from "@src/api/useFetchPlaylists";
 import { ListItem } from "@src/components/ListItem";
 import { ListPadding } from "@src/components/ListPadding";
 import { LoadingOverlay } from "@src/components/Loading";
+import { RightChevron } from "@src/components/RightChevron";
+import { Separator } from "@src/components/Separator";
 import { ThemedText } from "@src/components/ThemedText";
 import { useAuth } from "@src/store/AuthContext";
 import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
@@ -43,6 +45,7 @@ export default function PlaylistsList() {
               <ThemedText>{item.Name}</ThemedText>
             </View>
           }
+          RightComponent={<RightChevron />}
           height={100}
           key={item.Id}
         />
@@ -56,6 +59,7 @@ export default function PlaylistsList() {
 
   return (
     <FlatList
+      ItemSeparatorComponent={() => <Separator marginLeft={100} />}
       ListEmptyComponent={<ThemedText>Empty...</ThemedText>}
       ListFooterComponent={ListPadding}
       contentContainerStyle={styles.container}
