@@ -4,8 +4,8 @@ import { vibrateLight } from "@src/util/vibrate";
 import TrackPlayer from "react-native-track-player";
 
 export const playTracks = ({
-  shuffle,
-  skipToIndex,
+  shuffle = false,
+  skipToIndex = 0,
   tracks = [],
 }: {
   shuffle?: boolean;

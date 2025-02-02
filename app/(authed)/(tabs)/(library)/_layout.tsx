@@ -40,6 +40,13 @@ export default function Layout() {
       <Stack.Screen
         name="albums/[id]"
         options={{
+          // TODO: workaround...
+          // https://github.com/react-navigation/react-navigation/issues/11946#issuecomment-2506102387
+          // headerBackButtonDisplayMode: "minimal",
+          headerBackButtonDisplayMode: "default",
+          headerBackTitle: ".",
+          headerBackTitleStyle: { fontSize: 1 },
+          //
           headerBlurEffect: undefined,
           headerLargeTitle: false,
           headerTintColor: theme.colors.tint,
