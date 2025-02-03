@@ -5,9 +5,11 @@ import { ListPadding } from "@src/components/ListPadding";
 import { LoadingOverlay } from "@src/components/Loading";
 import { ThemedText } from "@src/components/ThemedText";
 import { useAuth } from "@src/store/AuthContext";
+import { useSearchStore } from "@src/store/useSearchStore";
 import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
 import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
-import { Link, useLocalSearchParams } from "expo-router";
+import { Link, useFocusEffect, useLocalSearchParams } from "expo-router";
+import { useCallback } from "react";
 import { FlatList, View } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
@@ -16,7 +18,21 @@ export default function GenreDetails() {
   const { id: genreId } = useLocalSearchParams<{ id: string }>();
   const { styles } = useStyles(stylesheet);
   const { api } = useAuth();
-  const genreDetails = useFetchGenreAlbums(api, genreId);
+  const genreAlbums = useFetchGenreAlbums(api, genreId);
+  const { query, resetQuery } = useSearchStore();
+
+  useFocusEffect(
+    useCallback(() => {
+      resetQuery();
+    }, []),
+  );
+
+  const filteredAlbums = genreAlbums?.data?.Items?.filter((item) => {
+    if (!query) return true;
+
+    const searchLower = query.toLowerCase();
+    return item.Name?.toLowerCase().includes(searchLower);
+  });
 
   const renderItem = ({ item }: { item: BaseItemDto }) => {
     return (
@@ -39,7 +55,7 @@ export default function GenreDetails() {
     );
   };
 
-  if (genreDetails.isPending) {
+  if (genreAlbums.isPending) {
     return <LoadingOverlay />;
   }
 
@@ -50,7 +66,7 @@ export default function GenreDetails() {
       columnWrapperStyle={styles.columnWrapper}
       contentContainerStyle={styles.container}
       contentInsetAdjustmentBehavior="automatic"
-      data={genreDetails.data?.Items}
+      data={filteredAlbums}
       keyExtractor={(item) => item?.Id ?? ""}
       numColumns={2}
       renderItem={renderItem}

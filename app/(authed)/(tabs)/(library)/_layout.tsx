@@ -118,9 +118,18 @@ export default function Layout() {
       <Stack.Screen
         name="genres/[id]"
         options={{
-          headerLargeTitle: false,
+          headerLargeTitle: true,
+          headerSearchBarOptions: {
+            hideNavigationBar: true,
+            hideWhenScrolling: false,
+            onChangeText: (e) => {
+              setQuery(e.nativeEvent.text);
+            },
+            onClose: resetQuery,
+          },
           headerTintColor: theme.colors.tint,
-          headerTitle: "",
+          // TODO: add actual genre name
+          headerTitle: "Genres",
         }}
       />
 
