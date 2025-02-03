@@ -1,11 +1,7 @@
 import { SettingsButton } from "@src/components/SettingsButton";
 import { useSearchStore } from "@src/store/useSearchStore";
 import { Stack } from "expo-router";
-import {
-  UnistylesRuntime,
-  createStyleSheet,
-  useStyles,
-} from "react-native-unistyles";
+import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 export default function Layout() {
   const { styles, theme } = useStyles(stylesheet);
@@ -16,7 +12,6 @@ export default function Layout() {
       screenOptions={{
         contentStyle: styles.contentContainer,
         headerBlurEffect: "prominent",
-        headerLargeStyle: { backgroundColor: theme.colors.background },
         headerShadowVisible: false,
         headerTitle: "Library",
         headerTitleStyle: styles.headerTitle,
@@ -26,6 +21,7 @@ export default function Layout() {
       <Stack.Screen
         name="index"
         options={{
+          headerLargeStyle: { backgroundColor: theme.colors.background },
           headerLargeTitle: true,
           headerRight: SettingsButton,
         }}
@@ -35,6 +31,7 @@ export default function Layout() {
       <Stack.Screen
         name="albums/index"
         options={{
+          headerLargeStyle: { backgroundColor: theme.colors.background },
           headerLargeTitle: true,
           headerSearchBarOptions: {
             hideNavigationBar: true,
@@ -69,6 +66,7 @@ export default function Layout() {
       <Stack.Screen
         name="artists/index"
         options={{
+          headerLargeStyle: { backgroundColor: theme.colors.background },
           headerLargeTitle: true,
           headerSearchBarOptions: {
             hideNavigationBar: true,
@@ -85,6 +83,13 @@ export default function Layout() {
       <Stack.Screen
         name="artists/[id]"
         options={{
+          // TODO: workaround...
+          // https://github.com/react-navigation/react-navigation/issues/11946#issuecomment-2506102387
+          // headerBackButtonDisplayMode: "minimal",
+          headerBackButtonDisplayMode: "default",
+          headerBackTitle: ".",
+          headerBackTitleStyle: { fontSize: 1 },
+          //
           headerBlurEffect: undefined,
           headerLargeTitle: false,
           headerTintColor: theme.colors.tint,
@@ -96,6 +101,7 @@ export default function Layout() {
       <Stack.Screen
         name="genres/index"
         options={{
+          headerLargeStyle: { backgroundColor: theme.colors.background },
           headerLargeTitle: true,
           headerSearchBarOptions: {
             hideNavigationBar: true,
@@ -138,10 +144,16 @@ export default function Layout() {
       <Stack.Screen
         name="playlists/[id]"
         options={{
+          // TODO: workaround...
+          // https://github.com/react-navigation/react-navigation/issues/11946#issuecomment-2506102387
+          // headerBackButtonDisplayMode: "minimal",
+          headerBackButtonDisplayMode: "default",
+          headerBackTitle: ".",
+          headerBackTitleStyle: { fontSize: 1 },
+          //
           headerBlurEffect: undefined,
           headerLargeTitle: false,
           headerTintColor: theme.colors.tint,
-          headerTitle: "",
         }}
       />
 

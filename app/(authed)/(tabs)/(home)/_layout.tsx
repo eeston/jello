@@ -1,9 +1,5 @@
 import { Stack } from "expo-router";
-import {
-  UnistylesRuntime,
-  createStyleSheet,
-  useStyles,
-} from "react-native-unistyles";
+import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 export default function Layout() {
   const { styles, theme } = useStyles(stylesheet);
