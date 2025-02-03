@@ -4,9 +4,11 @@ import { AlbumCard } from "@src/components/AlbumCard";
 import { ListPadding } from "@src/components/ListPadding";
 import { LoadingOverlay } from "@src/components/Loading";
 import { useAuth } from "@src/store/AuthContext";
+import { useSearchStore } from "@src/store/useSearchStore";
 import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
 import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
-import { Link } from "expo-router";
+import { Link, useFocusEffect } from "expo-router";
+import { useCallback } from "react";
 import { FlatList, View } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
@@ -14,6 +16,23 @@ export default function AlbumsList() {
   const { styles } = useStyles(stylesheet);
   const { api } = useAuth();
   const albums = useFetchAlbums(api);
+  const { query, resetQuery } = useSearchStore();
+
+  useFocusEffect(
+    useCallback(() => {
+      resetQuery();
+    }, []),
+  );
+
+  const filteredAlbums = albums?.data?.Items?.filter((item) => {
+    if (!query) return true;
+
+    const searchLower = query.toLowerCase();
+    return (
+      item.Name?.toLowerCase().includes(searchLower) ??
+      item.AlbumArtist?.toLowerCase().includes(searchLower)
+    );
+  });
 
   const renderItem = ({ item }: { item: BaseItemDto }) => {
     if (!item.Id) {
@@ -50,7 +69,7 @@ export default function AlbumsList() {
       columnWrapperStyle={styles.columnWrapper}
       contentContainerStyle={styles.container}
       contentInsetAdjustmentBehavior="automatic"
-      data={albums?.data?.Items}
+      data={filteredAlbums}
       keyExtractor={(item) => String(item.Id)}
       numColumns={2}
       renderItem={renderItem}

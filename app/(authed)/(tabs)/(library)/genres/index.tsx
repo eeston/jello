@@ -7,7 +7,9 @@ import { RightChevron } from "@src/components/RightChevron";
 import { Separator } from "@src/components/Separator";
 import { ThemedText } from "@src/components/ThemedText";
 import { useAuth } from "@src/store/AuthContext";
-import { Link } from "expo-router";
+import { useSearchStore } from "@src/store/useSearchStore";
+import { Link, useFocusEffect } from "expo-router";
+import { useCallback } from "react";
 import { FlatList, View } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
@@ -15,6 +17,20 @@ export default function GenresList() {
   const { api } = useAuth();
   const genres = useFetchGenres(api);
   const { styles } = useStyles(stylesheet);
+  const { query, resetQuery } = useSearchStore();
+
+  useFocusEffect(
+    useCallback(() => {
+      resetQuery();
+    }, []),
+  );
+
+  const filteredGenres = genres?.data?.Items?.filter((item) => {
+    if (!query) return true;
+
+    const searchLower = query.toLowerCase();
+    return item.Name?.toLowerCase().includes(searchLower);
+  });
 
   const renderItem = ({ item }: { item: BaseItemDto }) => {
     if (!item.Id) {
@@ -52,7 +68,7 @@ export default function GenresList() {
       ListFooterComponent={ListPadding}
       contentContainerStyle={styles.container}
       contentInsetAdjustmentBehavior="automatic"
-      data={genres?.data?.Items}
+      data={filteredGenres}
       renderItem={renderItem}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}

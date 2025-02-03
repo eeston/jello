@@ -1,4 +1,5 @@
 import { SettingsButton } from "@src/components/SettingsButton";
+import { useSearchStore } from "@src/store/useSearchStore";
 import { Stack } from "expo-router";
 import {
   UnistylesRuntime,
@@ -8,6 +9,7 @@ import {
 
 export default function Layout() {
   const { styles, theme } = useStyles(stylesheet);
+  const { resetQuery, setQuery } = useSearchStore();
 
   return (
     <Stack
@@ -39,6 +41,10 @@ export default function Layout() {
           headerSearchBarOptions: {
             hideNavigationBar: true,
             hideWhenScrolling: false,
+            onChangeText: (e) => {
+              setQuery(e.nativeEvent.text);
+            },
+            onClose: resetQuery,
           },
           headerTintColor: theme.colors.tint,
           headerTitle: "Albums",
@@ -69,6 +75,10 @@ export default function Layout() {
           headerSearchBarOptions: {
             hideNavigationBar: true,
             hideWhenScrolling: false,
+            onChangeText: (e) => {
+              setQuery(e.nativeEvent.text);
+            },
+            onClose: resetQuery,
           },
           headerTintColor: theme.colors.tint,
           headerTitle: "Artists",
@@ -92,6 +102,10 @@ export default function Layout() {
           headerSearchBarOptions: {
             hideNavigationBar: true,
             hideWhenScrolling: false,
+            onChangeText: (e) => {
+              setQuery(e.nativeEvent.text);
+            },
+            onClose: resetQuery,
           },
           headerTintColor: theme.colors.tint,
           headerTitle: "Genres",
@@ -114,6 +128,10 @@ export default function Layout() {
           headerSearchBarOptions: {
             hideNavigationBar: true,
             hideWhenScrolling: false,
+            onChangeText: (e) => {
+              setQuery(e.nativeEvent.text);
+            },
+            onClose: resetQuery,
           },
           headerTintColor: theme.colors.tint,
           headerTitle: "Playlists",

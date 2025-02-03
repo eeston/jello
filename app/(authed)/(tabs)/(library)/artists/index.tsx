@@ -9,10 +9,12 @@ import { Separator } from "@src/components/Separator";
 import { ThemedText } from "@src/components/ThemedText";
 import { ROW_HEIGHT } from "@src/constants";
 import { useAuth } from "@src/store/AuthContext";
+import { useSearchStore } from "@src/store/useSearchStore";
 import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
 import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
 import { Image } from "expo-image";
-import { Link } from "expo-router";
+import { Link, useFocusEffect } from "expo-router";
+import { useCallback } from "react";
 import { FlatList, View } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
@@ -20,6 +22,20 @@ export default function ArtistsList() {
   const { api } = useAuth();
   const artists = useFetchArtists(api);
   const { styles, theme } = useStyles(stylesheet);
+  const { query, resetQuery } = useSearchStore();
+
+  useFocusEffect(
+    useCallback(() => {
+      resetQuery();
+    }, []),
+  );
+
+  const filteredArtists = artists?.data?.Items?.filter((item) => {
+    if (!query) return true;
+
+    const searchLower = query.toLowerCase();
+    return item.Name?.toLowerCase().includes(searchLower);
+  });
 
   const renderItem = ({ item }: { item: BaseItemDto }) => {
     if (!item.Id) {
@@ -77,7 +93,7 @@ export default function ArtistsList() {
       ListFooterComponent={ListPadding}
       contentContainerStyle={styles.container}
       contentInsetAdjustmentBehavior="automatic"
-      data={artists?.data?.Items}
+      data={filteredArtists}
       initialNumToRender={5}
       maxToRenderPerBatch={10}
       renderItem={renderItem}
