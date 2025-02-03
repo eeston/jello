@@ -6,19 +6,19 @@ import {
 } from "react-native-unistyles";
 
 export default function Layout() {
-  const { styles } = useStyles(stylesheet);
+  const { styles, theme } = useStyles(stylesheet);
 
   return (
     <Stack
       screenOptions={{
         contentStyle: styles.contentContainer,
-        headerBlurEffect: UnistylesRuntime.themeName,
+        headerBlurEffect: "prominent",
+        headerLargeStyle: { backgroundColor: theme.colors.background },
         headerLargeTitle: true,
         headerShadowVisible: false,
         headerTitle: "Radio",
         headerTitleStyle: styles.headerTitle,
         headerTransparent: true,
-        // headerRight: () => (),
       }}
     >
       <Stack.Screen name="index" />

@@ -15,10 +15,8 @@ export default function Layout() {
     <Stack
       screenOptions={{
         contentStyle: styles.contentContainer,
-        headerBlurEffect:
-          UnistylesRuntime.themeName === "light"
-            ? "prominent"
-            : UnistylesRuntime.themeName,
+        headerBlurEffect: "prominent",
+        headerLargeStyle: { backgroundColor: theme.colors.background },
         headerShadowVisible: false,
         headerTitle: "Library",
         headerTitleStyle: styles.headerTitle,

@@ -18,7 +18,8 @@ export default function Layout() {
         headerBackTitle: ".",
         headerBackTitleStyle: { fontSize: 1 },
         //
-        headerBlurEffect: UnistylesRuntime.themeName,
+        headerBlurEffect: "prominent",
+        headerLargeStyle: { backgroundColor: theme.colors.background },
         headerShadowVisible: false,
         headerTitleStyle: styles.headerTitle,
         headerTransparent: true,
