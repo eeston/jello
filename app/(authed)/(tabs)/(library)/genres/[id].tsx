@@ -8,18 +8,33 @@ import { useAuth } from "@src/store/AuthContext";
 import { useSearchStore } from "@src/store/useSearchStore";
 import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
 import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
-import { Link, useFocusEffect, useLocalSearchParams } from "expo-router";
-import { useCallback } from "react";
+import {
+  Link,
+  useFocusEffect,
+  useLocalSearchParams,
+  useNavigation,
+} from "expo-router";
+import { useCallback, useEffect } from "react";
 import { FlatList, View } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 export default function GenreDetails() {
   // if no id...
-  const { id: genreId } = useLocalSearchParams<{ id: string }>();
+  const { id: genreId, name: genreName } = useLocalSearchParams<{
+    id: string;
+    name: string;
+  }>();
   const { styles } = useStyles(stylesheet);
+  const navigation = useNavigation();
   const { api } = useAuth();
   const genreAlbums = useFetchGenreAlbums(api, genreId);
   const { query, resetQuery } = useSearchStore();
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerTitle: genreName,
+    });
+  }, [genreName]);
 
   useFocusEffect(
     useCallback(() => {

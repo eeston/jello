@@ -41,7 +41,7 @@ export default function GenresList() {
       <Link
         asChild
         href={{
-          params: { id: item.Id },
+          params: { id: item.Id, name: item.Name },
           pathname: "/genres/[id]",
         }}
       >
