@@ -96,7 +96,12 @@ export default function LibraryDetails() {
     <FlatList
       ItemSeparatorComponent={() => <Separator marginLeft={40} />}
       ListFooterComponent={
-        <RecentlyAdded recentlyAddedAlbums={recentlyAddedAlbums?.data?.Items} />
+        <View>
+          <Separator marginLeft={40} />
+          <RecentlyAdded
+            recentlyAddedAlbums={recentlyAddedAlbums?.data?.Items}
+          />
+        </View>
       }
       contentContainerStyle={styles.container}
       contentInsetAdjustmentBehavior="automatic"
