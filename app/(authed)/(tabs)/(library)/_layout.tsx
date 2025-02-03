@@ -137,6 +137,7 @@ export default function Layout() {
       <Stack.Screen
         name="playlists/index"
         options={{
+          headerLargeStyle: { backgroundColor: theme.colors.background },
           headerLargeTitle: true,
           headerSearchBarOptions: {
             hideNavigationBar: true,

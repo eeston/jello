@@ -15,7 +15,6 @@ export default function Layout() {
         headerBackTitleStyle: { fontSize: 1 },
         //
         headerBlurEffect: "prominent",
-        headerLargeStyle: { backgroundColor: theme.colors.background },
         headerShadowVisible: false,
         headerTitleStyle: styles.headerTitle,
         headerTransparent: true,
@@ -24,6 +23,7 @@ export default function Layout() {
       <Stack.Screen
         name="index"
         options={{
+          headerLargeStyle: { backgroundColor: theme.colors.background },
           headerLargeTitle: true,
           headerTitle: "Home",
         }}
