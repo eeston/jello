@@ -16,7 +16,7 @@ describe("generateTrackUrl", () => {
     const url = generateTrackUrl({ api, trackId, userId });
 
     expect(url).toEqual(
-      "http://jellylols.com/Audio/123/universal?AudioCodec=aac&Container=mp3%252Caac%252Cm4a%257Caac%252Cm4b%257Caac%252Cflac%252Calac%252Cm4a%257Calac%252Cm4b%257Calac%252Cwav%252Cm4a%252Caiff%252Caif&TranscodingContainer=aac&TranscodingProtocol=http&api_key=token&deviceId=device&userId=456",
+      "http://jellylols.com/Audio/123/universal?AudioCodec=flac&Container=flac&TranscodingContainer=flac&TranscodingProtocol=http&api_key=token&deviceId=device&userId=456",
     );
   });
 });
