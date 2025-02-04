@@ -12,7 +12,7 @@ export function NoSearchResults({
 }) {
   const { styles, theme } = useStyles(stylesheet);
 
-  if (query) {
+  if (!query) {
     return (
       <View style={styles.container}>
         <View style={styles.content}>
