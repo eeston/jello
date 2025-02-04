@@ -3,7 +3,7 @@ import { useFetchRecentlyAddedAlbums } from "@src/api/useFetchRecentlyAddedAlbum
 import { AlbumCard } from "@src/components/AlbumCard";
 import { ListItem } from "@src/components/ListItem";
 import { ListPadding } from "@src/components/ListPadding";
-import { LoadingOverlay } from "@src/components/Loading";
+import { LoadingOverlay } from "@src/components/LoadingOverlay";
 import { RightChevron } from "@src/components/RightChevron";
 import { Separator } from "@src/components/Separator";
 import { ThemedText } from "@src/components/ThemedText";

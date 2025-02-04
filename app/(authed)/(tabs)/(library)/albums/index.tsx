@@ -2,7 +2,7 @@ import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client";
 import { useFetchAlbums } from "@src/api/useFetchAlbums";
 import { AlbumCard } from "@src/components/AlbumCard";
 import { ListPadding } from "@src/components/ListPadding";
-import { LoadingOverlay } from "@src/components/Loading";
+import { LoadingOverlay } from "@src/components/LoadingOverlay";
 import { NoSearchResults } from "@src/components/NoResults";
 import { useAuth } from "@src/store/AuthContext";
 import { useSearchStore } from "@src/store/useSearchStore";

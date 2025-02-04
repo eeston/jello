@@ -3,7 +3,7 @@ import { useFetchArtists } from "@src/api/useFetchArtists";
 import { EmptyOverlay } from "@src/components/Empty";
 import { ListItem } from "@src/components/ListItem";
 import { ListPadding } from "@src/components/ListPadding";
-import { LoadingOverlay } from "@src/components/Loading";
+import { LoadingOverlay } from "@src/components/LoadingOverlay";
 import { NoSearchResults } from "@src/components/NoResults";
 import { RightChevron } from "@src/components/RightChevron";
 import { Separator } from "@src/components/Separator";

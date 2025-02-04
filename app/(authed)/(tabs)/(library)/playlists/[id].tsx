@@ -1,7 +1,7 @@
 import { useFetchPlaylistDetails } from "@src/api/useFetchPlaylistDetails";
 import { useFetchPlaylistSongs } from "@src/api/useFetchPlaylistSongs";
 import { ArtworkView } from "@src/components/ArtworkView";
-import { LoadingOverlay } from "@src/components/Loading";
+import { LoadingOverlay } from "@src/components/LoadingOverlay";
 import { MusicButton } from "@src/components/MusicButton";
 import { PlaylistStats } from "@src/components/PlaylistStats";
 import { ThemedText } from "@src/components/ThemedText";

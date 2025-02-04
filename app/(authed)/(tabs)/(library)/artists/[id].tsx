@@ -5,7 +5,7 @@ import { useFetchArtistTopSongs } from "@src/api/useFetchArtistTopSongs";
 import { AlbumCarousel } from "@src/components/AlbumCarousel";
 import { ArtworkView } from "@src/components/ArtworkView";
 import { ListPadding } from "@src/components/ListPadding";
-import { LoadingOverlay } from "@src/components/Loading";
+import { LoadingOverlay } from "@src/components/LoadingOverlay";
 import { ThemedText } from "@src/components/ThemedText";
 import { TopTracksList } from "@src/components/TopTracksList";
 import { useAuth } from "@src/store/AuthContext";
@@ -109,9 +109,7 @@ export default function ArtistDetails() {
 }
 
 const stylesheet = createStyleSheet((theme) => ({
-  contentContainer: {
-    paddingBottom: theme.spacing.xxxl,
-  },
+  contentContainer: {},
   headerOverlayContainer: {
     alignItems: "center",
     flexDirection: "row",

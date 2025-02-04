@@ -6,7 +6,7 @@ import { AlbumStats } from "@src/components/AlbumStats";
 import { AlbumTitleDetails } from "@src/components/AlbumTitleDetails";
 import { ArtworkView } from "@src/components/ArtworkView";
 import { ListPadding } from "@src/components/ListPadding";
-import { LoadingOverlay } from "@src/components/Loading";
+import { LoadingOverlay } from "@src/components/LoadingOverlay";
 import { MusicButton } from "@src/components/MusicButton";
 import { TrackList } from "@src/components/TrackList";
 import { useAuth } from "@src/store/AuthContext";

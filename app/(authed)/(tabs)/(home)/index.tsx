@@ -4,7 +4,7 @@ import { useFetchRecentlyPlayedAlbums } from "@src/api/useFetchRecentlyPlayedAlb
 import { useFetchSuggestedAlbums } from "@src/api/useFetchSuggestedAlbums";
 import { AlbumCarousel } from "@src/components/AlbumCarousel";
 import { ListPadding } from "@src/components/ListPadding";
-import { LoadingOverlay } from "@src/components/Loading";
+import { LoadingOverlay } from "@src/components/LoadingOverlay";
 import { useAuth } from "@src/store/AuthContext";
 import { delay } from "@src/util/delay";
 import { useQueryClient } from "@tanstack/react-query";
