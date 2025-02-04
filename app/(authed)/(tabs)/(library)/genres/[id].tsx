@@ -3,6 +3,7 @@ import { useFetchGenreAlbums } from "@src/api/useFetchGenreAlbums";
 import { AlbumCard } from "@src/components/AlbumCard";
 import { ListPadding } from "@src/components/ListPadding";
 import { LoadingOverlay } from "@src/components/Loading";
+import { NoSearchResults } from "@src/components/NoResults";
 import { ThemedText } from "@src/components/ThemedText";
 import { useAuth } from "@src/store/AuthContext";
 import { useSearchStore } from "@src/store/useSearchStore";
@@ -76,7 +77,7 @@ export default function GenreDetails() {
 
   return (
     <FlatList
-      ListEmptyComponent={<ThemedText>Empty...</ThemedText>}
+      ListEmptyComponent={<NoSearchResults query={query} type="Genres" />}
       ListFooterComponent={<ListPadding />}
       columnWrapperStyle={styles.columnWrapper}
       contentContainerStyle={styles.container}

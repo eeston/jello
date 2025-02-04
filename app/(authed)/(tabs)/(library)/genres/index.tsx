@@ -3,6 +3,7 @@ import { useFetchGenres } from "@src/api/useFetchGenres";
 import { ListItem } from "@src/components/ListItem";
 import { ListPadding } from "@src/components/ListPadding";
 import { LoadingOverlay } from "@src/components/Loading";
+import { NoSearchResults } from "@src/components/NoResults";
 import { RightChevron } from "@src/components/RightChevron";
 import { Separator } from "@src/components/Separator";
 import { ThemedText } from "@src/components/ThemedText";
@@ -65,6 +66,7 @@ export default function GenresList() {
   return (
     <FlatList
       ItemSeparatorComponent={() => <Separator />}
+      ListEmptyComponent={<NoSearchResults query={query} type="Genres" />}
       ListFooterComponent={ListPadding}
       contentContainerStyle={styles.container}
       contentInsetAdjustmentBehavior="automatic"

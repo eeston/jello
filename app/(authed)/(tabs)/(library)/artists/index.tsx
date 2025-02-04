@@ -4,6 +4,7 @@ import { EmptyOverlay } from "@src/components/Empty";
 import { ListItem } from "@src/components/ListItem";
 import { ListPadding } from "@src/components/ListPadding";
 import { LoadingOverlay } from "@src/components/Loading";
+import { NoSearchResults } from "@src/components/NoResults";
 import { RightChevron } from "@src/components/RightChevron";
 import { Separator } from "@src/components/Separator";
 import { ThemedText } from "@src/components/ThemedText";
@@ -90,6 +91,7 @@ export default function ArtistsList() {
   return (
     <FlatList
       ItemSeparatorComponent={() => <Separator marginLeft={60} />}
+      ListEmptyComponent={<NoSearchResults query={query} type="Artists" />}
       ListFooterComponent={ListPadding}
       contentContainerStyle={styles.container}
       contentInsetAdjustmentBehavior="automatic"

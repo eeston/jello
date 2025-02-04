@@ -3,6 +3,7 @@ import { useFetchPlaylists } from "@src/api/useFetchPlaylists";
 import { ListItem } from "@src/components/ListItem";
 import { ListPadding } from "@src/components/ListPadding";
 import { LoadingOverlay } from "@src/components/Loading";
+import { NoSearchResults } from "@src/components/NoResults";
 import { RightChevron } from "@src/components/RightChevron";
 import { Separator } from "@src/components/Separator";
 import { ThemedText } from "@src/components/ThemedText";
@@ -76,7 +77,7 @@ export default function PlaylistsList() {
   return (
     <FlatList
       ItemSeparatorComponent={() => <Separator marginLeft={100} />}
-      ListEmptyComponent={<ThemedText>Empty...</ThemedText>}
+      ListEmptyComponent={<NoSearchResults query={query} type="Playlists" />}
       ListFooterComponent={ListPadding}
       contentContainerStyle={styles.container}
       contentInsetAdjustmentBehavior="automatic"

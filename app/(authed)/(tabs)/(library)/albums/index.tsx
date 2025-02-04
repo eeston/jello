@@ -3,6 +3,7 @@ import { useFetchAlbums } from "@src/api/useFetchAlbums";
 import { AlbumCard } from "@src/components/AlbumCard";
 import { ListPadding } from "@src/components/ListPadding";
 import { LoadingOverlay } from "@src/components/Loading";
+import { NoSearchResults } from "@src/components/NoResults";
 import { useAuth } from "@src/store/AuthContext";
 import { useSearchStore } from "@src/store/useSearchStore";
 import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
@@ -65,6 +66,7 @@ export default function AlbumsList() {
 
   return (
     <FlatList
+      ListEmptyComponent={<NoSearchResults query={query} type="Albums" />}
       ListFooterComponent={ListPadding}
       columnWrapperStyle={styles.columnWrapper}
       contentContainerStyle={styles.container}
