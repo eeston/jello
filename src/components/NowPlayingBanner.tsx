@@ -7,11 +7,7 @@ import { SymbolView } from "expo-symbols";
 import { ActivityIndicator, Pressable, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import TrackPlayer, { useIsPlaying } from "react-native-track-player";
-import {
-  UnistylesRuntime,
-  createStyleSheet,
-  useStyles,
-} from "react-native-unistyles";
+import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 const PlayIndicator = ({
   isLoading,
@@ -63,11 +59,7 @@ export const NowPlayingBanner = () => {
       style={[styles.container, { bottom: bottomPosition }]}
     >
       <Pressable style={[styles.container, { bottom: bottomPosition }]}>
-        <BlurView
-          intensity={100}
-          style={styles.content}
-          tint={UnistylesRuntime.themeName}
-        >
+        <BlurView intensity={100} style={styles.content} tint="prominent">
           <View style={styles.miniPlayerContent}>
             {currentTrack?.artworkBlur || currentTrack?.artwork ? (
               <Image
