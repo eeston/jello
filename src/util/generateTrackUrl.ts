@@ -16,18 +16,22 @@ export const generateTrackUrl = ({
   }
 
   const params = new URLSearchParams({
-    AudioCodec: "flac",
-    Container: "flac",
-    TranscodingContainer: "flac",
-    TranscodingProtocol: "http",
+    AudioCodec: "aac",
+    Container:
+      "opus,webm|opus,ts|mp3,mp3,aac,m4a|aac,m4b|aac,flac,webma,webm|webma,wav,ogg",
+    DeviceId: api?.deviceInfo.id,
+    EnableAudioVbrEncoding: "false",
+    EnableRedirection: "false",
+    EnableRemoteMedia: "false",
+    MaxStreamingBitrate: "256000",
+    StartTimeTicks: "0",
+    TranscodingContainer: "mp4",
+    TranscodingProtocol: "hls",
+    UserId: userId,
     api_key: api?.accessToken,
-    deviceId: api?.deviceInfo.id,
-    userId,
   });
 
-  const url = encodeURI(
-    `${api?.basePath}/Audio/${trackId}/universal?${params.toString()}`,
-  );
+  const url = `${api?.basePath}/Audio/${trackId}/universal?${params.toString()}`;
 
   return url;
 };

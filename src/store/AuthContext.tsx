@@ -1,6 +1,5 @@
 import { Api, Jellyfin } from "@jellyfin/sdk";
 import { STORE_CLIENT_DEVICE_ID } from "@src/constants";
-import { useCheckCollectionId } from "@src/hooks/useCollectionId";
 import { useSecureStoreItems } from "@src/hooks/useSecureStoreItems";
 import { apiService } from "@src/services/api";
 import * as Crypto from "expo-crypto";
