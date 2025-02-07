@@ -1,3 +1,6 @@
+import "@src/theme/unistyles"; // must be first thing imported
+
+// eslint-disable-next-line perfectionist/sort-imports
 import { playbackService } from "@src/services/player";
 import { AuthProvider } from "@src/store/AuthContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -13,8 +16,6 @@ import TrackPlayer, {
   IOSCategoryOptions,
 } from "react-native-track-player";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
-
-import "../src/theme/unistyles";
 
 TrackPlayer.registerPlaybackService(() => playbackService);
 

@@ -12,7 +12,7 @@ export default function Page() {
     <SafeAreaView style={styles.container}>
       <View style={styles.sectionContainer}>
         <Image
-          source={require("../assets/images/icon.png")}
+          source={require("../../assets/images/icon.png")}
           style={styles.image}
         />
       </View>
