@@ -27,7 +27,7 @@ export const TrackList = ({
   return (
     <View style={styles.container}>
       {tracks?.map((track: JelloTrackItem, index: number) => (
-        <View>
+        <View key={track.id}>
           <TrackListItem
             index={index}
             isCurrentTrack={currentTrack?.id === track.id}
