@@ -39,7 +39,7 @@ export default function Modal() {
       style={styles.container}
     >
       <View>
-        <ThemedText style={styles.text}>User</ThemedText>
+        <ThemedText type="defaultSemiBold">User</ThemedText>
         <TextGroup
           rows={[
             { leftText: "Username", rightText: user?.data?.Name ?? "Unknonw" },
@@ -48,7 +48,7 @@ export default function Modal() {
         />
       </View>
       <View>
-        <ThemedText style={styles.text}>Client</ThemedText>
+        <ThemedText type="defaultSemiBold">Client</ThemedText>
         <TextGroup
           rows={[
             { leftText: "Version", rightText: api?.clientInfo?.version },
@@ -66,7 +66,7 @@ export default function Modal() {
         />
       </View>
       <View>
-        <ThemedText style={styles.text}>Server</ThemedText>
+        <ThemedText type="defaultSemiBold">Server</ThemedText>
         <TextGroup rows={[{ leftText: "Host", rightText: api?.basePath }]} />
       </View>
 
@@ -91,10 +91,5 @@ const stylesheet = createStyleSheet((theme) => ({
   listItem: {
     fontSize: 20,
     fontWeight: "400",
-  },
-  text: {
-    fontSize: 14,
-    paddingBottom: theme.spacing.xxxs,
-    paddingHorizontal: theme.spacing.sm,
   },
 }));

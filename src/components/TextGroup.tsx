@@ -1,14 +1,14 @@
+import { Separator } from "@src/components/Separator";
+import { ThemedText } from "@src/components/ThemedText";
 import { Pressable, StyleProp, View, ViewStyle } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
-
-import { ThemedText } from "./ThemedText";
 
 type TextGroupProps = {
   rows: { leftText: string; onPress?: () => void; rightText?: string }[];
 };
 
 export const TextGroup = ({ rows }: TextGroupProps) => {
-  const { styles } = useStyles(stylesheet);
+  const { styles, theme } = useStyles(stylesheet);
 
   const textRows = rows.map((row, i) => {
     const isFirst = i === 0;
@@ -22,18 +22,21 @@ export const TextGroup = ({ rows }: TextGroupProps) => {
     };
 
     return (
-      <Pressable
-        key={i}
-        onPress={row.onPress}
-        style={({ pressed }) => [
-          { opacity: row.onPress && pressed ? 0.5 : 1.0 },
-        ]}
-      >
-        <View style={[styles.row, { ...borderRadii }]}>
-          <ThemedText style={styles.textLeft}>{row.leftText}</ThemedText>
-          <ThemedText style={styles.textRight}>{row.rightText}</ThemedText>
-        </View>
-      </Pressable>
+      <View>
+        <Pressable
+          key={i}
+          onPress={row.onPress}
+          style={({ pressed }) => [
+            { opacity: row.onPress && pressed ? 0.5 : 1.0 },
+          ]}
+        >
+          <View style={[styles.row, { ...borderRadii }]}>
+            <ThemedText>{row.leftText}</ThemedText>
+            <ThemedText>{row.rightText}</ThemedText>
+          </View>
+        </Pressable>
+        {!isLast && <Separator color={theme.colors.background} />}
+      </View>
     );
   });
   return <View style={styles.container}>{textRows}</View>;
@@ -44,16 +47,9 @@ const stylesheet = createStyleSheet((theme) => ({
     paddingBottom: theme.spacing.lg,
   },
   row: {
-    backgroundColor: "#292C33",
+    backgroundColor: theme.colors.translucent,
     flexDirection: "row",
     justifyContent: "space-between",
     padding: theme.spacing.sm,
-  },
-  textLeft: {
-    // color: theme.colors.text,
-  },
-  textRight: {
-    // color: theme.colors.textSecondary,
-    fontSize: 12,
   },
 }));
