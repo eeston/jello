@@ -8,20 +8,15 @@ import { LoadingOverlay } from "@src/components/LoadingOverlay";
 import { MusicButton } from "@src/components/MusicButton";
 import { ThemedText } from "@src/components/ThemedText";
 import { TrackList } from "@src/components/TrackList";
+import { useScrollHeader } from "@src/hooks/useScrollHeader";
 import { useAuth } from "@src/store/AuthContext";
 import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
 import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
 import { playTracks } from "@src/util/playTracks";
 import { Image } from "expo-image";
 import { useLocalSearchParams, useNavigation, useSegments } from "expo-router";
-import { useLayoutEffect } from "react";
 import { View } from "react-native";
-import Animated, {
-  interpolate,
-  useAnimatedScrollHandler,
-  useAnimatedStyle,
-  useSharedValue,
-} from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 export default function AlbumDetails() {
@@ -39,30 +34,12 @@ export default function AlbumDetails() {
   );
   const segments = useSegments() as string[];
   const isLibrary = segments.includes("(library)");
-  const scrollY = useSharedValue(0);
-  const scrollHandler = useAnimatedScrollHandler({
-    onScroll: (event) => {
-      scrollY.value = event.contentOffset.y;
-    },
+
+  const { scrollHandler } = useScrollHeader({
+    navigation,
+    title: fetchAlbumDetails?.data?.Name ?? "",
+    titleStyle: styles.headerTitle,
   });
-
-  const headerFadeStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(scrollY.value, [200, 250], [0, 1], "clamp"),
-  }));
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTitle: () => (
-        <Animated.Text
-          numberOfLines={1}
-          style={[styles.headerTitle, headerFadeStyle]}
-        >
-          {fetchAlbumDetails?.data?.Name}
-        </Animated.Text>
-      ),
-      headerTransparent: true,
-    });
-  }, [navigation, fetchAlbumDetails?.data?.Name, headerFadeStyle]);
 
   const handleOnPressPlay = () => {
     playTracks({ tracks: fetchAlbumSongs?.data?.tracks });
