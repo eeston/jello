@@ -13,7 +13,7 @@ import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
 import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
 import { playTracks } from "@src/util/playTracks";
 import { Image } from "expo-image";
-import { useLocalSearchParams, useNavigation } from "expo-router";
+import { useLocalSearchParams, useNavigation, useSegments } from "expo-router";
 import { useLayoutEffect } from "react";
 import { View } from "react-native";
 import Animated, {
@@ -37,8 +37,9 @@ export default function AlbumDetails() {
     fetchAlbumDetails?.data?.ParentId,
     fetchAlbumDetails?.data?.Id,
   );
+  const segments = useSegments() as string[];
+  const isLibrary = segments.includes("(library)");
   const scrollY = useSharedValue(0);
-
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event) => {
       scrollY.value = event.contentOffset.y;
@@ -127,7 +128,7 @@ export default function AlbumDetails() {
       </View>
       <AlbumCarousel
         identifier="Id"
-        pathname="home"
+        pathname={isLibrary ? "library" : "home"}
         replace
         request={fetchMoreAlbums}
         title={`More by ${fetchAlbumDetails?.data?.AlbumArtist}...`}
