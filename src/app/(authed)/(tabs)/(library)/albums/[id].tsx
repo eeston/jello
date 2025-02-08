@@ -93,6 +93,8 @@ export default function AlbumDetails() {
         request={fetchMoreAlbums}
         title={`More by ${fetchAlbumDetails?.data?.AlbumArtist}...`}
       />
+      {/* Featured On... */}
+      {/* You Might Also Like... */}
       <ListPadding />
     </ArtworkView>
   );

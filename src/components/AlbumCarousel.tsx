@@ -32,11 +32,6 @@ export const AlbumCarousel = ({
   const { api } = useAuth();
 
   const CARD_WIDTH = large ? AlbumCardSize.large : AlbumCardSize.small;
-  const screenWidth = Dimensions.get("window").width;
-
-  const endPadding = useMemo(() => {
-    return screenWidth - CARD_WIDTH - theme.spacing.md;
-  }, [CARD_WIDTH]);
 
   if (!request.data?.Items?.length) {
     return null;
@@ -79,10 +74,7 @@ export const AlbumCarousel = ({
       </ThemedText>
       <FlatList
         ItemSeparatorComponent={() => <View style={styles.separator} />}
-        contentContainerStyle={[
-          styles.flatlistContent,
-          { paddingRight: endPadding },
-        ]}
+        contentContainerStyle={styles.flatlistContent}
         data={request.data?.Items}
         decelerationRate="fast"
         horizontal
