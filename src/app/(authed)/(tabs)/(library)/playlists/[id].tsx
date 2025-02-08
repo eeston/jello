@@ -1,33 +1,39 @@
 import { useFetchPlaylistDetails } from "@src/api/useFetchPlaylistDetails";
 import { useFetchPlaylistSongs } from "@src/api/useFetchPlaylistSongs";
-import { ArtworkView } from "@src/components/ArtworkView";
+import { ListPadding } from "@src/components/ListPadding";
 import { LoadingOverlay } from "@src/components/LoadingOverlay";
 import { MusicButton } from "@src/components/MusicButton";
 import { PlaylistStats } from "@src/components/PlaylistStats";
 import { ThemedText } from "@src/components/ThemedText";
 import { TrackList } from "@src/components/TrackList";
+import { useScrollHeader } from "@src/hooks/useScrollHeader";
 import { useAuth } from "@src/store/AuthContext";
 import { fmtIsoDate } from "@src/util/date";
 import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
 import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
 import { playTracks } from "@src/util/playTracks";
 import { Image } from "expo-image";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useNavigation } from "expo-router";
 import { View } from "react-native";
+import Animated from "react-native-reanimated";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 export default function PlaylistDetails() {
-  // if no id...
+  // if no id...??
   const { id: playlistId } = useLocalSearchParams<{ id: string }>();
+  const navigation = useNavigation();
   const { styles, theme } = useStyles(stylesheet);
   const { api } = useAuth();
 
   const fetchPlaylistDetails = useFetchPlaylistDetails(api, playlistId);
   const fetchPlaylistSongs = useFetchPlaylistSongs(api, playlistId);
 
-  if (fetchPlaylistDetails.isPending || fetchPlaylistSongs.isPending) {
-    return <LoadingOverlay />;
-  }
+  const { scrollHandler } = useScrollHeader({
+    navigation,
+    title: fetchPlaylistDetails?.data?.Name ?? "",
+    titleStyle: styles.headerTitle,
+  });
+
   const handleOnPressPlay = () => {
     playTracks({ tracks: fetchPlaylistSongs?.data?.tracks });
   };
@@ -35,9 +41,18 @@ export default function PlaylistDetails() {
     playTracks({ shuffle: true, tracks: fetchPlaylistSongs?.data?.tracks });
   };
 
+  if (fetchPlaylistDetails.isPending || fetchPlaylistSongs.isPending) {
+    return <LoadingOverlay />;
+  }
+
   return (
-    <ArtworkView
-      headerImage={
+    <Animated.ScrollView
+      contentInsetAdjustmentBehavior="automatic"
+      onScroll={scrollHandler}
+      scrollEventThrottle={16}
+      style={styles.container}
+    >
+      <View style={styles.imageContainer}>
         <Image
           contentFit="cover"
           placeholder={{
@@ -45,7 +60,6 @@ export default function PlaylistDetails() {
               fetchPlaylistDetails?.data?.ImageBlurHashes,
             ),
           }}
-          recyclingKey={fetchPlaylistDetails?.data?.Id}
           source={generateArtworkUrl({
             api,
             id: fetchPlaylistDetails?.data?.Id,
@@ -53,49 +67,57 @@ export default function PlaylistDetails() {
           style={styles.image}
           transition={theme.timing.medium}
         />
-      }
-      headerOverlay={
-        <View style={styles.headerOverlayContainer}>
-          <View style={styles.headerDetailsContainer}>
-            <ThemedText style={styles.text} type="subtitle">
-              {fetchPlaylistDetails?.data?.Name}
-            </ThemedText>
-            <ThemedText style={styles.smallText}>
-              {fmtIsoDate(fetchPlaylistDetails.data?.DateCreated)}
-            </ThemedText>
-          </View>
-          <View style={styles.headerButtonContainer}>
-            <MusicButton onPress={handleOnPressPlay} type="play" />
-            <MusicButton onPress={handleOnPressShuffle} type="shuffle" />
-          </View>
-        </View>
-      }
-      title={fetchPlaylistDetails?.data?.Name}
-    >
-      <View style={styles.contentContainer}>
+      </View>
+      <View style={styles.detailsContainer}>
+        <ThemedText type="subtitle">
+          {fetchPlaylistDetails?.data?.Name}
+        </ThemedText>
+        {/* TODO: Username?? */}
+        {/* <ThemedText style={styles.textArtist}>
+          {fetchPlaylistDetails?.data?.AlbumArtist}
+        </ThemedText> */}
+
+        <ThemedText style={styles.textDate} type="defaultSemiBold">
+          {/* TODO: last updated */}
+          {fmtIsoDate(fetchPlaylistDetails.data?.DateCreated)}
+        </ThemedText>
+      </View>
+      <View style={styles.buttonContainer}>
+        <MusicButton onPress={handleOnPressPlay} type="play" />
+        <MusicButton onPress={handleOnPressShuffle} type="shuffle" />
+      </View>
+
+      <View style={styles.trackListContainer}>
         <TrackList isPlaylist tracks={fetchPlaylistSongs?.data?.tracks} />
         <PlaylistStats
           playlistDetails={fetchPlaylistDetails?.data}
           playlistSongs={fetchPlaylistSongs.data?.tracks}
         />
       </View>
-    </ArtworkView>
+
+      <ListPadding />
+    </Animated.ScrollView>
   );
 }
 
 const stylesheet = createStyleSheet((theme) => ({
-  contentContainer: { paddingHorizontal: theme.spacing.md },
-  headerButtonContainer: {
+  buttonContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
   },
-  headerDetailsContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    padding: theme.spacing.xs,
+  container: { paddingVertical: theme.spacing.md },
+  detailsContainer: { alignItems: "center", paddingVertical: theme.spacing.md },
+  headerTitle: {
+    color: theme.colors.primary,
+    fontSize: 18,
+    fontWeight: "500",
   },
-  headerOverlayContainer: { padding: theme.spacing.md },
-  image: { flex: 1 },
-  smallText: { color: "white", fontSize: 14 },
-  text: { color: "white" },
+  image: {
+    borderRadius: theme.spacing.md,
+    height: 300,
+    width: 300,
+  },
+  imageContainer: { alignItems: "center", ...theme.shadow.sm },
+  textDate: { color: theme.colors.secondary, fontSize: 12 },
+  trackListContainer: { padding: theme.spacing.lg },
 }));
