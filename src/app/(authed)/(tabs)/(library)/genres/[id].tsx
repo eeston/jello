@@ -4,18 +4,12 @@ import { AlbumCard } from "@src/components/AlbumCard";
 import { ListPadding } from "@src/components/ListPadding";
 import { LoadingOverlay } from "@src/components/LoadingOverlay";
 import { NoSearchResults } from "@src/components/NoResults";
-import { ThemedText } from "@src/components/ThemedText";
 import { useAuth } from "@src/store/AuthContext";
 import { useSearchStore } from "@src/store/useSearchStore";
 import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
 import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
-import {
-  Link,
-  useFocusEffect,
-  useLocalSearchParams,
-  useNavigation,
-} from "expo-router";
-import { useCallback, useEffect } from "react";
+import { Link, useLocalSearchParams, useNavigation } from "expo-router";
+import { useLayoutEffect } from "react";
 import { FlatList, View } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
@@ -29,19 +23,13 @@ export default function GenreDetails() {
   const navigation = useNavigation();
   const { api } = useAuth();
   const genreAlbums = useFetchGenreAlbums(api, genreId);
-  const { query, resetQuery } = useSearchStore();
+  const { query } = useSearchStore();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: genreName,
     });
   }, [genreName]);
-
-  useFocusEffect(
-    useCallback(() => {
-      resetQuery();
-    }, []),
-  );
 
   const filteredAlbums = genreAlbums?.data?.Items?.filter((item) => {
     if (!query) return true;

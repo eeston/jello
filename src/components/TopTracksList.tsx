@@ -28,7 +28,7 @@ export const TopTracksList = ({ tracks }: { tracks?: JelloTrackItem[] }) => {
 
   const renderColumn = ({ index: columnIndex, item: columnTracks }) => {
     return (
-      <View style={styles.column}>
+      <View key={columnIndex} style={styles.column}>
         {columnTracks.map((track, rowIndex) => {
           const absoluteIndex = columnIndex * ITEMS_PER_COLUMN + rowIndex;
           return (

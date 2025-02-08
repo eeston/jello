@@ -14,8 +14,7 @@ import { useSearchStore } from "@src/store/useSearchStore";
 import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
 import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
 import { Image } from "expo-image";
-import { Link, useFocusEffect } from "expo-router";
-import { useCallback } from "react";
+import { Link } from "expo-router";
 import { FlatList, View } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
@@ -23,13 +22,7 @@ export default function ArtistsList() {
   const { api } = useAuth();
   const artists = useFetchArtists(api);
   const { styles, theme } = useStyles(stylesheet);
-  const { query, resetQuery } = useSearchStore();
-
-  useFocusEffect(
-    useCallback(() => {
-      resetQuery();
-    }, []),
-  );
+  const { query } = useSearchStore();
 
   const filteredArtists = artists?.data?.Items?.filter((item) => {
     if (!query) return true;

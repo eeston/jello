@@ -8,8 +8,7 @@ import { useAuth } from "@src/store/AuthContext";
 import { useSearchStore } from "@src/store/useSearchStore";
 import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
 import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
-import { Link, useFocusEffect } from "expo-router";
-import { useCallback } from "react";
+import { Link } from "expo-router";
 import { FlatList, View } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
@@ -17,20 +16,14 @@ export default function AlbumsList() {
   const { styles } = useStyles(stylesheet);
   const { api } = useAuth();
   const albums = useFetchAlbums(api);
-  const { query, resetQuery } = useSearchStore();
-
-  useFocusEffect(
-    useCallback(() => {
-      resetQuery();
-    }, []),
-  );
+  const { query } = useSearchStore();
 
   const filteredAlbums = albums?.data?.Items?.filter((item) => {
     if (!query) return true;
 
     const searchLower = query.toLowerCase();
     return (
-      item.Name?.toLowerCase().includes(searchLower) ??
+      item.Name?.toLowerCase().includes(searchLower) ||
       item.AlbumArtist?.toLowerCase().includes(searchLower)
     );
   });
