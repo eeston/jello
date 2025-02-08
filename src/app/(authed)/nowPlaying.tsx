@@ -3,6 +3,7 @@ import { NowPlayingMediaControls } from "@src/components/NowPlayingScreen//NowPl
 import { NowPlayingBottomControls } from "@src/components/NowPlayingScreen/NowPlayingBottomControls";
 import { NowPlayingProgress } from "@src/components/NowPlayingScreen/NowPlayingProgress";
 import { NowPlayingTitle } from "@src/components/NowPlayingScreen/NowPlayingTitle";
+import { NowPlayingVolume } from "@src/components/NowPlayingScreen/NowPlayingVolume";
 import { useSpringAnimation } from "@src/hooks/useSpringAnimation";
 import { useTrackedActiveTrack } from "@src/hooks/useTrackedActiveTrack";
 import { Image } from "expo-image";
@@ -38,38 +39,56 @@ export default function NowPlayingModal() {
         </Animated.View>
       </View>
 
-      <NowPlayingTitle
-        artist={currentTrack?.artist}
-        title={currentTrack?.title}
-      />
+      <View style={styles.contentContainer}>
+        <View style={styles.top}>
+          <NowPlayingTitle
+            artist={currentTrack?.artist}
+            title={currentTrack?.title}
+          />
+        </View>
 
-      <NowPlayingProgress
-        duration={currentTrack?.duration ?? 0}
-        isLiveStream={!!currentTrack?.isLiveStream}
-      />
+        <NowPlayingProgress isLiveStream={!!currentTrack?.isLiveStream} />
 
-      <NowPlayingMediaControls isLiveStream={!!currentTrack?.isLiveStream} />
-      <NowPlayingBottomControls />
+        <NowPlayingMediaControls isLiveStream={!!currentTrack?.isLiveStream} />
+
+        <NowPlayingVolume />
+      </View>
+      <View style={styles.bottom}>
+        <NowPlayingBottomControls />
+      </View>
 
       <NowPlayingBackground blurhash={currentTrack?.artworkBlur} />
     </View>
   );
 }
 
-const stylesheet = createStyleSheet((theme, runtime) => ({
-  artwork: {
-    borderRadius: theme.spacing.sm,
-    height: runtime.screen.width - 52,
-    width: runtime.screen.width - 52,
-  },
-  artworkContainer: {
-    alignItems: "center",
-    ...theme.shadow.lg,
-  },
-  container: {
-    height: runtime.screen.height,
-    justifyContent: "space-between",
-    paddingBottom: runtime.insets.bottom + theme.spacing.md,
-    paddingTop: theme.spacing.lg,
-  },
-}));
+const stylesheet = createStyleSheet((theme, runtime) => {
+  const noInset = runtime.insets.bottom === 0;
+  return {
+    artwork: {
+      borderRadius: theme.spacing.sm,
+      height: runtime.screen.width - 52,
+      width: runtime.screen.width - 52,
+    },
+    artworkContainer: {
+      alignItems: "center",
+      ...theme.shadow.lg,
+    },
+    bottom: {
+      bottom: noInset ? 50 : runtime.insets.bottom + 70,
+      position: "absolute",
+    },
+    container: {
+      height: runtime.screen.height,
+      paddingTop: theme.spacing.lg,
+    },
+    contentContainer: {
+      height: "50%",
+      justifyContent: "space-between",
+      paddingBottom: noInset ? 50 + 50 : runtime.insets.bottom + 70,
+    },
+    top: {
+      paddingTop: theme.spacing.sm,
+    },
+  };
+});

@@ -1,5 +1,6 @@
 import { ThemedText } from "@src/components/ThemedText";
-import { View } from "react-native";
+import { SymbolView } from "expo-symbols";
+import { Alert, Pressable, View } from "react-native";
 import { TrackMetadataBase } from "react-native-track-player";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
@@ -10,11 +11,11 @@ export const NowPlayingTitle = ({
   artist: TrackMetadataBase["artist"];
   title: TrackMetadataBase["title"];
 }) => {
-  const { styles } = useStyles(stylesheet);
+  const { styles, theme } = useStyles(stylesheet);
 
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.textContainer}>
         <ThemedText
           numberOfLines={1}
           style={{ color: "white" }}
@@ -29,14 +30,63 @@ export const NowPlayingTitle = ({
           {artist ?? "Unknown Artist"}
         </ThemedText>
       </View>
-      {/* TODO: add right action button */}
+      <View style={styles.buttonsContainer}>
+        <Pressable
+          onPress={() => Alert.alert("TODO...")}
+          style={{
+            backgroundColor: theme.colors.translucent,
+            borderRadius: theme.spacing.md,
+            marginHorizontal: theme.spacing.xxs,
+            padding: theme.spacing.xxs,
+          }}
+        >
+          <SymbolView
+            name="star"
+            resizeMode="scaleAspectFit"
+            size={theme.symbol.sm}
+            tintColor="white"
+            weight="medium"
+          />
+        </Pressable>
+
+        <Pressable
+          onPress={() => Alert.alert("TODO...")}
+          style={{
+            backgroundColor: theme.colors.translucent,
+            borderRadius: theme.spacing.md,
+            marginHorizontal: theme.spacing.xxs,
+            padding: theme.spacing.xxs,
+          }}
+        >
+          <SymbolView
+            name="ellipsis"
+            resizeMode="scaleAspectFit"
+            size={theme.symbol.sm}
+            tintColor="white"
+            weight="medium"
+          />
+        </Pressable>
+      </View>
     </View>
   );
 };
 
 const stylesheet = createStyleSheet((theme, runtime) => ({
+  buttonsContainer: {
+    alignItems: "center",
+    flexDirection: "row",
+    flexShrink: 0, // Prevents buttons from shrinking
+  },
   container: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
     paddingHorizontal: theme.spacing.xl,
     width: "100%",
+  },
+  textContainer: {
+    flex: 1,
+    flexShrink: 1, // Allows text to shrink
+    marginRight: theme.spacing.md, // Adds space between text and buttons
   },
 }));

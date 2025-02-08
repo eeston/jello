@@ -40,7 +40,7 @@ export const NowPlayingMediaControls = ({
           <SymbolView
             name="backward.fill"
             resizeMode="scaleAspectFit"
-            size={theme.symbol.lg}
+            size={theme.symbol.xl}
             tintColor={isLiveStream ? "grey" : "white"}
           />
         </Pressable>
@@ -52,7 +52,7 @@ export const NowPlayingMediaControls = ({
           <SymbolView
             name={isPlaying ? "pause.fill" : "play.fill"}
             resizeMode="scaleAspectFit"
-            size={theme.symbol.lg}
+            size={theme.symbol.xl}
             tintColor="white"
           />
         )}
@@ -62,7 +62,7 @@ export const NowPlayingMediaControls = ({
           <SymbolView
             name="forward.fill"
             resizeMode="scaleAspectFit"
-            size={theme.symbol.lg}
+            size={theme.symbol.xl}
             tintColor="white"
           />
         </Pressable>
@@ -75,5 +75,6 @@ const stylesheet = createStyleSheet((theme, runtime) => ({
   container: {
     flexDirection: "row",
     justifyContent: "space-around",
+    paddingHorizontal: theme.spacing.md,
   },
 }));

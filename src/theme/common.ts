@@ -45,4 +45,7 @@ export const timing = {
 export const symbol = {
   lg: 40,
   md: 32,
+  sm: 24,
+  xl: 48,
+  xs: 16,
 } as const;
