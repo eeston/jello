@@ -26,6 +26,7 @@ export const TrackList = ({
 
   return (
     <View style={styles.container}>
+      <Separator />
       {tracks?.map((track: JelloTrackItem, index: number) => (
         <View key={track.id}>
           <TrackListItem

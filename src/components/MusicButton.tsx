@@ -1,8 +1,7 @@
 import { ThemedText } from "@src/components/ThemedText";
-import { BlurView } from "expo-blur";
 import * as Haptics from "expo-haptics";
 import { SFSymbol, SymbolView } from "expo-symbols";
-import { Dimensions, Pressable } from "react-native";
+import { Dimensions, Pressable, View } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 const buttonTypes = {
@@ -16,13 +15,14 @@ const buttonTypes = {
   },
 };
 
-type MusicButtonProps = {
+export const MusicButton = ({
+  onPress,
+  type,
+}: {
   onPress: () => void;
   type: "play" | "shuffle";
-};
-
-export const MusicButton = ({ onPress, type }: MusicButtonProps) => {
-  const { styles } = useStyles(stylesheet);
+}) => {
+  const { styles, theme } = useStyles(stylesheet);
 
   const handleOnPress = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -30,7 +30,7 @@ export const MusicButton = ({ onPress, type }: MusicButtonProps) => {
   };
 
   return (
-    <BlurView style={styles.container} tint="light">
+    <View style={styles.container}>
       <Pressable
         onPress={handleOnPress}
         style={({ pressed }) => [styles.inner, { opacity: pressed ? 0.5 : 1 }]}
@@ -39,13 +39,13 @@ export const MusicButton = ({ onPress, type }: MusicButtonProps) => {
           name={buttonTypes[type].icon}
           resizeMode="scaleAspectFit"
           size={18}
-          tintColor="white"
+          tintColor={theme.colors.tint}
         />
         <ThemedText style={styles.text} type="defaultSemiBold">
           {buttonTypes[type].title}
         </ThemedText>
       </Pressable>
-    </BlurView>
+    </View>
   );
 };
 
@@ -53,6 +53,7 @@ const stylesheet = createStyleSheet((theme) => {
   const size = Dimensions.get("window").width / 2.4; // maybe this is repsonsive between screen sizes??
   return {
     container: {
+      backgroundColor: theme.colors.translucent,
       borderRadius: theme.spacing.xs,
       overflow: "hidden",
       paddingVertical: theme.spacing.sm,
@@ -65,7 +66,7 @@ const stylesheet = createStyleSheet((theme) => {
       justifyContent: "center",
     },
     text: {
-      color: "white",
+      color: theme.colors.tint,
     },
   };
 });

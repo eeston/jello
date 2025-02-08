@@ -31,8 +31,8 @@ export default function Layout() {
       <Stack.Screen
         name="albums/[id]"
         options={{
-          headerBackTitle: " ",
-          headerBlurEffect: undefined,
+          headerBlurEffect: "prominent",
+          headerLargeStyle: { backgroundColor: theme.colors.background },
           headerTintColor: theme.colors.tint,
           headerTitle: "",
         }}
@@ -47,5 +47,6 @@ const stylesheet = createStyleSheet((theme) => ({
   },
   headerTitle: {
     color: theme.colors.primary,
+    fontSize: 20,
   },
 }));

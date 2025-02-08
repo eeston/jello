@@ -2,7 +2,6 @@ import { Api } from "@jellyfin/sdk";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client";
 import { getUserLibraryApi } from "@jellyfin/sdk/lib/utils/api/user-library-api";
 import { useFetchUser } from "@src/api/useFetchUser";
-import { getParentId } from "@src/util/getParentId";
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
 
 export const useFetchAlbumDetails = (
@@ -15,7 +14,6 @@ export const useFetchAlbumDetails = (
     queryFn: async () => {
       const result = await getUserLibraryApi(api).getItem({
         itemId: albumId,
-        parentId: getParentId(),
         userId: user?.data?.Id,
       });
       return result.data;

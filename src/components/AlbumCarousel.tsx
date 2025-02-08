@@ -9,8 +9,7 @@ import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
 import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
 import { UseQueryResult } from "@tanstack/react-query";
 import { Link } from "expo-router";
-import { useMemo } from "react";
-import { Dimensions, FlatList, View } from "react-native";
+import { FlatList, View } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 export const AlbumCarousel = ({

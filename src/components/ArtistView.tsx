@@ -86,7 +86,9 @@ export const ArtistView = ({
   useLayoutEffect(() => {
     navigation.setOptions({
       headerBackground: () => (
-        <Animated.View style={[styles.headerBackground, headerFadeStyle]} />
+        <Animated.View style={[StyleSheet.absoluteFill, headerFadeStyle]}>
+          <BlurView style={StyleSheet.absoluteFill} tint="prominent" />
+        </Animated.View>
       ),
       headerTitle: () => (
         <Animated.Text style={[styles.headerTitle, headerFadeStyle]}>

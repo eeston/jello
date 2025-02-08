@@ -10,7 +10,7 @@ import { useFetchUser } from "@src/api/useFetchUser";
 import { getParentId } from "@src/util/getParentId";
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
 
-// TODO: just use listArtistAlbums and ignore
+// TODO: just use listArtistAlbums and
 // ignore the one being viewed
 export const useFetchMoreArtistAlbums = (
   api: Api,
