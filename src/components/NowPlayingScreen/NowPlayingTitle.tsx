@@ -32,38 +32,38 @@ export const NowPlayingTitle = ({
       </View>
       <View style={styles.buttonsContainer}>
         <TouchableOpacity
-          onPress={() => Alert.alert("TODO...")}
+          // onPress={() => Alert.alert("TODO...")}
           style={{
             backgroundColor: theme.colors.translucent,
             borderRadius: theme.spacing.md,
-            marginHorizontal: theme.spacing.xxs,
+            marginLeft: theme.spacing.sm,
             padding: theme.spacing.xxs,
           }}
         >
           <SymbolView
             name="star"
             resizeMode="scaleAspectFit"
-            size={theme.symbol.sm}
+            size={20}
             tintColor="white"
-            weight="medium"
+            weight="heavy"
           />
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => Alert.alert("TODO...")}
+          // onPress={() => Alert.alert("TODO...")}
           style={{
             backgroundColor: theme.colors.translucent,
             borderRadius: theme.spacing.md,
-            marginHorizontal: theme.spacing.xxs,
+            marginLeft: theme.spacing.sm,
             padding: theme.spacing.xxs,
           }}
         >
           <SymbolView
             name="ellipsis"
             resizeMode="scaleAspectFit"
-            size={theme.symbol.sm}
+            size={20}
             tintColor="white"
-            weight="medium"
+            weight="heavy"
           />
         </TouchableOpacity>
       </View>
