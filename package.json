@@ -2,7 +2,7 @@
   "name": "jello",
   "main": "expo-router/entry",
   "author": "John Easton <john@easton.dev>",
-  "version": "0.0.83",
+  "version": "0.0.84",
   "scripts": {
     "start": "expo run:ios",
     "prebuild": "expo prebuild -p ios --clean",
