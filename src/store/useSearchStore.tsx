@@ -1,3 +1,5 @@
+import { timing } from "@src/theme/common";
+import debounce from "lodash/debounce";
 import { create } from "zustand";
 
 interface SearchStore {
@@ -9,5 +11,7 @@ interface SearchStore {
 export const useSearchStore = create<SearchStore>((set) => ({
   query: "",
   resetQuery: () => set({ query: "" }),
-  setQuery: (query) => set({ query }),
+  setQuery: debounce((value: string) => {
+    set({ query: value });
+  }, timing.fast),
 }));
