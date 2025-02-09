@@ -3,7 +3,6 @@ import { NowPlayingMediaControls } from "@src/components/NowPlayingScreen//NowPl
 import { NowPlayingBottomControls } from "@src/components/NowPlayingScreen/NowPlayingBottomControls";
 import { NowPlayingProgress } from "@src/components/NowPlayingScreen/NowPlayingProgress";
 import { NowPlayingTitle } from "@src/components/NowPlayingScreen/NowPlayingTitle";
-import { NowPlayingVolume } from "@src/components/NowPlayingScreen/NowPlayingVolume";
 import { useSpringAnimation } from "@src/hooks/useSpringAnimation";
 import { useTrackedActiveTrack } from "@src/hooks/useTrackedActiveTrack";
 import { Image } from "expo-image";
@@ -40,18 +39,17 @@ export default function NowPlayingModal() {
       </View>
 
       <View style={styles.contentContainer}>
-        <View style={styles.top}>
-          <NowPlayingTitle
-            artist={currentTrack?.artist}
-            title={currentTrack?.title}
-          />
-        </View>
+        <NowPlayingTitle
+          artist={currentTrack?.artist}
+          title={currentTrack?.title}
+        />
 
         <NowPlayingProgress isLiveStream={!!currentTrack?.isLiveStream} />
 
         <NowPlayingMediaControls isLiveStream={!!currentTrack?.isLiveStream} />
 
-        <NowPlayingVolume />
+        {/* TODO: add volume */}
+        {/* <NowPlayingVolume /> */}
       </View>
 
       <View style={styles.bottom}>
@@ -78,7 +76,6 @@ const stylesheet = createStyleSheet((theme, runtime) => {
     bottom: {
       bottom: noInset ? 50 : runtime.insets.bottom + 70,
       position: "absolute",
-      zIndex: -1, // TODO: fix ExpoAvRoutePickerView layout
     },
     container: {
       height: runtime.screen.height,
@@ -86,11 +83,8 @@ const stylesheet = createStyleSheet((theme, runtime) => {
     },
     contentContainer: {
       height: "50%",
-      justifyContent: "space-between",
-      paddingBottom: noInset ? 50 + 50 : runtime.insets.bottom + 70,
-    },
-    top: {
-      paddingTop: theme.spacing.xl,
+      justifyContent: "space-around",
+      paddingBottom: noInset ? 100 : runtime.insets.bottom + 70,
     },
   };
 });

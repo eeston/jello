@@ -137,5 +137,6 @@ const stylesheet = createStyleSheet((theme) => ({
   },
   headerTitle: {
     color: theme.colors.primary,
+    fontSize: 20,
   },
 }));
