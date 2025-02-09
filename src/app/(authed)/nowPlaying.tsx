@@ -53,6 +53,7 @@ export default function NowPlayingModal() {
 
         <NowPlayingVolume />
       </View>
+
       <View style={styles.bottom}>
         <NowPlayingBottomControls />
       </View>
@@ -77,6 +78,7 @@ const stylesheet = createStyleSheet((theme, runtime) => {
     bottom: {
       bottom: noInset ? 50 : runtime.insets.bottom + 70,
       position: "absolute",
+      zIndex: -1, // TODO: fix ExpoAvRoutePickerView layout
     },
     container: {
       height: runtime.screen.height,

@@ -1,6 +1,6 @@
 import { ExpoAvRoutePickerView } from "@douglowder/expo-av-route-picker-view";
 import { SymbolView } from "expo-symbols";
-import { Alert, Pressable, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 export const NowPlayingBottomControls = () => {
@@ -8,14 +8,18 @@ export const NowPlayingBottomControls = () => {
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={() => Alert.alert("TODO...")}>
+      <TouchableOpacity
+        // onPress={() => Alert.alert("TODO...")}
+        // TODO: some weird hackery because ExpoAvRoutePickerView is the thief of screen space
+        style={{ zIndex: 10 }}
+      >
         <SymbolView
           name="quote.bubble"
           resizeMode="scaleAspectFit"
-          size={theme.symbol.md}
+          size={theme.symbol.sm}
           tintColor="#ffffff6a"
         />
-      </Pressable>
+      </TouchableOpacity>
       <View
         style={{
           alignItems: "center",
@@ -29,20 +33,23 @@ export const NowPlayingBottomControls = () => {
           activeTintColor="white"
           prioritizesVideoDevices={false}
           style={{
-            height: 150,
-            width: 150,
+            height: 130,
+            width: 130,
+            zIndex: -10,
           }}
           tintColor="#ffffff6a"
         />
       </View>
-      <Pressable onPress={() => Alert.alert("TODO...")}>
+      <TouchableOpacity
+      // onPress={() => Alert.alert("TODO...")}
+      >
         <SymbolView
           name="list.bullet"
           resizeMode="scaleAspectFit"
-          size={theme.symbol.md}
+          size={theme.symbol.sm}
           tintColor="#ffffff6a"
         />
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 };

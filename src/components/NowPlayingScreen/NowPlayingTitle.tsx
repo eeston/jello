@@ -1,6 +1,6 @@
 import { ThemedText } from "@src/components/ThemedText";
 import { SymbolView } from "expo-symbols";
-import { Alert, Pressable, View } from "react-native";
+import { Alert, TouchableOpacity, View } from "react-native";
 import { TrackMetadataBase } from "react-native-track-player";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
@@ -31,7 +31,7 @@ export const NowPlayingTitle = ({
         </ThemedText>
       </View>
       <View style={styles.buttonsContainer}>
-        <Pressable
+        <TouchableOpacity
           onPress={() => Alert.alert("TODO...")}
           style={{
             backgroundColor: theme.colors.translucent,
@@ -47,9 +47,9 @@ export const NowPlayingTitle = ({
             tintColor="white"
             weight="medium"
           />
-        </Pressable>
+        </TouchableOpacity>
 
-        <Pressable
+        <TouchableOpacity
           onPress={() => Alert.alert("TODO...")}
           style={{
             backgroundColor: theme.colors.translucent,
@@ -65,7 +65,7 @@ export const NowPlayingTitle = ({
             tintColor="white"
             weight="medium"
           />
-        </Pressable>
+        </TouchableOpacity>
       </View>
     </View>
   );
