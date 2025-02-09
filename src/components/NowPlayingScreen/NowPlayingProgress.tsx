@@ -97,6 +97,7 @@ const stylesheet = createStyleSheet((theme) => ({
   timeContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
+    paddingTop: theme.spacing.xxs,
   },
   timeText: {
     color: "white",

@@ -1,6 +1,6 @@
 import { ThemedText } from "@src/components/ThemedText";
 import { SymbolView } from "expo-symbols";
-import { Alert, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { TrackMetadataBase } from "react-native-track-player";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 

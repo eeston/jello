@@ -14,8 +14,13 @@ import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
 import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
 import { playTracks } from "@src/util/playTracks";
 import { Image } from "expo-image";
-import { useLocalSearchParams, useNavigation, useSegments } from "expo-router";
-import { View } from "react-native";
+import {
+  Link,
+  useLocalSearchParams,
+  useNavigation,
+  useSegments,
+} from "expo-router";
+import { TouchableOpacity, View } from "react-native";
 import Animated from "react-native-reanimated";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
@@ -81,9 +86,20 @@ export default function AlbumDetails() {
       </View>
       <View style={styles.detailsContainer}>
         <ThemedText type="subtitle">{fetchAlbumDetails?.data?.Name}</ThemedText>
-        <ThemedText style={styles.textArtist}>
-          {fetchAlbumDetails?.data?.AlbumArtist}
-        </ThemedText>
+        <Link
+          asChild
+          href={{
+            params: { id: fetchAlbumDetails?.data?.ParentId ?? "" },
+            pathname: "/artists/[id]",
+          }}
+          push
+        >
+          <TouchableOpacity>
+            <ThemedText style={styles.textArtist}>
+              {fetchAlbumDetails?.data?.AlbumArtist}
+            </ThemedText>
+          </TouchableOpacity>
+        </Link>
 
         <ThemedText style={styles.textGenres} type="defaultSemiBold">
           {!!fetchAlbumDetails?.data?.Genres?.length &&

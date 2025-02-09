@@ -1,3 +1,4 @@
+import { BACK_BUTTON_WORKAROUND } from "@src/common";
 import { Stack } from "expo-router";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
@@ -7,17 +8,13 @@ export default function Layout() {
     <Stack
       screenOptions={{
         contentStyle: styles.contentContainer,
-        // TODO: workaround...
-        // https://github.com/react-navigation/react-navigation/issues/11946#issuecomment-2506102387
-        // headerBackButtonDisplayMode: "minimal",
-        headerBackButtonDisplayMode: "default",
-        headerBackTitle: ".",
-        headerBackTitleStyle: { fontSize: 1 },
-        //
         headerBlurEffect: "prominent",
         headerShadowVisible: false,
+        headerTintColor: theme.colors.tint,
+        headerTitle: "Home",
         headerTitleStyle: styles.headerTitle,
         headerTransparent: true,
+        ...BACK_BUTTON_WORKAROUND,
       }}
     >
       <Stack.Screen
@@ -33,8 +30,14 @@ export default function Layout() {
         options={{
           headerBlurEffect: "prominent",
           headerLargeStyle: { backgroundColor: theme.colors.background },
-          headerTintColor: theme.colors.tint,
           headerTitle: "",
+        }}
+      />
+      <Stack.Screen
+        name="artists/[id]"
+        options={{
+          headerBlurEffect: undefined,
+          headerLargeTitle: false,
         }}
       />
     </Stack>

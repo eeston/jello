@@ -90,7 +90,7 @@ const stylesheet = createStyleSheet((theme, runtime) => {
       paddingBottom: noInset ? 50 + 50 : runtime.insets.bottom + 70,
     },
     top: {
-      paddingTop: theme.spacing.sm,
+      paddingTop: theme.spacing.xl,
     },
   };
 });
