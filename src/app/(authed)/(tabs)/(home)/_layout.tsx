@@ -28,16 +28,24 @@ export default function Layout() {
       <Stack.Screen
         name="albums/[id]"
         options={{
-          headerBlurEffect: "prominent",
           headerLargeStyle: { backgroundColor: theme.colors.background },
           headerTitle: "",
         }}
       />
       <Stack.Screen
-        name="artists/[id]"
+        name="artists/[id]/index"
         options={{
           headerBlurEffect: undefined,
           headerLargeTitle: false,
+        }}
+      />
+      <Stack.Screen
+        name="artists/[id]/top-songs"
+        options={{
+          ...BACK_BUTTON_WORKAROUND,
+          headerLargeStyle: { backgroundColor: theme.colors.background },
+          headerLargeTitle: false,
+          headerTitle: "Top Songs",
         }}
       />
     </Stack>

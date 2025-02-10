@@ -2,14 +2,22 @@ import { ThemedText } from "@src/components/ThemedText";
 import { TopTrackListItem } from "@src/components/TopTracksListItem";
 import { JelloTrackItem } from "@src/util/generateJelloTrack";
 import { playTracks } from "@src/util/playTracks";
-import { Dimensions, FlatList, View } from "react-native";
+import { Link } from "expo-router";
+import { SymbolView } from "expo-symbols";
+import { Dimensions, FlatList, TouchableOpacity, View } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 const WINDOW_WIDTH = Dimensions.get("window").width;
 const ITEMS_PER_COLUMN = 4;
 
-export const TopTracksList = ({ tracks }: { tracks?: JelloTrackItem[] }) => {
-  const { styles } = useStyles(stylesheet);
+export const TopTracksList = ({
+  artistId,
+  tracks,
+}: {
+  artistId: string;
+  tracks?: JelloTrackItem[];
+}) => {
+  const { styles, theme } = useStyles(stylesheet);
 
   if (!tracks?.length) {
     return null;
@@ -46,9 +54,30 @@ export const TopTracksList = ({ tracks }: { tracks?: JelloTrackItem[] }) => {
 
   return (
     <View style={styles.container}>
-      <ThemedText style={styles.title} type="subtitle">
-        Top Songs
-      </ThemedText>
+      <Link
+        asChild
+        href={{ params: { id: artistId }, pathname: "/artists/[id]/top-songs" }}
+      >
+        <TouchableOpacity
+          style={{
+            alignItems: "center",
+            flexDirection: "row",
+            paddingBottom: theme.spacing.xs,
+            paddingTop: theme.spacing.lg,
+          }}
+        >
+          <ThemedText style={styles.title} type="subtitle">
+            Top Songs
+          </ThemedText>
+          <SymbolView
+            name="chevron.right"
+            resizeMode="scaleAspectFit"
+            size={14}
+            tintColor={theme.colors.secondary}
+            weight="heavy"
+          />
+        </TouchableOpacity>
+      </Link>
       <FlatList
         contentContainerStyle={styles.contentContainer}
         data={columns}
@@ -76,8 +105,7 @@ const stylesheet = createStyleSheet((theme) => ({
     width: WINDOW_WIDTH,
   },
   title: {
-    paddingBottom: theme.spacing.xs,
-    paddingHorizontal: theme.spacing.md,
-    paddingTop: theme.spacing.lg,
+    paddingLeft: theme.spacing.md,
+    paddingRight: theme.spacing.xxs,
   },
 }));

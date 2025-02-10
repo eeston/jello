@@ -20,7 +20,7 @@ export const FETCH_LIBRARY_RECENTLY_ADDED_COUNT_LIMIT = 10;
 /**
  * @description The number of recently added albums we should return on the lubrary tab
  */
-export const FETCH_ARTIST_TOP_SONGS_COUNT_LIMIT = 8;
+export const FETCH_ARTIST_TOP_SONGS_COUNT_LIMIT = 12;
 
 /**
  * @description The amount of times we should refetch to build data sets for frequently & recently played albums

@@ -185,8 +185,10 @@ export const ArtistView = ({
         ) : (
           <View>
             {/* Top Played Tracks */}
-            {/* Add a new screen with full ordered list */}
-            <TopTracksList tracks={fetchArtistTopSongs?.data?.tracks} />
+            <TopTracksList
+              artistId={artistId}
+              tracks={fetchArtistTopSongs?.data?.tracks}
+            />
 
             {/* Favourite Albums */}
             <AlbumCarousel
