@@ -38,13 +38,13 @@ export const TopTrackListItem = ({
                 ellipsizeMode="tail"
                 numberOfLines={1}
                 style={styles.textSub}
-                type="defaultSemiBold"
+                type="default"
               >
                 {track.album}
               </ThemedText>
               <ThemedText
                 style={[styles.textSub, styles.yearText]}
-                type="defaultSemiBold"
+                type="default"
               >
                 {" • " + fmtIsoYear(track.date)}
               </ThemedText>
@@ -82,7 +82,6 @@ const stylesheet = createStyleSheet((theme) => ({
     color: theme.colors.secondary,
     flexShrink: 1,
     fontSize: 12,
-    lineHeight: 14,
   },
   yearText: {
     flexShrink: 0,
