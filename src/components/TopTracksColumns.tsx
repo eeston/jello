@@ -4,13 +4,20 @@ import { JelloTrackItem } from "@src/util/generateJelloTrack";
 import { playTracks } from "@src/util/playTracks";
 import { Link } from "expo-router";
 import { SymbolView } from "expo-symbols";
-import { Dimensions, FlatList, TouchableOpacity, View } from "react-native";
+import {
+  Dimensions,
+  FlatList,
+  ListRenderItemInfo,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 const WINDOW_WIDTH = Dimensions.get("window").width;
 const ITEMS_PER_COLUMN = 4;
+const COLUMN_WIDTH = WINDOW_WIDTH - 60;
 
-export const TopTracksList = ({
+export const TopTracksColumns = ({
   artistId,
   tracks,
 }: {
@@ -27,22 +34,25 @@ export const TopTracksList = ({
     playTracks({ skipToIndex: index, tracks });
   };
 
-  const columns = tracks.reduce((acc, track, index) => {
+  const columns = tracks.reduce<JelloTrackItem[][]>((acc, track, index) => {
     const columnIndex = Math.floor(index / ITEMS_PER_COLUMN);
     acc[columnIndex] = acc[columnIndex] || [];
     acc[columnIndex].push(track);
     return acc;
-  }, [] as JelloTrackItem[][]);
+  }, []);
 
-  const renderColumn = ({ index: columnIndex, item: columnTracks }) => {
+  const renderColumn = ({
+    index,
+    item,
+  }: ListRenderItemInfo<JelloTrackItem[]>) => {
     return (
-      <View key={columnIndex} style={styles.column}>
-        {columnTracks.map((track, rowIndex) => {
-          const absoluteIndex = columnIndex * ITEMS_PER_COLUMN + rowIndex;
+      <View key={index} style={styles.column}>
+        {item.map((track, rowIndex) => {
+          const absoluteIndex = index * ITEMS_PER_COLUMN + rowIndex;
           return (
             <TopTrackListItem
               index={absoluteIndex}
-              key={track.Id}
+              key={track.id}
               onPress={() => handleOnPressPlay(absoluteIndex)}
               track={track}
             />
@@ -81,10 +91,13 @@ export const TopTracksList = ({
       <FlatList
         contentContainerStyle={styles.contentContainer}
         data={columns}
+        decelerationRate="fast"
         horizontal
         pagingEnabled
         renderItem={renderColumn}
         showsHorizontalScrollIndicator={false}
+        snapToAlignment="start"
+        snapToInterval={COLUMN_WIDTH}
         style={styles.flatlistContent}
       />
     </View>
@@ -93,13 +106,14 @@ export const TopTracksList = ({
 
 const stylesheet = createStyleSheet((theme) => ({
   column: {
-    width: WINDOW_WIDTH - theme.spacing.md * 2,
+    width: COLUMN_WIDTH,
   },
   container: {
     flex: 1,
   },
   contentContainer: {
     paddingHorizontal: theme.spacing.md,
+    paddingRight: COLUMN_WIDTH,
   },
   flatlistContent: {
     width: WINDOW_WIDTH,

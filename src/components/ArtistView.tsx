@@ -7,7 +7,7 @@ import { useFetchArtistTopSongs } from "@src/api/useFetchArtistTopSongs";
 import { AlbumCarousel } from "@src/components/AlbumCarousel";
 import { ListPadding } from "@src/components/ListPadding";
 import { ThemedText } from "@src/components/ThemedText";
-import { TopTracksList } from "@src/components/TopTracksList";
+import { TopTracksColumns } from "@src/components/TopTracksColumns";
 import { useAuth } from "@src/store/AuthContext";
 import { playTracks } from "@src/util/playTracks";
 import { BlurView } from "expo-blur";
@@ -185,7 +185,7 @@ export const ArtistView = ({
         ) : (
           <View>
             {/* Top Played Tracks */}
-            <TopTracksList
+            <TopTracksColumns
               artistId={artistId}
               tracks={fetchArtistTopSongs?.data?.tracks}
             />
