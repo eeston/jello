@@ -36,6 +36,8 @@ export const TrackList = ({
             key={track.id}
             onPress={() => handleOnPress(index)}
             track={track}
+            withAlbumName
+            withArtwork
           />
           <Separator
             marginLeft={index === tracks.length - 1 ? 0 : theme.spacing.xl}

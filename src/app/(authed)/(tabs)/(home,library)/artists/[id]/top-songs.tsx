@@ -4,8 +4,7 @@ import { ListPadding } from "@src/components/ListPadding";
 import { LoadingOverlay } from "@src/components/LoadingOverlay";
 import { NoSearchResults } from "@src/components/NoResults";
 import { Separator } from "@src/components/Separator";
-import { TopTrackListItem } from "@src/components/TopTracksListItem";
-import { ROW_HEIGHT } from "@src/constants";
+import { TrackListItem } from "@src/components/TrackListItem";
 import { useAuth } from "@src/store/AuthContext";
 import { JelloTrackItem } from "@src/util/generateJelloTrack";
 import { playTracks } from "@src/util/playTracks";
@@ -40,10 +39,13 @@ export default function ArtistTopTracks() {
     }
 
     return (
-      <View style={{ flex: 1 }}>
-        <TopTrackListItem
+      <View style={styles.trackListItemContainer}>
+        <TrackListItem
           onPress={() => handleOnPressPlay(index)}
           track={item}
+          withAlbumName
+          withAlbumYear
+          withArtwork
         />
       </View>
     );
@@ -80,4 +82,5 @@ const stylesheet = createStyleSheet((theme) => ({
     paddingHorizontal: theme.spacing.md,
     paddingTop: theme.spacing.sm,
   },
+  trackListItemContainer: { flex: 1 },
 }));

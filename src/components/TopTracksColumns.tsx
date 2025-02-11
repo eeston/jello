@@ -1,6 +1,6 @@
 import { Separator } from "@src/components/Separator";
 import { ThemedText } from "@src/components/ThemedText";
-import { TopTrackListItem } from "@src/components/TopTracksListItem";
+import { TrackListItem } from "@src/components/TrackListItem";
 import { JelloTrackItem } from "@src/util/generateJelloTrack";
 import { playTracks } from "@src/util/playTracks";
 import { Link } from "expo-router";
@@ -56,11 +56,14 @@ export const TopTracksColumns = ({
           const absoluteIndex = index * ITEMS_PER_COLUMN + rowIndex;
           return (
             <View key={track.id}>
-              <TopTrackListItem
-                index={absoluteIndex}
+              <TrackListItem
+                index={index}
                 key={track.id}
                 onPress={() => handleOnPressPlay(absoluteIndex)}
                 track={track}
+                withAlbumName
+                withAlbumYear
+                withArtwork
               />
               {rowIndex < item.length - 1 && <Separator marginLeft={62} />}
             </View>
