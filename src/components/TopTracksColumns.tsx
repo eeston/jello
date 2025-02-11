@@ -46,8 +46,12 @@ export const TopTracksColumns = ({
     index,
     item,
   }: ListRenderItemInfo<JelloTrackItem[]>) => {
+    const isLastColumn = index === columns.length - 1;
     return (
-      <View key={index} style={styles.column}>
+      <View
+        key={index}
+        style={[styles.column, isLastColumn && styles.lastColumn]}
+      >
         {item.map((track, rowIndex) => {
           const absoluteIndex = index * ITEMS_PER_COLUMN + rowIndex;
           return (
@@ -58,7 +62,7 @@ export const TopTracksColumns = ({
                 onPress={() => handleOnPressPlay(absoluteIndex)}
                 track={track}
               />
-              {rowIndex < item.length - 1 && <Separator marginLeft={66} />}
+              {rowIndex < item.length - 1 && <Separator marginLeft={62} />}
             </View>
           );
         })}
@@ -110,6 +114,7 @@ export const TopTracksColumns = ({
 
 const stylesheet = createStyleSheet((theme) => ({
   column: {
+    paddingRight: theme.spacing.md,
     width: COLUMN_WIDTH,
   },
   container: {
@@ -117,10 +122,13 @@ const stylesheet = createStyleSheet((theme) => ({
   },
   contentContainer: {
     paddingHorizontal: theme.spacing.md,
-    paddingRight: theme.spacing.md * 3,
   },
   flatlistContent: {
     width: WINDOW_WIDTH,
+  },
+  lastColumn: {
+    paddingRight: 0,
+    width: WINDOW_WIDTH - theme.spacing.md * 2,
   },
   title: {
     paddingLeft: theme.spacing.md,

@@ -1,10 +1,10 @@
-import { ListItem } from "@src/components/ListItem";
 import { ThemedText } from "@src/components/ThemedText";
 import { ROW_HEIGHT } from "@src/constants";
 import { fmtIsoYear } from "@src/util/date";
 import { JelloTrackItem } from "@src/util/generateJelloTrack";
 import { Image } from "expo-image";
-import { View } from "react-native";
+import { SymbolView } from "expo-symbols";
+import { TouchableOpacity, View } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 export const TopTrackListItem = ({
@@ -17,73 +17,67 @@ export const TopTrackListItem = ({
   const { styles, theme } = useStyles(stylesheet);
 
   return (
-    <ListItem
-      LeftComponent={
-        <View style={styles.leftContainer}>
-          <Image
-            contentFit="cover"
-            placeholder={{
-              blurhash: track.artworkBlur,
-            }}
-            source={track.artwork}
-            style={styles.image}
-            transition={theme.timing.medium}
-          />
-          <View style={styles.textContainer}>
-            <ThemedText ellipsizeMode="tail" numberOfLines={1}>
-              {track.title}
-            </ThemedText>
-            <View style={styles.subTextContainer}>
-              <ThemedText
-                ellipsizeMode="tail"
-                numberOfLines={1}
-                style={styles.textSub}
-                type="default"
-              >
-                {track.album}
-              </ThemedText>
-              <ThemedText
-                style={[styles.textSub, styles.yearText]}
-                type="default"
-              >
-                {" • " + fmtIsoYear(track.date)}
-              </ThemedText>
-            </View>
-          </View>
-        </View>
-      }
-      height={ROW_HEIGHT}
-      key={track.id}
-      onPress={onPress}
-    />
+    <TouchableOpacity onPress={onPress} style={styles.container}>
+      <Image
+        contentFit="cover"
+        placeholder={{
+          blurhash: track.artworkBlur,
+        }}
+        source={track.artwork}
+        style={styles.image}
+        transition={theme.timing.medium}
+      />
+      <View style={styles.textContainer}>
+        <ThemedText ellipsizeMode="tail" numberOfLines={1}>
+          {track.title}
+        </ThemedText>
+        <ThemedText
+          ellipsizeMode="tail"
+          numberOfLines={1}
+          style={styles.textSub}
+          type="default"
+        >
+          {track.album} {" • " + fmtIsoYear(track.date)}
+        </ThemedText>
+      </View>
+      <TouchableOpacity style={styles.moreButtonContainer}>
+        <SymbolView
+          name="ellipsis"
+          resizeMode="scaleAspectFit"
+          size={14}
+          tintColor={theme.colors.primary}
+        />
+      </TouchableOpacity>
+    </TouchableOpacity>
   );
 };
 
 const stylesheet = createStyleSheet((theme) => ({
-  container: {},
+  container: {
+    alignItems: "center",
+    flexDirection: "row",
+    height: ROW_HEIGHT,
+  },
   image: {
     borderRadius: 5,
     height: 50,
     width: 50,
   },
-  leftContainer: {
-    alignItems: "center",
-    flexDirection: "row",
+  moreButtonContainer: {
+    height: "100%",
+    justifyContent: "center",
+    paddingLeft: theme.spacing.sm,
   },
   subTextContainer: {
     alignItems: "center",
     flexDirection: "row",
   },
   textContainer: {
-    marginHorizontal: theme.spacing.md,
-    width: "75%",
+    flex: 1,
+    paddingHorizontal: theme.spacing.sm,
   },
   textSub: {
     color: theme.colors.secondary,
-    flexShrink: 1,
     fontSize: 12,
-  },
-  yearText: {
-    flexShrink: 0,
   },
 }));

@@ -10,7 +10,7 @@ import { useAuth } from "@src/store/AuthContext";
 import { JelloTrackItem } from "@src/util/generateJelloTrack";
 import { playTracks } from "@src/util/playTracks";
 import { useLocalSearchParams } from "expo-router";
-import { FlatList } from "react-native";
+import { FlatList, View } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 // TODO: handle all songs
@@ -40,7 +40,12 @@ export default function ArtistTopTracks() {
     }
 
     return (
-      <TopTrackListItem onPress={() => handleOnPressPlay(index)} track={item} />
+      <View style={{ flex: 1 }}>
+        <TopTrackListItem
+          onPress={() => handleOnPressPlay(index)}
+          track={item}
+        />
+      </View>
     );
   };
 
@@ -74,20 +79,5 @@ const stylesheet = createStyleSheet((theme) => ({
   container: {
     paddingHorizontal: theme.spacing.md,
     paddingTop: theme.spacing.sm,
-  },
-  listItemLeftContainer: {
-    alignItems: "center",
-    flexDirection: "row",
-    height: ROW_HEIGHT,
-  },
-  listItemLeftImage: {
-    borderRadius: theme.spacing.xxl,
-    height: theme.spacing.xxl,
-    width: theme.spacing.xxl,
-  },
-  listItemText: {
-    fontSize: 16,
-    paddingLeft: theme.spacing.sm,
-    paddingRight: 80,
   },
 }));
