@@ -1,3 +1,4 @@
+import { Separator } from "@src/components/Separator";
 import { ThemedText } from "@src/components/ThemedText";
 import { TopTrackListItem } from "@src/components/TopTracksListItem";
 import { JelloTrackItem } from "@src/util/generateJelloTrack";
@@ -50,12 +51,15 @@ export const TopTracksColumns = ({
         {item.map((track, rowIndex) => {
           const absoluteIndex = index * ITEMS_PER_COLUMN + rowIndex;
           return (
-            <TopTrackListItem
-              index={absoluteIndex}
-              key={track.id}
-              onPress={() => handleOnPressPlay(absoluteIndex)}
-              track={track}
-            />
+            <View key={track.id}>
+              <TopTrackListItem
+                index={absoluteIndex}
+                key={track.id}
+                onPress={() => handleOnPressPlay(absoluteIndex)}
+                track={track}
+              />
+              {rowIndex < item.length - 1 && <Separator marginLeft={66} />}
+            </View>
           );
         })}
       </View>
@@ -113,7 +117,7 @@ const stylesheet = createStyleSheet((theme) => ({
   },
   contentContainer: {
     paddingHorizontal: theme.spacing.md,
-    paddingRight: COLUMN_WIDTH,
+    paddingRight: theme.spacing.md * 3,
   },
   flatlistContent: {
     width: WINDOW_WIDTH,
