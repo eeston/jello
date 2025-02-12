@@ -4,8 +4,9 @@ import { ListPadding } from "@src/components/ListPadding";
 import { LoadingOverlay } from "@src/components/LoadingOverlay";
 import { MusicButton } from "@src/components/MusicButton";
 import { PlaylistStats } from "@src/components/PlaylistStats";
+import { Separator } from "@src/components/Separator";
 import { ThemedText } from "@src/components/ThemedText";
-import { TrackList } from "@src/components/TrackList";
+import { TrackListItem } from "@src/components/TrackListItem";
 import { useScrollHeader } from "@src/hooks/useScrollHeader";
 import { useAuth } from "@src/store/AuthContext";
 import { fmtIsoDate } from "@src/util/date";
@@ -39,6 +40,12 @@ export default function PlaylistDetails() {
   };
   const handleOnPressShuffle = () => {
     playTracks({ shuffle: true, tracks: fetchPlaylistSongs?.data?.tracks });
+  };
+  const handleOnPressPlayTrack = (index: number) => {
+    playTracks({
+      skipToIndex: index,
+      tracks: fetchPlaylistSongs?.data?.tracks,
+    });
   };
 
   if (fetchPlaylistDetails.isPending || fetchPlaylistSongs.isPending) {
@@ -88,7 +95,24 @@ export default function PlaylistDetails() {
       </View>
 
       <View style={styles.trackListContainer}>
-        <TrackList isPlaylist tracks={fetchPlaylistSongs?.data?.tracks} />
+        <Separator />
+        {fetchPlaylistSongs?.data?.tracks.map((track, index) => {
+          const isLastItem =
+            index === fetchPlaylistSongs?.data?.tracks.length - 1;
+          return (
+            <View>
+              <TrackListItem
+                index={index}
+                onPress={() => handleOnPressPlayTrack(index)}
+                track={track}
+                withAlbumName
+                withArtwork
+              />
+              <Separator marginLeft={isLastItem ? 0 : theme.spacing.xxxl} />
+            </View>
+          );
+        })}
+
         <PlaylistStats
           playlistDetails={fetchPlaylistDetails?.data}
           playlistSongs={fetchPlaylistSongs.data?.tracks}

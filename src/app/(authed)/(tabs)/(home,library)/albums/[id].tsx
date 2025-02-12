@@ -6,8 +6,9 @@ import { AlbumStats } from "@src/components/AlbumStats";
 import { ListPadding } from "@src/components/ListPadding";
 import { LoadingOverlay } from "@src/components/LoadingOverlay";
 import { MusicButton } from "@src/components/MusicButton";
+import { Separator } from "@src/components/Separator";
 import { ThemedText } from "@src/components/ThemedText";
-import { TrackList } from "@src/components/TrackList";
+import { TrackListItem } from "@src/components/TrackListItem";
 import { useScrollHeader } from "@src/hooks/useScrollHeader";
 import { useAuth } from "@src/store/AuthContext";
 import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
@@ -46,11 +47,14 @@ export default function AlbumDetails() {
     titleStyle: styles.headerTitle,
   });
 
-  const handleOnPressPlay = () => {
+  const handleOnPressPlayAlbum = () => {
     playTracks({ tracks: fetchAlbumSongs?.data?.tracks });
   };
-  const handleOnPressShuffle = () => {
+  const handleOnPressShuffleAlbum = () => {
     playTracks({ shuffle: true, tracks: fetchAlbumSongs?.data?.tracks });
+  };
+  const handleOnPressTrack = (index: number) => {
+    playTracks({ skipToIndex: index, tracks: fetchAlbumSongs?.data?.tracks });
   };
 
   if (
@@ -85,7 +89,9 @@ export default function AlbumDetails() {
         />
       </View>
       <View style={styles.detailsContainer}>
-        <ThemedText type="subtitle">{fetchAlbumDetails?.data?.Name}</ThemedText>
+        <ThemedText numberOfLines={1} type="subtitle">
+          {fetchAlbumDetails?.data?.Name}
+        </ThemedText>
         <Link
           asChild
           href={{
@@ -101,19 +107,39 @@ export default function AlbumDetails() {
           </TouchableOpacity>
         </Link>
 
-        <ThemedText style={styles.textGenres} type="defaultSemiBold">
+        <ThemedText
+          numberOfLines={1}
+          style={styles.textGenres}
+          type="defaultSemiBold"
+        >
           {!!fetchAlbumDetails?.data?.Genres?.length &&
             `${fetchAlbumDetails?.data?.Genres?.map((genre) => genre).join(", ")} • `}
           {fetchAlbumDetails?.data?.ProductionYear}
         </ThemedText>
       </View>
       <View style={styles.buttonContainer}>
-        <MusicButton onPress={handleOnPressPlay} type="play" />
-        <MusicButton onPress={handleOnPressShuffle} type="shuffle" />
+        <MusicButton onPress={handleOnPressPlayAlbum} type="play" />
+        <MusicButton onPress={handleOnPressShuffleAlbum} type="shuffle" />
       </View>
 
       <View style={styles.trackListContainer}>
-        <TrackList tracks={fetchAlbumSongs?.data?.tracks} />
+        <Separator />
+        {fetchAlbumSongs?.data?.tracks.map((track, index) => (
+          <View>
+            <TrackListItem
+              onPress={() => handleOnPressTrack(index)}
+              track={track}
+              trackIndex={track.index}
+            />
+            <Separator
+              marginLeft={
+                index === fetchAlbumSongs?.data?.tracks.length - 1
+                  ? 0
+                  : theme.spacing.xl
+              }
+            />
+          </View>
+        ))}
         <AlbumStats
           albumDetails={fetchAlbumDetails?.data}
           albumSongs={fetchAlbumSongs.data?.tracks}
@@ -140,7 +166,7 @@ const stylesheet = createStyleSheet((theme) => ({
     justifyContent: "space-around",
   },
   container: { paddingVertical: theme.spacing.md },
-  detailsContainer: { alignItems: "center", paddingVertical: theme.spacing.md },
+  detailsContainer: { alignItems: "center", padding: theme.spacing.md },
   headerTitle: {
     color: theme.colors.primary,
     fontSize: 18,
