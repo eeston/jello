@@ -116,6 +116,13 @@ export default function Layout() {
         }}
       />
       <Stack.Screen
+        name="playlists/favourite-songs"
+        options={{
+          ...BACK_BUTTON_WORKAROUND,
+          headerLargeStyle: { backgroundColor: theme.colors.background },
+        }}
+      />
+      <Stack.Screen
         name="playlists/[id]"
         options={{
           ...BACK_BUTTON_WORKAROUND,

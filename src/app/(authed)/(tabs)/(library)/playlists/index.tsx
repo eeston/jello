@@ -13,7 +13,8 @@ import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
 import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
-import { FlatList, View } from "react-native";
+import { SymbolView } from "expo-symbols";
+import { FlatList, TouchableOpacity, View } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 export default function PlaylistsList() {
@@ -42,23 +43,19 @@ export default function PlaylistsList() {
           pathname: "/playlists/[id]",
         }}
       >
-        <ListItem
-          LeftComponent={
-            <View style={styles.imageContainer}>
-              <Image
-                contentFit="cover"
-                placeholder={extractPrimaryHash(item.ImageBlurHashes)}
-                source={generateArtworkUrl({ api, id: item.Id })}
-                style={styles.itemImage}
-                transition={theme.timing.medium}
-              />
-              <ThemedText>{item.Name}</ThemedText>
-            </View>
-          }
-          RightComponent={<RightChevron />}
-          height={100}
-          key={item.Id}
-        />
+        <TouchableOpacity style={{ flexDirection: "row" }}>
+          <View style={styles.imageContainer}>
+            <Image
+              contentFit="cover"
+              placeholder={extractPrimaryHash(item.ImageBlurHashes)}
+              source={generateArtworkUrl({ api, id: item.Id })}
+              style={styles.itemImage}
+              transition={theme.timing.medium}
+            />
+            <ThemedText>{item.Name}</ThemedText>
+          </View>
+          <RightChevron />
+        </TouchableOpacity>
       </Link>
     );
   };
@@ -72,6 +69,7 @@ export default function PlaylistsList() {
       ItemSeparatorComponent={() => <Separator marginLeft={100} />}
       ListEmptyComponent={<NoSearchResults query={query} type="Playlists" />}
       ListFooterComponent={ListPadding}
+      ListHeaderComponent={<FavouriteSongsPlaylistItem />}
       contentContainerStyle={styles.container}
       contentInsetAdjustmentBehavior="automatic"
       data={filteredPlaylists}
@@ -82,6 +80,46 @@ export default function PlaylistsList() {
     />
   );
 }
+
+const FavouriteSongsPlaylistItem = () => {
+  const { theme } = useStyles(stylesheet);
+
+  return (
+    <Link
+      asChild
+      href={{
+        pathname: "/playlists/favourite-songs",
+      }}
+    >
+      <TouchableOpacity
+        style={{ flexDirection: "row", justifyContent: "space-between" }}
+      >
+        <View style={{ alignItems: "center", flexDirection: "row" }}>
+          <View
+            style={{
+              alignItems: "center",
+              backgroundColor: theme.colors.translucent,
+              borderRadius: theme.spacing.xs,
+              height: 80,
+              justifyContent: "center",
+              marginRight: theme.spacing.md,
+              width: 80,
+            }}
+          >
+            <SymbolView
+              name="star.fill"
+              resizeMode="scaleAspectFit"
+              size={50}
+              tintColor={theme.colors.tint}
+            />
+          </View>
+          <ThemedText>Favourite Songs</ThemedText>
+        </View>
+        <RightChevron />
+      </TouchableOpacity>
+    </Link>
+  );
+};
 
 const stylesheet = createStyleSheet((theme) => ({
   container: {

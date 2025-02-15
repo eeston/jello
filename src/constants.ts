@@ -1,4 +1,5 @@
 export const ROW_HEIGHT = 55; // this should be in the theme
+export const ARTWORK_SIZE = 250; // this should be in the theme
 export const DEMO_SERVER = "https://demo.jellyfin.org/stable";
 
 export const STORE_ACCESS_TOKEN_KEY = "dev.easton.jello.access-token";
@@ -13,12 +14,12 @@ export const STORE_SELECTED_MUSIC_LIBRARY =
 export const FETCH_HOME_ITEM_COUNT_LIMIT = 6;
 
 /**
- * @description The number of recently added albums we should return on the lubrary tab
+ * @description The number of recently added albums we should return on the library tab
  */
 export const FETCH_LIBRARY_RECENTLY_ADDED_COUNT_LIMIT = 10;
 
 /**
- * @description The number of recently added albums we should return on the lubrary tab
+ * @description The number of top songs we should return for the artist details page
  */
 export const FETCH_ARTIST_TOP_SONGS_COUNT_LIMIT = 12;
 
