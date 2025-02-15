@@ -1,4 +1,5 @@
 import { ThemedText } from "@src/components/ThemedText";
+import { ARTWORK_SIZE } from "@src/constants";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
 import { SymbolView } from "expo-symbols";
@@ -80,8 +81,8 @@ const stylesheet = createStyleSheet((theme) => ({
   image: {
     alignSelf: "center",
     borderRadius: theme.spacing.md,
-    height: 300,
-    width: 300,
+    height: ARTWORK_SIZE,
+    width: ARTWORK_SIZE,
   },
   noteContainer: {
     bottom: theme.spacing.lg,

@@ -1,7 +1,9 @@
+import { useToggleFavouriteTrack } from "@src/api/useAddFavouriteTrack";
 import { ThemedText } from "@src/components/ThemedText";
 import { TrackListItemLeft } from "@src/components/TrackListItem/TrackListItemLeft";
 import { formatAlbumSubtext } from "@src/components/TrackListItem/formatAlbumSubtext";
 import { ROW_HEIGHT } from "@src/constants";
+import { useAuth } from "@src/store/AuthContext";
 import { JelloTrackItem } from "@src/util/generateJelloTrack";
 import { SymbolView } from "expo-symbols";
 import { TouchableOpacity, View } from "react-native";
@@ -37,6 +39,17 @@ export const TrackListItem = ({
   withArtwork?: boolean;
 }) => {
   const { styles, theme } = useStyles(stylesheet);
+  const { api } = useAuth();
+  const toggleFavouriteTrack = useToggleFavouriteTrack();
+
+  const handleOnPressTrackOptions = () => {
+    // TODO: add dropdown
+    return toggleFavouriteTrack.mutate({
+      api,
+      id: track.id,
+      isFavourite: track.isFavourite,
+    });
+  };
 
   return (
     <TouchableOpacity onPress={onPress} style={styles.container(withArtwork)}>
@@ -65,7 +78,10 @@ export const TrackListItem = ({
           </ThemedText>
         )}
       </View>
-      <TouchableOpacity style={styles.moreButtonContainer}>
+      <TouchableOpacity
+        onPress={handleOnPressTrackOptions}
+        style={styles.moreButtonContainer}
+      >
         <SymbolView
           name="ellipsis"
           resizeMode="scaleAspectFit"

@@ -3,7 +3,6 @@ import { BaseItemKind, SortOrder } from "@jellyfin/sdk/lib/generated-client";
 import { ItemSortBy } from "@jellyfin/sdk/lib/models/api";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api";
 import { useFetchUser } from "@src/api/useFetchUser";
-import { FETCH_ARTIST_TOP_SONGS_COUNT_LIMIT } from "@src/constants";
 import {
   JelloTrackItem,
   generateJelloTrack,
@@ -14,6 +13,7 @@ import { UseQueryResult, useQuery } from "@tanstack/react-query";
 export const useFetchArtistTopSongs = (
   api: Api,
   artistId: string,
+  size?: number,
 ): UseQueryResult<{ tracks: JelloTrackItem[] }, Error> => {
   const user = useFetchUser(api);
   const artistTopSongs = useQuery({
@@ -22,7 +22,7 @@ export const useFetchArtistTopSongs = (
       const result = await getItemsApi(api).getItems({
         albumArtistIds: [artistId],
         includeItemTypes: [BaseItemKind.Audio],
-        limit: FETCH_ARTIST_TOP_SONGS_COUNT_LIMIT,
+        limit: size,
         parentId: getParentId(),
         recursive: true,
         sortBy: [ItemSortBy.PlayCount],
@@ -36,7 +36,7 @@ export const useFetchArtistTopSongs = (
 
       return { tracks };
     },
-    queryKey: ["artistTopSongs", artistId],
+    queryKey: ["artistTopSongs", artistId, size],
   });
 
   return artistTopSongs;

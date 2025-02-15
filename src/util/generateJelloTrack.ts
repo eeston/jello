@@ -5,6 +5,7 @@ import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
 import { generateTrackUrl } from "@src/util/generateTrackUrl";
 import { ticksToSeconds } from "@src/util/time";
 import {
+  RatingType,
   type PitchAlgorithm as RntpPitchAlgorithm,
   type TrackMetadataBase as RntpTrackMetadataBase,
   type TrackType as RntpTrackType,
@@ -17,6 +18,7 @@ export type JelloTrackItem = {
   artworkBlur: string;
 
   /**
+
    * @description jellyfin id
    */
   id: string;
@@ -25,6 +27,11 @@ export type JelloTrackItem = {
    * @description album index
    */
   index: number;
+
+  /**
+   * @description album index
+   */
+  isFavourite: boolean;
 } & RntpAddTrack &
   RntpTrack &
   RntpTrackMetadataBase;
@@ -41,25 +48,18 @@ export const generateJelloTrack = (
   return {
     album: jellyfinTrack.Album ?? "Unknown Album",
     artist: jellyfinTrack.AlbumArtist ?? "Unknown Artist",
-    // rating
     artwork: generateArtworkUrl({
       api,
       id: jellyfinTrack.AlbumId,
     }),
-    // type
-    // userAgent
-    // isLiveStream
     artworkBlur: extractPrimaryHash(jellyfinTrack.ImageBlurHashes),
-    // genre
     date: jellyfinTrack.PremiereDate ?? "Unknown Date",
-    // contentType
     duration: ticksToSeconds(jellyfinTrack.RunTimeTicks),
     id: jellyfinTrack.Id ?? "Unkown ID",
-    // description
     index: jellyfinTrack.IndexNumber ?? 0,
+    isFavourite: !!jellyfinTrack.UserData?.IsFavorite,
+    rating: jellyfinTrack.UserData?.IsFavorite ? RatingType.Heart : undefined,
     title: jellyfinTrack.Name ?? "Unkown Title",
-    // pitchAlgorithm
-    // headers
     url: generateTrackUrl({
       api,
       trackId: jellyfinTrack.Id,

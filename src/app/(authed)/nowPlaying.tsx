@@ -41,6 +41,9 @@ export default function NowPlayingModal() {
       <View style={styles.contentContainer}>
         <NowPlayingTitle
           artist={currentTrack?.artist}
+          id={currentTrack?.id}
+          isFavourite={currentTrack?.isFavourite}
+          rating={currentTrack?.rating}
           title={currentTrack?.title}
         />
 

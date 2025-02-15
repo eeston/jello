@@ -1,7 +1,6 @@
+import { syncPlaybackProgress, syncPlaybackStart } from "@src/api/playback";
 import { fetchRadioInfo } from "@src/api/radio";
 import TrackPlayer, { Event, State } from "react-native-track-player";
-
-import { syncPlaybackProgress, syncPlaybackStart } from "../api/playback";
 
 export const playbackService = async () => {
   TrackPlayer.addEventListener(Event.RemotePlay, async () => {
@@ -20,7 +19,7 @@ export const playbackService = async () => {
     return TrackPlayer.reset();
   });
   TrackPlayer.addEventListener(Event.RemoteSeek, (event) => {
-    // TrackPlayer.seekTo(event.position);
+    TrackPlayer.seekTo(event.position);
   });
   TrackPlayer.addEventListener(
     Event.PlaybackActiveTrackChanged,
@@ -58,5 +57,27 @@ export const playbackService = async () => {
     if (event.state === State.Ended) {
       TrackPlayer.reset();
     }
+  });
+  TrackPlayer.addEventListener(Event.RemoteLike, async () => {
+    // TODO: not really sure why this doesn't show up on the home screen
+    // const currentTrack = await getActiveTrack();
+    // addFavouriteTrack({ api: apiService?.getApi(), itemId: currentTrack?.id });
+    // const nowPlayingIndex = await getActiveTrackIndex();
+    // await TrackPlayer.updateMetadataForTrack(nowPlayingIndex, {
+    //   rating: RatingType.Heart,
+    // });
+  });
+
+  TrackPlayer.addEventListener(Event.RemoteDislike, async () => {
+    // TODO: not really sure why this doesn't show up on the home screen
+    // const currentTrack = await getActiveTrack();
+    // removeFavouriteTrack({
+    //   api: apiService?.getApi(),
+    //   itemId: currentTrack?.id,
+    // });
+    // const nowPlayingIndex = await getActiveTrackIndex();
+    // await TrackPlayer.updateMetadataForTrack(nowPlayingIndex, {
+    //   rating: undefined,
+    // });
   });
 };

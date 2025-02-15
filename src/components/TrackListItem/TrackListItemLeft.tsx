@@ -2,8 +2,9 @@ import { MusicVisualizer } from "@src/components/MusicVisualiser";
 import { ThemedText } from "@src/components/ThemedText";
 import { JelloTrackItem } from "@src/util/generateJelloTrack";
 import { Image } from "expo-image";
+import { SymbolView } from "expo-symbols";
 import { View } from "react-native";
-import { useActiveTrack, useIsPlaying } from "react-native-track-player";
+import { useActiveTrack } from "react-native-track-player";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 export const TrackListItemLeft = ({
@@ -16,7 +17,6 @@ export const TrackListItemLeft = ({
   withArtwork: boolean;
 }) => {
   const { styles, theme } = useStyles(stylesheet);
-  const isPlaying = useIsPlaying();
   const activeTrack = useActiveTrack();
 
   const isCurrentTrack = activeTrack?.id === track.id;
@@ -37,11 +37,25 @@ export const TrackListItemLeft = ({
     );
   } else {
     return (
-      <View style={styles.indiciesContainer}>
+      <View style={styles.container}>
         {isCurrentTrack ? (
-          <MusicVisualizer isPlaying={!!isPlaying} />
+          <View>
+            {/* TODO: add favourite */}
+            <MusicVisualizer />
+          </View>
         ) : (
-          <ThemedText style={styles.text}>{index}</ThemedText>
+          <View style={styles.indiciesContainer}>
+            {track.isFavourite && (
+              <SymbolView
+                name="star.fill"
+                resizeMode="scaleAspectFit"
+                size={8}
+                style={styles.favouriteStar}
+                tintColor={theme.colors.tint}
+              />
+            )}
+            <ThemedText style={styles.text}>{index}</ThemedText>
+          </View>
         )}
       </View>
     );
@@ -50,11 +64,21 @@ export const TrackListItemLeft = ({
 
 const stylesheet = createStyleSheet((theme) => ({
   artworkContainer: { paddingRight: theme.spacing.sm },
+  container: { width: 30 },
+  favouriteStar: { left: -theme.spacing.xxs, position: "absolute" },
   image: {
     borderRadius: 5,
     height: 50,
     width: 50,
   },
-  indiciesContainer: { width: 30 },
-  text: { color: theme.colors.secondary, width: 30 },
+  indiciesContainer: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  text: {
+    color: theme.colors.secondary,
+    paddingLeft: theme.spacing.xs,
+    width: 30,
+  },
 }));

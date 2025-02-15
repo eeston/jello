@@ -8,6 +8,7 @@ import { AlbumCarousel } from "@src/components/AlbumCarousel";
 import { ListPadding } from "@src/components/ListPadding";
 import { ThemedText } from "@src/components/ThemedText";
 import { TopTracksColumns } from "@src/components/TopTracksColumns";
+import { FETCH_ARTIST_TOP_SONGS_COUNT_LIMIT } from "@src/constants";
 import { useAuth } from "@src/store/AuthContext";
 import { playTracks } from "@src/util/playTracks";
 import { BlurView } from "expo-blur";
@@ -54,7 +55,11 @@ export const ArtistView = ({
     api,
     artistId,
   );
-  const fetchArtistTopSongs = useFetchArtistTopSongs(api, artistId);
+  const fetchArtistTopSongs = useFetchArtistTopSongs(
+    api,
+    artistId,
+    FETCH_ARTIST_TOP_SONGS_COUNT_LIMIT,
+  );
 
   const isLoadingArtistContent =
     fetchArtistAlbums.isLoading ||

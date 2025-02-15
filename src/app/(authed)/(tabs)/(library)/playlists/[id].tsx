@@ -7,6 +7,7 @@ import { PlaylistStats } from "@src/components/PlaylistStats";
 import { Separator } from "@src/components/Separator";
 import { ThemedText } from "@src/components/ThemedText";
 import { TrackListItem } from "@src/components/TrackListItem";
+import { ARTWORK_SIZE } from "@src/constants";
 import { useScrollHeader } from "@src/hooks/useScrollHeader";
 import { useAuth } from "@src/store/AuthContext";
 import { fmtIsoDate } from "@src/util/date";
@@ -100,11 +101,11 @@ export default function PlaylistDetails() {
           const isLastItem =
             index === fetchPlaylistSongs?.data?.tracks.length - 1;
           return (
-            <View>
+            <View key={track.id}>
               <TrackListItem
-                index={index}
                 onPress={() => handleOnPressPlayTrack(index)}
                 track={track}
+                trackIndex={index}
                 withAlbumName
                 withArtwork
               />
@@ -138,8 +139,8 @@ const stylesheet = createStyleSheet((theme) => ({
   },
   image: {
     borderRadius: theme.spacing.md,
-    height: 300,
-    width: 300,
+    height: ARTWORK_SIZE,
+    width: ARTWORK_SIZE,
   },
   imageContainer: { alignItems: "center", ...theme.shadow.sm },
   textDate: { color: theme.colors.secondary, fontSize: 12 },

@@ -14,7 +14,7 @@ export const PlaylistStats = ({
 }) => {
   const { styles } = useStyles(stylesheet);
 
-  if (!playlistDetails || !playlistSongs?.length) {
+  if (!playlistSongs?.length) {
     return null;
   }
 

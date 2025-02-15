@@ -6,12 +6,30 @@ import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 export const NowPlayingTitle = ({
   artist,
+  id,
+  isFavourite,
   title,
 }: {
   artist: TrackMetadataBase["artist"];
+  id: TrackMetadataBase["id"];
+  isFavourite: TrackMetadataBase["isFavourite"];
   title: TrackMetadataBase["title"];
 }) => {
   const { styles, theme } = useStyles(stylesheet);
+  // const { api } = useAuth();
+  // const toggleFavouriteTrack = useToggleFavouriteTrack();
+
+  // const handleOnPressFavourite = async () => {
+  //   await TrackPlayer.updateMetadataForTrack(1, {
+  //     // isFavorite: true,
+  //     rating: RatingType.Heart,
+  //   });
+  //   toggleFavouriteTrack.mutate({
+  //     id,
+  //     api,
+  //     isFavourite,
+  //   });
+  // };
 
   return (
     <View style={styles.container}>
@@ -32,7 +50,7 @@ export const NowPlayingTitle = ({
       </View>
       <View style={styles.buttonsContainer}>
         <TouchableOpacity
-          // onPress={() => Alert.alert("TODO...")}
+          // onPress={handleOnPressFavourite}
           style={{
             backgroundColor: theme.colors.translucent,
             borderRadius: theme.spacing.md,
@@ -41,7 +59,8 @@ export const NowPlayingTitle = ({
           }}
         >
           <SymbolView
-            name="star"
+            // name="star"
+            name={isFavourite ? "star.fill" : "star"}
             resizeMode="scaleAspectFit"
             size={20}
             tintColor="white"
@@ -71,11 +90,11 @@ export const NowPlayingTitle = ({
   );
 };
 
-const stylesheet = createStyleSheet((theme, runtime) => ({
+const stylesheet = createStyleSheet((theme) => ({
   buttonsContainer: {
     alignItems: "center",
     flexDirection: "row",
-    flexShrink: 0, // Prevents buttons from shrinking
+    flexShrink: 0,
   },
   container: {
     alignItems: "center",
@@ -86,7 +105,7 @@ const stylesheet = createStyleSheet((theme, runtime) => ({
   },
   textContainer: {
     flex: 1,
-    flexShrink: 1, // Allows text to shrink
-    marginRight: theme.spacing.md, // Adds space between text and buttons
+    flexShrink: 1,
+    marginRight: theme.spacing.md,
   },
 }));

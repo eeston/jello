@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Animated, View } from "react-native";
+import { useIsPlaying } from "react-native-track-player";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 const DEFAULT_BAR_COUNT = 6;
@@ -11,16 +12,16 @@ export const MusicVisualizer = ({
   barCount = DEFAULT_BAR_COUNT,
   barHeight = 12,
   barWidth = 2,
-  isPlaying,
 }: {
   backgroundColor?: string;
   barColor?: string;
   barCount?: number;
   barHeight?: number;
   barWidth?: number;
-  isPlaying: boolean;
 }) => {
   const { styles } = useStyles(stylesheet);
+  const { playing: isPlaying } = useIsPlaying();
+
   // eslint-disable-next-line react-compiler/react-compiler
   const animatedValues = useRef(
     Array(barCount)

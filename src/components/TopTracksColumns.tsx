@@ -35,12 +35,16 @@ export const TopTracksColumns = ({
     playTracks({ skipToIndex: index, tracks });
   };
 
-  const columns = tracks.reduce<JelloTrackItem[][]>((acc, track, index) => {
-    const columnIndex = Math.floor(index / ITEMS_PER_COLUMN);
-    acc[columnIndex] = acc[columnIndex] || [];
-    acc[columnIndex].push(track);
-    return acc;
-  }, []);
+  const tracksSlice = tracks.slice(0, 12); // three columns of 4
+  const columns = tracksSlice.reduce<JelloTrackItem[][]>(
+    (acc, track, index) => {
+      const columnIndex = Math.floor(index / ITEMS_PER_COLUMN);
+      acc[columnIndex] = acc[columnIndex] || [];
+      acc[columnIndex].push(track);
+      return acc;
+    },
+    [],
+  );
 
   const renderColumn = ({
     index,

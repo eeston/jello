@@ -9,6 +9,7 @@ import { MusicButton } from "@src/components/MusicButton";
 import { Separator } from "@src/components/Separator";
 import { ThemedText } from "@src/components/ThemedText";
 import { TrackListItem } from "@src/components/TrackListItem";
+import { ARTWORK_SIZE } from "@src/constants";
 import { useScrollHeader } from "@src/hooks/useScrollHeader";
 import { useAuth } from "@src/store/AuthContext";
 import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
@@ -125,7 +126,7 @@ export default function AlbumDetails() {
       <View style={styles.trackListContainer}>
         <Separator />
         {fetchAlbumSongs?.data?.tracks.map((track, index) => (
-          <View>
+          <View key={track.id}>
             <TrackListItem
               onPress={() => handleOnPressTrack(index)}
               track={track}
@@ -165,7 +166,7 @@ const stylesheet = createStyleSheet((theme) => ({
     flexDirection: "row",
     justifyContent: "space-around",
   },
-  container: { paddingVertical: theme.spacing.md },
+  container: { paddingVertical: theme.spacing.xs },
   detailsContainer: { alignItems: "center", padding: theme.spacing.md },
   headerTitle: {
     color: theme.colors.primary,
@@ -174,11 +175,14 @@ const stylesheet = createStyleSheet((theme) => ({
   },
   image: {
     borderRadius: theme.spacing.md,
-    height: 300,
-    width: 300,
+    height: ARTWORK_SIZE,
+    width: ARTWORK_SIZE,
   },
   imageContainer: { alignItems: "center", ...theme.shadow.sm },
   textArtist: { color: theme.colors.tint, fontSize: 20 },
   textGenres: { color: theme.colors.secondary, fontSize: 12 },
-  trackListContainer: { padding: theme.spacing.lg },
+  trackListContainer: {
+    padding: theme.spacing.lg,
+    paddingLeft: theme.spacing.sm,
+  },
 }));

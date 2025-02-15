@@ -14,6 +14,7 @@ import TrackPlayer, {
   IOSCategory,
   IOSCategoryMode,
   IOSCategoryOptions,
+  RatingType,
 } from "react-native-track-player";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
@@ -25,6 +26,8 @@ const PLAYER_OPTIONS = {
     Capability.SkipToPrevious,
     Capability.Pause,
     Capability.Play,
+    Capability.SeekTo,
+    Capability.SetRating,
   ],
 };
 
@@ -43,6 +46,7 @@ async function initializePlayer() {
     await TrackPlayer.updateOptions({
       ...PLAYER_OPTIONS,
       progressUpdateEventInterval: 10,
+      ratingType: RatingType.Heart,
     });
   } catch (error) {
     if (
@@ -61,20 +65,7 @@ initializePlayer();
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  // const [loaded] = useFonts({
-  // SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-  // });
-
-  // useEffect(() => {
-  // if (loaded) {
   SplashScreen.hideAsync();
-  // }
-  // }, [loaded]);
-
-  // if (!loaded) {
-  // return null;
-  // }
-
   return <Layout />;
 }
 
