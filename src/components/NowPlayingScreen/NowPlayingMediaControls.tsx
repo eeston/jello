@@ -1,6 +1,6 @@
 import { useTrackedActiveTrack } from "@src/hooks/useTrackedActiveTrack";
 import { SymbolView } from "expo-symbols";
-import { ActivityIndicator, Pressable, View } from "react-native";
+import { ActivityIndicator, TouchableOpacity, View } from "react-native";
 import TrackPlayer, { useIsPlaying } from "react-native-track-player";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
@@ -36,18 +36,24 @@ export const NowPlayingMediaControls = ({
   return (
     <View style={styles.container}>
       {!isLiveStream && (
-        <Pressable disabled={isLiveStream} onPress={handleOnPressSkipBackward}>
+        <TouchableOpacity
+          disabled={isLiveStream}
+          onPress={handleOnPressSkipBackward}
+        >
           <SymbolView
             name="backward.fill"
             resizeMode="scaleAspectFit"
             size={theme.symbol.xl}
             tintColor={isLiveStream ? "grey" : "white"}
           />
-        </Pressable>
+        </TouchableOpacity>
       )}
-      <Pressable disabled={isLoading} onPress={handleOnPressTogglePlayPause}>
+      <TouchableOpacity
+        disabled={isLoading}
+        onPress={handleOnPressTogglePlayPause}
+      >
         {isLoading ? (
-          <ActivityIndicator color="white" size={32} />
+          <ActivityIndicator color="white" size={theme.symbol.xl} />
         ) : (
           <SymbolView
             name={isPlaying ? "pause.fill" : "play.fill"}
@@ -56,16 +62,19 @@ export const NowPlayingMediaControls = ({
             tintColor="white"
           />
         )}
-      </Pressable>
+      </TouchableOpacity>
       {!isLiveStream && (
-        <Pressable disabled={isLiveStream} onPress={handleOnPressSkipForward}>
+        <TouchableOpacity
+          disabled={isLiveStream}
+          onPress={handleOnPressSkipForward}
+        >
           <SymbolView
             name="forward.fill"
             resizeMode="scaleAspectFit"
             size={theme.symbol.xl}
             tintColor="white"
           />
-        </Pressable>
+        </TouchableOpacity>
       )}
     </View>
   );
