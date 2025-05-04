@@ -1,4 +1,3 @@
-import { BACK_BUTTON_WORKAROUND } from "@src/common";
 import { SettingsButton } from "@src/components/SettingsButton";
 import { useSearchStore } from "@src/store/useSearchStore";
 import { Stack } from "expo-router";
@@ -61,7 +60,7 @@ export default function Layout() {
       <Stack.Screen
         name="albums/[id]"
         options={{
-          ...BACK_BUTTON_WORKAROUND,
+          headerBackButtonDisplayMode: "minimal",
           headerLargeStyle: { backgroundColor: theme.colors.background },
         }}
       />
@@ -77,7 +76,7 @@ export default function Layout() {
       <Stack.Screen
         name="artists/[id]/index"
         options={{
-          ...BACK_BUTTON_WORKAROUND,
+          headerBackButtonDisplayMode: "minimal",
           headerBlurEffect: undefined,
           headerLargeTitle: false,
         }}
@@ -85,7 +84,7 @@ export default function Layout() {
       <Stack.Screen
         name="artists/[id]/top-songs"
         options={{
-          ...BACK_BUTTON_WORKAROUND,
+          headerBackButtonDisplayMode: "minimal",
           headerLargeStyle: { backgroundColor: theme.colors.background },
           headerLargeTitle: false,
           headerTitle: "Top Songs",
@@ -118,14 +117,14 @@ export default function Layout() {
       <Stack.Screen
         name="playlists/favourite-songs"
         options={{
-          ...BACK_BUTTON_WORKAROUND,
+          headerBackButtonDisplayMode: "minimal",
           headerLargeStyle: { backgroundColor: theme.colors.background },
         }}
       />
       <Stack.Screen
         name="playlists/[id]"
         options={{
-          ...BACK_BUTTON_WORKAROUND,
+          headerBackButtonDisplayMode: "minimal",
           headerLargeStyle: { backgroundColor: theme.colors.background },
         }}
       />

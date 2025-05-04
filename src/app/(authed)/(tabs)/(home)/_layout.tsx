@@ -1,4 +1,3 @@
-import { BACK_BUTTON_WORKAROUND } from "@src/common";
 import { Stack } from "expo-router";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
@@ -8,13 +7,13 @@ export default function Layout() {
     <Stack
       screenOptions={{
         contentStyle: styles.contentContainer,
+        headerBackButtonDisplayMode: "minimal",
         headerBlurEffect: "prominent",
         headerShadowVisible: false,
         headerTintColor: theme.colors.tint,
         headerTitle: "Home",
         headerTitleStyle: styles.headerTitle,
         headerTransparent: true,
-        ...BACK_BUTTON_WORKAROUND,
       }}
     >
       <Stack.Screen
@@ -42,7 +41,6 @@ export default function Layout() {
       <Stack.Screen
         name="artists/[id]/top-songs"
         options={{
-          ...BACK_BUTTON_WORKAROUND,
           headerLargeStyle: { backgroundColor: theme.colors.background },
           headerLargeTitle: false,
           headerTitle: "Top Songs",
