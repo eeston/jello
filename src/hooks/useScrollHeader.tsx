@@ -1,19 +1,17 @@
-import { NavigationProp } from "@react-navigation/native";
 import { useLayoutEffect } from "react";
-import { TextStyle } from "react-native";
 import Animated, {
   interpolate,
   useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue,
 } from "react-native-reanimated";
+import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 interface UseScrollHeaderProps {
   fadeEnd?: number;
   fadeStart?: number;
   navigation: any;
   title: string;
-  titleStyle?: TextStyle;
 }
 
 export const useScrollHeader = ({
@@ -21,8 +19,8 @@ export const useScrollHeader = ({
   fadeStart = 200,
   navigation,
   title,
-  titleStyle,
 }: UseScrollHeaderProps) => {
+  const { styles } = useStyles(stylesheet);
   const scrollY = useSharedValue(0);
 
   const scrollHandler = useAnimatedScrollHandler({
@@ -38,16 +36,27 @@ export const useScrollHeader = ({
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
-        <Animated.Text numberOfLines={1} style={[titleStyle, headerFadeStyle]}>
+        <Animated.Text
+          numberOfLines={1}
+          style={[styles.header, headerFadeStyle]}
+        >
           {title}
         </Animated.Text>
       ),
       headerTransparent: true,
     });
-  }, [navigation, title, headerFadeStyle, titleStyle]);
+  }, [navigation, title, headerFadeStyle]);
 
   return {
     headerFadeStyle,
     scrollHandler,
   };
 };
+
+const stylesheet = createStyleSheet(() => ({
+  header: {
+    // these seem to be the default styles for iOS headers
+    fontSize: 17,
+    fontWeight: "600",
+  },
+}));

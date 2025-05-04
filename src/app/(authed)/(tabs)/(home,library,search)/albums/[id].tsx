@@ -45,7 +45,6 @@ export default function AlbumDetails() {
   const { scrollHandler } = useScrollHeader({
     navigation,
     title: fetchAlbumDetails?.data?.Name ?? "",
-    titleStyle: styles.headerTitle,
   });
 
   const handleOnPressPlayAlbum = () => {
@@ -168,18 +167,13 @@ const stylesheet = createStyleSheet((theme) => ({
   },
   container: { paddingVertical: theme.spacing.xs },
   detailsContainer: { alignItems: "center", padding: theme.spacing.md },
-  headerTitle: {
-    color: theme.colors.primary,
-    fontSize: 18,
-    fontWeight: "500",
-  },
   image: {
     borderRadius: theme.spacing.md,
     height: ARTWORK_SIZE,
     width: ARTWORK_SIZE,
   },
   imageContainer: { alignItems: "center", ...theme.shadow.sm },
-  textArtist: { color: theme.colors.tint, fontSize: 20 },
+  textArtist: { color: theme.colors.tint },
   textGenres: { color: theme.colors.secondary, fontSize: 12 },
   trackListContainer: {
     padding: theme.spacing.lg,
