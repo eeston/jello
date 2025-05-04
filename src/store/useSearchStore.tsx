@@ -1,5 +1,5 @@
 import { timing } from "@src/theme/common";
-import debounce from "lodash/debounce";
+import debounce from "lodash.debounce";
 import { create } from "zustand";
 
 interface SearchStore {

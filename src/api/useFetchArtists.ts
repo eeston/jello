@@ -12,9 +12,9 @@ export const useFetchArtists = (
   const artists = useQuery({
     enabled: !!user.isSuccess,
     queryFn: async () => {
-      const result = await getArtistsApi(api).getAlbumArtists({
-        parentId: getParentId(),
-        userId: user.data?.Id,
+      const result = await fetchArtists({
+        api,
+        userId: user.data?.Id ?? "",
       });
       return result.data;
     },
@@ -22,4 +22,22 @@ export const useFetchArtists = (
   });
 
   return artists;
+};
+
+// also used for useSearchLibrary
+export const fetchArtists = ({
+  api,
+  searchTerm,
+  userId,
+}: {
+  api: Api;
+  searchTerm?: string;
+  userId: string;
+}) => {
+  return getArtistsApi(api).getAlbumArtists({
+    limit: searchTerm ? 10 : undefined,
+    parentId: getParentId(),
+    searchTerm,
+    userId,
+  });
 };

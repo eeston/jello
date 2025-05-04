@@ -1,6 +1,5 @@
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client";
 import { useFetchPlaylists } from "@src/api/useFetchPlaylists";
-import { ListItem } from "@src/components/ListItem";
 import { ListPadding } from "@src/components/ListPadding";
 import { LoadingOverlay } from "@src/components/LoadingOverlay";
 import { NoSearchResults } from "@src/components/NoResults";

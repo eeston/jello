@@ -17,18 +17,33 @@ export const useFetchAlbums = (
   const albums = useQuery({
     enabled: !!user.isSuccess,
     queryFn: async () => {
-      const result = await getItemsApi(api).getItems({
-        includeItemTypes: [BaseItemKind.MusicAlbum],
-        parentId: getParentId(),
-        recursive: true,
-        sortBy: [ItemSortBy.Name],
-        sortOrder: [SortOrder.Ascending],
-        userId: user.data?.Id,
-      });
+      const result = await fetchAlbums({ api, userId: user.data?.Id ?? "" });
       return result.data;
     },
     queryKey: ["albums"],
   });
 
   return albums;
+};
+
+// also used for useSearchLibrary
+export const fetchAlbums = ({
+  api,
+  searchTerm,
+  userId,
+}: {
+  api: Api;
+  searchTerm?: string;
+  userId: string;
+}) => {
+  return getItemsApi(api).getItems({
+    includeItemTypes: [BaseItemKind.MusicAlbum],
+    limit: searchTerm ? 10 : undefined,
+    parentId: getParentId(),
+    recursive: true,
+    searchTerm,
+    sortBy: [ItemSortBy.Name],
+    sortOrder: [SortOrder.Ascending],
+    userId,
+  });
 };

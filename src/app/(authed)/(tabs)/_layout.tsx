@@ -64,6 +64,20 @@ export default function TabLayout() {
           title: "Library",
         }}
       />
+      <Tabs.Screen
+        name="(search)"
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <SymbolView
+              name="magnifyingglass"
+              resizeMode="scaleAspectFit"
+              size={theme.symbol.md}
+              tintColor={focused ? theme.colors.tint : "grey"}
+            />
+          ),
+          title: "Search",
+        }}
+      />
     </Tabs>
   );
 }
