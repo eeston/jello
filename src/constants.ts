@@ -16,7 +16,7 @@ export const FETCH_HOME_ITEM_COUNT_LIMIT = 6;
 /**
  * @description The number of recently added albums we should return on the library tab
  */
-export const FETCH_LIBRARY_RECENTLY_ADDED_COUNT_LIMIT = 10;
+export const FETCH_LIBRARY_RECENTLY_ADDED_COUNT_LIMIT = 20;
 
 /**
  * @description The number of top songs we should return for the artist details page
