@@ -31,7 +31,7 @@ export default function Layout() {
             tintColor: theme.colors.tint,
           },
           headerShadowVisible: false,
-          headerTintColor: "black",
+          headerTintColor: theme.colors.primary,
           headerTitle: "Search",
         }}
       />
