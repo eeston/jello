@@ -11,9 +11,11 @@ import { useAuth } from "@src/store/AuthContext";
 import { useSearchStore } from "@src/store/useSearchStore";
 import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
 import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
+import { JelloTrackItem } from "@src/util/generateJelloTrack";
+import { playTracks } from "@src/util/playTracks";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
-import { FlatList, Pressable, View } from "react-native";
+import { FlatList, View } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 export default function LibraryList() {
@@ -23,11 +25,11 @@ export default function LibraryList() {
   const { query } = useSearchStore();
   const results = useSearchLibrary(api, query);
 
+  const handleOnPressPlayTrack = (track: JelloTrackItem) => {
+    playTracks({ tracks: [track] });
+  };
+
   const renderItem = ({ item }: { item: BaseItemDto }) => {
-    if (!item.Id) {
-      return null;
-    }
-    // console.log(item.Type );
     if (item.Type === BaseItemKind.MusicArtist) {
       return (
         <Link
@@ -60,7 +62,7 @@ export default function LibraryList() {
                   <ThemedText
                     ellipsizeMode="tail"
                     numberOfLines={1}
-                    style={styles.listItemText}
+                    style={styles.listItemSubText}
                   >
                     Artist
                   </ThemedText>
@@ -75,8 +77,12 @@ export default function LibraryList() {
       );
     } else if (item.Type === BaseItemKind.MusicAlbum) {
       return (
-        <Pressable
-        // play album
+        <Link
+          asChild
+          href={{
+            params: { id: item.Id },
+            pathname: "/albums/[id]",
+          }}
         >
           <ListItem
             LeftComponent={
@@ -101,7 +107,7 @@ export default function LibraryList() {
                   <ThemedText
                     ellipsizeMode="tail"
                     numberOfLines={1}
-                    style={styles.listItemText}
+                    style={styles.listItemSubText}
                   >
                     {`Album • ${item.AlbumArtist}`}
                   </ThemedText>
@@ -112,48 +118,48 @@ export default function LibraryList() {
             height={ROW_HEIGHT}
             key={item.Id}
           />
-        </Pressable>
+        </Link>
       );
     } else if (item.Type === BaseItemKind.Audio) {
+      // TODO: tidy this up
+      const track = item as JelloTrackItem;
       return (
-        <Pressable
-        // play album and skip to track
-        >
-          <ListItem
-            LeftComponent={
-              <View style={styles.listItemLeftContainer}>
-                <Image
-                  contentFit="cover"
-                  placeholder={{
-                    blurhash: extractPrimaryHash(item.ImageBlurHashes),
-                  }}
-                  source={generateArtworkUrl({ api, id: item?.Id })}
-                  style={styles.albumImage}
-                  transition={theme.timing.medium}
-                />
-                <View>
-                  <ThemedText
-                    ellipsizeMode="tail"
-                    numberOfLines={1}
-                    style={styles.listItemText}
-                  >
-                    {item.Name}
-                  </ThemedText>
-                  <ThemedText
-                    ellipsizeMode="tail"
-                    numberOfLines={1}
-                    style={styles.listItemText}
-                  >
-                    {`Song • ${item.AlbumArtist}`}
-                  </ThemedText>
-                </View>
+        <ListItem
+          LeftComponent={
+            <View style={styles.listItemLeftContainer}>
+              <Image
+                contentFit="cover"
+                placeholder={{
+                  blurhash: track.artworkBlur,
+                }}
+                source={track.artwork}
+                style={styles.albumImage}
+                transition={theme.timing.medium}
+              />
+              <View>
+                <ThemedText
+                  ellipsizeMode="tail"
+                  numberOfLines={1}
+                  style={styles.listItemText}
+                >
+                  {track.title}
+                </ThemedText>
+                <ThemedText
+                  ellipsizeMode="tail"
+                  numberOfLines={1}
+                  style={styles.listItemSubText}
+                >
+                  {`Song • ${track.artist}`}
+                </ThemedText>
               </View>
-            }
-            RightComponent={<RightChevron />}
-            height={ROW_HEIGHT}
-            key={item.Id}
-          />
-        </Pressable>
+            </View>
+          }
+          // TODO: add context menu
+          // RightComponent={<RightChevron />}
+          height={ROW_HEIGHT}
+          key={item.Id}
+          onPress={() => handleOnPressPlayTrack(track)}
+        />
       );
     }
     return null;
@@ -197,9 +203,11 @@ const stylesheet = createStyleSheet((theme) => ({
     flexDirection: "row",
     height: ROW_HEIGHT,
   },
-  listItemText: {
-    fontSize: 16,
+  listItemSubText: {
+    color: theme.colors.secondary,
     paddingLeft: theme.spacing.sm,
-    paddingRight: 80,
+  },
+  listItemText: {
+    paddingLeft: theme.spacing.sm,
   },
 }));

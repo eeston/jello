@@ -7,6 +7,7 @@ import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api";
 import { fetchAlbums } from "@src/api/useFetchAlbums";
 import { fetchArtists } from "@src/api/useFetchArtists";
 import { useFetchUser } from "@src/api/useFetchUser";
+import { generateJelloTrack } from "@src/util/generateJelloTrack";
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
 
 export const useSearchLibrary = (
@@ -32,7 +33,12 @@ export const useSearchLibrary = (
       const combinedItems = [
         ...(artists.data.Items ?? []),
         ...(albums.data.Items ?? []),
-        ...(songs.data.Items ?? []),
+        ...(songs?.data?.Items ?? [])
+          .map((item) => generateJelloTrack(item, api, user?.data?.Id))
+          .map((track) => ({
+            ...track,
+            Type: BaseItemKind.Audio,
+          })),
       ];
 
       // not really sure if this is a good idea but it helps shuffle
