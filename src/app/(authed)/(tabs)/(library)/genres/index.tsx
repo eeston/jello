@@ -8,7 +8,7 @@ import { RightChevron } from "@src/components/RightChevron";
 import { Separator } from "@src/components/Separator";
 import { ThemedText } from "@src/components/ThemedText";
 import { useAuth } from "@src/store/AuthContext";
-import { useSearchStore } from "@src/store/useSearchStore";
+import { useSearchGenresStore } from "@src/store/useSearchStore";
 import { Link } from "expo-router";
 import { FlatList, View } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
@@ -17,7 +17,7 @@ export default function GenresList() {
   const { api } = useAuth();
   const genres = useFetchGenres(api);
   const { styles } = useStyles(stylesheet);
-  const { query } = useSearchStore();
+  const { query } = useSearchGenresStore();
 
   const filteredGenres = genres?.data?.Items?.filter((item) => {
     if (!query) return true;

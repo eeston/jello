@@ -5,7 +5,7 @@ import { ListPadding } from "@src/components/ListPadding";
 import { LoadingOverlay } from "@src/components/LoadingOverlay";
 import { NoSearchResults } from "@src/components/NoResults";
 import { useAuth } from "@src/store/AuthContext";
-import { useSearchStore } from "@src/store/useSearchStore";
+import { useSearchAlbumsStore } from "@src/store/useSearchStore";
 import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
 import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
 import { Link } from "expo-router";
@@ -16,7 +16,7 @@ export default function AlbumsList() {
   const { styles } = useStyles(stylesheet);
   const { api } = useAuth();
   const albums = useFetchAlbums(api);
-  const { query } = useSearchStore();
+  const { query } = useSearchAlbumsStore();
 
   const filteredAlbums = albums?.data?.Items?.filter((item) => {
     if (!query) return true;

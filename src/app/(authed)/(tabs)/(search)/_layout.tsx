@@ -1,10 +1,10 @@
-import { useSearchStore } from "@src/store/useSearchStore";
+import { useSearchLibraryStore } from "@src/store/useSearchStore";
 import { Stack } from "expo-router";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 export default function Layout() {
   const { styles, theme } = useStyles(stylesheet);
-  const { resetQuery, setQuery } = useSearchStore();
+  const { setQuery } = useSearchLibraryStore();
 
   return (
     <Stack
@@ -26,7 +26,6 @@ export default function Layout() {
             onChangeText: (e) => {
               setQuery(e.nativeEvent.text);
             },
-            onClose: resetQuery,
             placeholder: "Artists, Albums, Songs and More",
             tintColor: theme.colors.tint,
           },

@@ -5,7 +5,7 @@ import { ListPadding } from "@src/components/ListPadding";
 import { LoadingOverlay } from "@src/components/LoadingOverlay";
 import { NoSearchResults } from "@src/components/NoResults";
 import { useAuth } from "@src/store/AuthContext";
-import { useSearchStore } from "@src/store/useSearchStore";
+import { useSearchGenreAlbumsStore } from "@src/store/useSearchStore";
 import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
 import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
 import { Link, useLocalSearchParams, useNavigation } from "expo-router";
@@ -23,7 +23,7 @@ export default function GenreDetails() {
   const navigation = useNavigation();
   const { api } = useAuth();
   const genreAlbums = useFetchGenreAlbums(api, genreId);
-  const { query } = useSearchStore();
+  const { query } = useSearchGenreAlbumsStore();
 
   useLayoutEffect(() => {
     navigation.setOptions({

@@ -10,7 +10,7 @@ import { Separator } from "@src/components/Separator";
 import { ThemedText } from "@src/components/ThemedText";
 import { ROW_HEIGHT } from "@src/constants";
 import { useAuth } from "@src/store/AuthContext";
-import { useSearchStore } from "@src/store/useSearchStore";
+import { useSearchArtistsStore } from "@src/store/useSearchStore";
 import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
 import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
 import { Image } from "expo-image";
@@ -22,7 +22,7 @@ export default function ArtistsList() {
   const { api } = useAuth();
   const artists = useFetchArtists(api);
   const { styles, theme } = useStyles(stylesheet);
-  const { query } = useSearchStore();
+  const { query } = useSearchArtistsStore();
 
   const filteredArtists = artists?.data?.Items?.filter((item) => {
     if (!query) return true;

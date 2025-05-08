@@ -8,7 +8,7 @@ import { Separator } from "@src/components/Separator";
 import { ThemedText } from "@src/components/ThemedText";
 import { ROW_HEIGHT } from "@src/constants";
 import { useAuth } from "@src/store/AuthContext";
-import { useSearchStore } from "@src/store/useSearchStore";
+import { useSearchLibraryStore } from "@src/store/useSearchStore";
 import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
 import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
 import { JelloTrackItem } from "@src/util/generateJelloTrack";
@@ -22,7 +22,7 @@ export default function LibraryList() {
   const { api } = useAuth();
   const { styles, theme } = useStyles(stylesheet);
 
-  const { query } = useSearchStore();
+  const { query } = useSearchLibraryStore();
   const results = useSearchLibrary(api, query);
 
   const handleOnPressPlayTrack = (track: JelloTrackItem) => {

@@ -1,5 +1,11 @@
 import { SettingsButton } from "@src/components/SettingsButton";
-import { useSearchStore } from "@src/store/useSearchStore";
+import {
+  useSearchAlbumsStore,
+  useSearchArtistsStore,
+  useSearchGenreAlbumsStore,
+  useSearchGenresStore,
+  useSearchPlaylistsStore,
+} from "@src/store/useSearchStore";
 import { Stack } from "expo-router";
 import { StyleProp } from "react-native";
 import { SearchBarProps } from "react-native-screens";
@@ -7,7 +13,11 @@ import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 export default function Layout() {
   const { styles, theme } = useStyles(stylesheet);
-  const { resetQuery, setQuery } = useSearchStore();
+  const { setQuery: setAlbumsQuery } = useSearchAlbumsStore();
+  const { setQuery: setArtistsQuery } = useSearchArtistsStore();
+  const { setQuery: setGenresQuery } = useSearchGenresStore();
+  const { setQuery: setGenreAlbumQuery } = useSearchGenreAlbumsStore();
+  const { setQuery: setPlaylistsQuery } = useSearchPlaylistsStore();
 
   const COMMON_SEARCH_HEADER_PROPS: {
     headerLargeStyle?: StyleProp<{
@@ -21,10 +31,6 @@ export default function Layout() {
     headerSearchBarOptions: {
       hideNavigationBar: true,
       hideWhenScrolling: false,
-      onChangeText: (e) => {
-        setQuery(e.nativeEvent.text);
-      },
-      onClose: resetQuery,
     },
   };
 
@@ -54,6 +60,10 @@ export default function Layout() {
         name="albums/index"
         options={{
           ...COMMON_SEARCH_HEADER_PROPS,
+          headerSearchBarOptions: {
+            ...COMMON_SEARCH_HEADER_PROPS.headerSearchBarOptions,
+            onChangeText: (e) => setAlbumsQuery(e.nativeEvent.text),
+          },
           headerTitle: "Albums",
         }}
       />
@@ -70,6 +80,10 @@ export default function Layout() {
         name="artists/index"
         options={{
           ...COMMON_SEARCH_HEADER_PROPS,
+          headerSearchBarOptions: {
+            ...COMMON_SEARCH_HEADER_PROPS.headerSearchBarOptions,
+            onChangeText: (e) => setArtistsQuery(e.nativeEvent.text),
+          },
           headerTitle: "Artists",
         }}
       />
@@ -96,6 +110,10 @@ export default function Layout() {
         name="genres/index"
         options={{
           ...COMMON_SEARCH_HEADER_PROPS,
+          headerSearchBarOptions: {
+            ...COMMON_SEARCH_HEADER_PROPS.headerSearchBarOptions,
+            onChangeText: (e) => setGenresQuery(e.nativeEvent.text),
+          },
           headerTitle: "Genres",
         }}
       />
@@ -103,6 +121,10 @@ export default function Layout() {
         name="genres/[id]"
         options={{
           ...COMMON_SEARCH_HEADER_PROPS,
+          headerSearchBarOptions: {
+            ...COMMON_SEARCH_HEADER_PROPS.headerSearchBarOptions,
+            onChangeText: (e) => setGenreAlbumQuery(e.nativeEvent.text),
+          },
         }}
       />
 
@@ -111,6 +133,10 @@ export default function Layout() {
         name="playlists/index"
         options={{
           ...COMMON_SEARCH_HEADER_PROPS,
+          headerSearchBarOptions: {
+            ...COMMON_SEARCH_HEADER_PROPS.headerSearchBarOptions,
+            onChangeText: (e) => setPlaylistsQuery(e.nativeEvent.text),
+          },
           headerTitle: "Playlists",
         }}
       />

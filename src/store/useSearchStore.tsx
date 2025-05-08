@@ -8,10 +8,19 @@ interface SearchStore {
   setQuery: (query: string) => void;
 }
 
-export const useSearchStore = create<SearchStore>((set) => ({
-  query: "",
-  resetQuery: () => set({ query: "" }),
-  setQuery: debounce((value: string) => {
-    set({ query: value });
-  }, timing.fast),
-}));
+// base store for search functionality
+const createSearchStore = () =>
+  create<SearchStore>((set) => ({
+    query: "",
+    resetQuery: () => set({ query: "" }),
+    setQuery: debounce((value: string) => {
+      set({ query: value });
+    }, timing.fast),
+  }));
+
+export const useSearchPlaylistsStore = createSearchStore();
+export const useSearchArtistsStore = createSearchStore();
+export const useSearchAlbumsStore = createSearchStore();
+export const useSearchGenresStore = createSearchStore();
+export const useSearchGenreAlbumsStore = createSearchStore();
+export const useSearchLibraryStore = createSearchStore();

@@ -7,7 +7,7 @@ import { RightChevron } from "@src/components/RightChevron";
 import { Separator } from "@src/components/Separator";
 import { ThemedText } from "@src/components/ThemedText";
 import { useAuth } from "@src/store/AuthContext";
-import { useSearchStore } from "@src/store/useSearchStore";
+import { useSearchPlaylistsStore } from "@src/store/useSearchStore";
 import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
 import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
 import { Image } from "expo-image";
@@ -20,7 +20,7 @@ export default function PlaylistsList() {
   const { styles, theme } = useStyles(stylesheet);
   const { api } = useAuth();
   const playlists = useFetchPlaylists(api);
-  const { query } = useSearchStore();
+  const { query } = useSearchPlaylistsStore();
 
   const filteredPlaylists = playlists?.data?.Items?.filter((item) => {
     if (!query) return true;
