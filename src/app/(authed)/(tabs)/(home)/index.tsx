@@ -54,7 +54,6 @@ export default function Home() {
       <AlbumCarousel
         identifier="AlbumId"
         large
-        pathname="home"
         request={fetchSuggestedAlbums}
         title="Top Picks for You"
       />
@@ -62,7 +61,6 @@ export default function Home() {
       {/* Recently played albums */}
       <AlbumCarousel
         identifier="AlbumId"
-        pathname="home"
         request={fetchRecentlyPlayedAlbums}
         title="Recently Played"
       />
@@ -70,7 +68,6 @@ export default function Home() {
       {/* Top played albums */}
       <AlbumCarousel
         identifier="AlbumId"
-        pathname="home"
         request={fetchFrequentlyPlayedAlbums}
         title="Frequently Played"
       />
@@ -78,7 +75,6 @@ export default function Home() {
       {/* Favourite albums */}
       <AlbumCarousel
         identifier="Id"
-        pathname="home"
         request={fetchFavouriteAlbums}
         title="Favourite Albums"
       />

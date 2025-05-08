@@ -199,7 +199,6 @@ export const ArtistView = ({
             <AlbumCarousel
               identifier="Id"
               large
-              pathname="library"
               request={fetchArtistFavouriteAlbums}
               title="Essential Albums"
             />
@@ -207,7 +206,6 @@ export const ArtistView = ({
             {/* All Albums */}
             <AlbumCarousel
               identifier="Id"
-              pathname="library"
               request={fetchArtistAlbums}
               title="Albums"
             />

@@ -15,14 +15,12 @@ import { createStyleSheet, useStyles } from "react-native-unistyles";
 export const AlbumCarousel = ({
   identifier,
   large,
-  pathname,
   replace,
   request,
   title,
 }: {
   identifier: "AlbumId" | "Id";
   large?: boolean;
-  pathname: "home" | "library";
   replace?: boolean;
   request: UseQueryResult<BaseItemDtoQueryResult, Error>;
   title: string;
@@ -48,7 +46,7 @@ export const AlbumCarousel = ({
         asChild
         href={{
           params: { id },
-          pathname: `/(authed)/(tabs)/(${pathname})/albums/[id]`,
+          pathname: `/albums/[id]`,
         }}
         key={id}
         replace={!!replace}
