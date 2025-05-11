@@ -9,13 +9,14 @@ import { fetchArtists } from "@src/api/useFetchArtists";
 import { useFetchUser } from "@src/api/useFetchUser";
 import { generateJelloTrack } from "@src/util/generateJelloTrack";
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 
 export const useSearchLibrary = (
   api: Api,
   query?: string,
 ): UseQueryResult<BaseItemDtoQueryResult, Error> => {
   const user = useFetchUser(api);
-  const response = useQuery({
+  const response = useDebouncedQuery({
     enabled: !!user.isSuccess && !!query,
     queryFn: async () => {
       const searchParams = {
@@ -82,4 +83,41 @@ const fetchSongs = ({
     searchTerm,
     userId,
   });
+};
+
+// TODO: find new home
+export const useDebouncedQuery = (
+  params,
+  request,
+  { debounce = 1000, ...options } = {},
+) => {
+  const [newParams, setNewParams] = useState(params);
+  const [isDebouncing, setIsDebouncing] = useState(false);
+  const stringify = (obj) => JSON.stringify(obj);
+
+  useEffect(() => {
+    if (stringify(params) !== stringify(newParams)) {
+      const isQueryEmpty =
+        params.queryKey?.[1] === "" || params.queryKey?.[1] === undefined;
+
+      if (isQueryEmpty) {
+        // update immediately without debouncing if query is empty
+        setNewParams(params);
+        setIsDebouncing(false);
+      } else {
+        setIsDebouncing(true);
+        const timerId = setTimeout(() => {
+          setNewParams(params);
+          setIsDebouncing(false);
+        }, debounce);
+        return () => clearTimeout(timerId);
+      }
+    }
+  }, [params, debounce]);
+
+  const result = useQuery(newParams, request, options);
+  return {
+    ...result,
+    isDebouncing,
+  };
 };

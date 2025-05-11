@@ -13,9 +13,7 @@ const createSearchStore = () =>
   create<SearchStore>((set) => ({
     query: "",
     resetQuery: () => set({ query: "" }),
-    setQuery: debounce((value: string) => {
-      set({ query: value });
-    }, timing.fast),
+    setQuery: (query: string) => set({ query }),
   }));
 
 export const useSearchPlaylistsStore = createSearchStore();

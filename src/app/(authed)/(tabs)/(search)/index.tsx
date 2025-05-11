@@ -165,7 +165,7 @@ export default function LibraryList() {
     return null;
   };
 
-  if (results.isLoading) {
+  if (results.isLoading || results.isDebouncing) {
     return <LoadingOverlay />;
   }
 
