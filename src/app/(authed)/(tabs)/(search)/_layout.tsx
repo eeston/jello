@@ -34,6 +34,31 @@ export default function Layout() {
           headerTitle: "Search",
         }}
       />
+
+      {/*  */}
+      <Stack.Screen
+        name="albums/[id]"
+        options={{
+          headerLargeStyle: { backgroundColor: theme.colors.background },
+          headerTitle: "",
+        }}
+      />
+      <Stack.Screen
+        name="artists/[id]/index"
+        options={{
+          headerBlurEffect: undefined,
+          headerLargeTitle: false,
+          headerTitle: "",
+        }}
+      />
+      <Stack.Screen
+        name="artists/[id]/top-songs"
+        options={{
+          headerLargeStyle: { backgroundColor: theme.colors.background },
+          headerLargeTitle: false,
+          headerTitle: "Top Songs",
+        }}
+      />
     </Stack>
   );
 }
