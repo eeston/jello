@@ -125,6 +125,7 @@ export default function LibraryList() {
       const track = item as JelloTrackItem;
       return (
         <ListItem
+          // TODO: add context menu
           LeftComponent={
             <View style={styles.listItemLeftContainer}>
               <Image
@@ -154,7 +155,6 @@ export default function LibraryList() {
               </View>
             </View>
           }
-          // TODO: add context menu
           // RightComponent={<RightChevron />}
           height={ROW_HEIGHT}
           key={item.Id}

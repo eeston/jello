@@ -8,18 +8,18 @@ import {
 } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
+interface ListItemActionProps {
+  Component?: ReactElement;
+  side: "left" | "right";
+  size: number;
+}
+
 interface ListItemProps extends PressableProps {
   LeftComponent?: ReactElement;
   RightComponent?: ReactElement;
   containerStyle?: StyleProp<ViewStyle>;
   height?: number;
   style?: StyleProp<ViewStyle>;
-}
-
-interface ListItemActionProps {
-  Component?: ReactElement;
-  side: "left" | "right";
-  size: number;
 }
 
 export const ListItem = (props: ListItemProps) => {

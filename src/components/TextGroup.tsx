@@ -22,9 +22,8 @@ export const TextGroup = ({ rows }: TextGroupProps) => {
     };
 
     return (
-      <View>
+      <View key={i}>
         <Pressable
-          key={i}
           onPress={row.onPress}
           style={({ pressed }) => [
             { opacity: row.onPress && pressed ? 0.5 : 1.0 },

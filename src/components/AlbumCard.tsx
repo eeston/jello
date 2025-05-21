@@ -8,6 +8,11 @@ import {
   useStyles,
 } from "react-native-unistyles";
 
+export enum AlbumCardSize {
+  large = UnistylesRuntime.screen.width / 1.2 - spacing.lg,
+  small = UnistylesRuntime.screen.width / 2 - spacing.lg,
+}
+
 type AlbumCardProps = {
   imageHash: string;
   imageUrl: string;
@@ -19,11 +24,6 @@ type AlbumCardProps = {
   subTitle: number | string;
   title: string;
 };
-
-export enum AlbumCardSize {
-  large = UnistylesRuntime.screen.width / 1.2 - spacing.lg,
-  small = UnistylesRuntime.screen.width / 2 - spacing.lg,
-}
 
 export const AlbumCard = ({
   imageHash,

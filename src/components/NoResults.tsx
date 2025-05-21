@@ -33,7 +33,7 @@ export function NoSearchResults({
           tintColor={theme.colors.secondary}
         />
         <ThemedText style={styles.queryText}>
-          No results for "{query}"
+          {`No results for "${query}"`}
         </ThemedText>
         <ThemedText style={styles.helpText}>
           Check the spelling or try a new search.

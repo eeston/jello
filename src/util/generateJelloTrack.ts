@@ -68,8 +68,7 @@ export const generateJelloTrack = (
   };
 };
 
-/** A copy of some exported RNTP types, but without `[key: string]: any;` to help keep types safe */
-type RntpTrack = {
+type RntpAddTrack = {
   /** Mime type of the media file */
   contentType?: string;
   headers?: {
@@ -83,7 +82,8 @@ type RntpTrack = {
   userAgent?: string;
 };
 
-type RntpAddTrack = {
+/** A copy of some exported RNTP types, but without `[key: string]: any;` to help keep types safe */
+type RntpTrack = {
   /** Mime type of the media file */
   contentType?: string;
   headers?: {

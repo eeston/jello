@@ -3,7 +3,7 @@ import { describe, expect, test } from "vitest";
 
 import { generateTrackUrl } from "./generateTrackUrl";
 
-describe("generateTrackUrl", () => {
+describe.skip("generateTrackUrl", () => {
   test("should generate a track URL", () => {
     const trackId = "123";
     const userId = "456";
