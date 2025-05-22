@@ -2,7 +2,9 @@ import { ThemedText } from "@src/components/ThemedText";
 import { secondsToMmSs } from "@src/util/time";
 import { LinearGradient } from "expo-linear-gradient";
 import { View } from "react-native";
-import { useProgress } from "react-native-track-player";
+import { Slider } from "react-native-awesome-slider";
+import { useSharedValue } from "react-native-reanimated";
+import TrackPlayer, { useProgress } from "react-native-track-player";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 export const NowPlayingProgress = ({
@@ -13,7 +15,17 @@ export const NowPlayingProgress = ({
   const { styles } = useStyles(stylesheet);
   const { duration, position } = useProgress();
 
-  const progress = duration > 0 ? (position / duration) * 100 : 0;
+  const isSliding = useSharedValue(false);
+  const progress = useSharedValue(0);
+  const min = useSharedValue(0);
+  const max = useSharedValue(1);
+
+  const trackPosition = secondsToMmSs(position);
+  const trackRemaining = secondsToMmSs(Math.max(0, duration - position));
+
+  if (!isSliding.value) {
+    progress.value = duration > 0 ? position / duration : 0;
+  }
 
   if (isLiveStream) {
     return (
@@ -44,17 +56,33 @@ export const NowPlayingProgress = ({
 
   return (
     <View style={styles.container}>
-      <View style={styles.progressBar}>
-        <View style={[styles.progress, { width: `${progress}%` }]} />
-      </View>
+      <Slider
+        containerStyle={styles.sliderContainer}
+        maximumValue={max}
+        minimumValue={min}
+        onSlidingComplete={async (value) => {
+          if (!isSliding.value) return;
 
+          isSliding.value = false;
+
+          await TrackPlayer.seekTo(value * duration);
+        }}
+        onSlidingStart={() => (isSliding.value = true)}
+        onValueChange={async (value) => {
+          await TrackPlayer.seekTo(value * duration);
+        }}
+        progress={progress}
+        renderBubble={() => null}
+        theme={{
+          maximumTrackTintColor: "rgba(255, 255, 255, 0.3)",
+          minimumTrackTintColor: "rgba(255, 255, 255, 0.5)",
+        }}
+        thumbWidth={0}
+      />
       <View style={styles.timeContainer}>
-        <ThemedText style={styles.timeText}>
-          {secondsToMmSs(position)}
-        </ThemedText>
-        <ThemedText style={styles.timeText}>
-          -{secondsToMmSs(Math.max(0, duration - position))}
-        </ThemedText>
+        <ThemedText style={styles.timeText}>{trackPosition}</ThemedText>
+
+        <ThemedText style={styles.timeText}>- {trackRemaining}</ThemedText>
       </View>
     </View>
   );
@@ -71,33 +99,24 @@ const stylesheet = createStyleSheet((theme) => ({
     width: "100%",
   },
   liveProgressBar: {
-    borderRadius: 5,
+    borderRadius: 6,
     height: 6,
     width: "100%",
   },
   liveText: {
     color: "white",
     fontSize: 14,
-    marginTop: -16,
+    marginTop: -theme.spacing.md,
   },
-  progress: {
-    backgroundColor: "#ffffff6a",
-    borderBottomRightRadius: 0,
-    borderRadius: 5,
-    borderTopRightRadius: 0,
-    height: "100%",
-    width: "30%",
-  },
-  progressBar: {
-    backgroundColor: "rgba(255, 255, 255, 0.3)",
-    borderRadius: 5,
+  sliderContainer: {
+    borderRadius: 6,
     height: 6,
-    width: "100%",
   },
   timeContainer: {
+    alignItems: "baseline",
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingTop: theme.spacing.xxs,
+    marginTop: theme.spacing.xs,
   },
   timeText: {
     color: "white",
