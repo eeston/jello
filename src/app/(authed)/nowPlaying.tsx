@@ -3,6 +3,7 @@ import { NowPlayingMediaControls } from "@src/components/NowPlayingScreen//NowPl
 import { NowPlayingBottomControls } from "@src/components/NowPlayingScreen/NowPlayingBottomControls";
 import { NowPlayingProgress } from "@src/components/NowPlayingScreen/NowPlayingProgress";
 import { NowPlayingTitle } from "@src/components/NowPlayingScreen/NowPlayingTitle";
+import { NowPlayingVolume } from "@src/components/NowPlayingScreen/NowPlayingVolume";
 import { useSpringAnimation } from "@src/hooks/useSpringAnimation";
 import { useTrackedActiveTrack } from "@src/hooks/useTrackedActiveTrack";
 import { Image } from "expo-image";
@@ -50,9 +51,7 @@ export default function NowPlayingModal() {
         <NowPlayingProgress isLiveStream={!!currentTrack?.isLiveStream} />
 
         <NowPlayingMediaControls isLiveStream={!!currentTrack?.isLiveStream} />
-
-        {/* TODO: add volume */}
-        {/* <NowPlayingVolume /> */}
+        <NowPlayingVolume />
       </View>
 
       <View style={styles.bottom}>

@@ -1,68 +1,19 @@
+import { useVolume } from "@src/hooks/useVolume";
 import { SymbolView } from "expo-symbols";
-import { useState } from "react";
 import { View } from "react-native";
-import {
-  PanGestureHandler,
-  PanGestureHandlerGestureEvent,
-} from "react-native-gesture-handler";
-import Animated, {
-  runOnJS,
-  useAnimatedGestureHandler,
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-} from "react-native-reanimated";
+import { Slider } from "react-native-awesome-slider";
+import { useSharedValue } from "react-native-reanimated";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
-interface NowPlayingVolumeProps {
-  onVolumeChange?: (volume: number) => void;
-}
-
-export const NowPlayingVolume = ({ onVolumeChange }: NowPlayingVolumeProps) => {
+export const NowPlayingVolume = () => {
   const { styles, theme } = useStyles(stylesheet);
-  const [volume, setVolume] = useState(50);
+  const { updateVolume, volume } = useVolume();
 
-  const progressWidth = useSharedValue(volume);
+  const progress = useSharedValue(0);
+  const min = useSharedValue(0);
+  const max = useSharedValue(1);
 
-  const updateVolume = (newVolume: number) => {
-    setVolume(newVolume);
-    onVolumeChange?.(newVolume);
-  };
-
-  const clampValue = (value: number, min: number, max: number) => {
-    "worklet";
-    return Math.min(Math.max(value, min), max);
-  };
-
-  const gestureHandler = useAnimatedGestureHandler<
-    PanGestureHandlerGestureEvent,
-    { startValue: number }
-  >({
-    onActive: (event, context) => {
-      "worklet";
-      const newVolume = context.startValue + event.translationX / 3;
-      progressWidth.value = clampValue(newVolume, 0, 100);
-      runOnJS(updateVolume)(progressWidth.value);
-    },
-    onEnd: () => {
-      "worklet";
-      progressWidth.value = withSpring(progressWidth.value, {
-        damping: 20,
-        stiffness: 90,
-      });
-    },
-    onStart: (_, context) => {
-      "worklet";
-      context.startValue = progressWidth.value;
-    },
-  });
-
-  const animatedStyle = useAnimatedStyle(() => {
-    "worklet";
-    return {
-      width: `${progressWidth.value}%`,
-    };
-  });
+  progress.value = volume ?? 0;
 
   return (
     <View style={styles.container}>
@@ -74,11 +25,23 @@ export const NowPlayingVolume = ({ onVolumeChange }: NowPlayingVolumeProps) => {
           tintColor="#ffffff6a"
         />
       </View>
-      <PanGestureHandler onGestureEvent={gestureHandler}>
-        <Animated.View style={styles.progressBar}>
-          <Animated.View style={[styles.progress, animatedStyle]} />
-        </Animated.View>
-      </PanGestureHandler>
+      <View style={styles.silderContainer}>
+        <Slider
+          containerStyle={styles.sliderContainerStyle}
+          maximumValue={max}
+          minimumValue={min}
+          onValueChange={(value) => {
+            updateVolume(value);
+          }}
+          progress={progress}
+          renderBubble={() => null}
+          theme={{
+            maximumTrackTintColor: "rgba(255, 255, 255, 0.3)",
+            minimumTrackTintColor: "rgba(255, 255, 255, 0.5)",
+          }}
+          thumbWidth={0}
+        />
+      </View>
       <View style={styles.iconRight}>
         <SymbolView
           name="speaker.wave.3.fill"
@@ -100,18 +63,9 @@ const stylesheet = createStyleSheet((theme) => ({
   },
   iconLeft: { paddingRight: theme.spacing.xs },
   iconRight: { paddingLeft: theme.spacing.xs },
-  progress: {
-    backgroundColor: "#ffffff6a",
-    borderBottomRightRadius: 0,
-    borderRadius: 5,
-    borderTopRightRadius: 0,
-    height: "100%",
-  },
-  progressBar: {
-    backgroundColor: "rgba(255, 255, 255, 0.3)",
-    borderRadius: 5,
-    flex: 1,
+  silderContainer: { flex: 1, paddingHorizontal: theme.spacing.sm },
+  sliderContainerStyle: {
+    borderRadius: 6,
     height: 6,
-    width: "100%",
   },
 }));
