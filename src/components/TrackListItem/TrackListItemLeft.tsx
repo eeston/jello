@@ -1,9 +1,9 @@
-import { MusicVisualizer } from "@src/components/MusicVisualiser";
 import { ThemedText } from "@src/components/ThemedText";
 import { JelloTrackItem } from "@src/util/generateJelloTrack";
 import { Image } from "expo-image";
 import { SymbolView } from "expo-symbols";
 import { View } from "react-native";
+import LoaderKit from "react-native-loader-kit";
 import { useActiveTrack } from "react-native-track-player";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
@@ -41,7 +41,14 @@ export const TrackListItemLeft = ({
         {isCurrentTrack ? (
           <View>
             {/* TODO: add favourite */}
-            <MusicVisualizer />
+            <LoaderKit
+              color="red"
+              name="LineScaleParty"
+              style={{
+                height: 16,
+                width: 16,
+              }}
+            />
           </View>
         ) : (
           <View style={styles.indiciesContainer}>

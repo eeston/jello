@@ -53,6 +53,7 @@
     "react-native-awesome-slider": "^2.9.0",
     "react-native-easing-gradient": "^1.1.1",
     "react-native-gesture-handler": "~2.24.0",
+    "react-native-loader-kit": "^2.0.8",
     "react-native-reanimated": "~3.17.4",
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.10.0",
