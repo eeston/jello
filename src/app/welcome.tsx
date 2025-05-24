@@ -13,7 +13,7 @@ export default function Page() {
     <SafeAreaView style={styles.container}>
       <View style={styles.sectionContainer}>
         <Image
-          source={require("../../assets/images/icon.png")}
+          source={require("../../assets/images/ios-light.png")}
           style={styles.image}
         />
       </View>

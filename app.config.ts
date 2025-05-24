@@ -18,7 +18,11 @@ export default (_: ConfigContext): ExpoConfig => ({
     config: {
       usesNonExemptEncryption: false,
     },
-    icon: "./assets/images/icon.png",
+    icon: {
+      dark: "./assets/images/ios-dark.png",
+      light: "./assets/images/ios-light.png",
+      tinted: "./assets/images/ios-tinted.png",
+    },
     infoPlist: {
       UIBackgroundModes: ["audio"],
     },
@@ -42,6 +46,6 @@ export default (_: ConfigContext): ExpoConfig => ({
   plugins: ["expo-secure-store", "expo-router", "expo-build-properties"],
   scheme: name,
   slug: name,
-  userInterfaceStyle: "automatic",
+  userInterfaceStyle: "light",
   version,
 });
