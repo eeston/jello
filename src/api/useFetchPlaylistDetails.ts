@@ -1,6 +1,7 @@
 import { Api } from "@jellyfin/sdk";
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client";
 import { getUserLibraryApi } from "@jellyfin/sdk/lib/utils/api/user-library-api";
+import { QUERY_KEYS } from "@src/api/useCommonQuery";
 import { useFetchUser } from "@src/api/useFetchUser";
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
 
@@ -18,7 +19,7 @@ export const useFetchPlaylistDetails = (
       });
       return result.data;
     },
-    queryKey: ["playlistDetails", playlistId],
+    queryKey: QUERY_KEYS.playlists.details(playlistId),
   });
 
   return playlistDetails;

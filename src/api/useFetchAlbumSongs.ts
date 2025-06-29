@@ -1,6 +1,7 @@
 import { Api } from "@jellyfin/sdk";
 import { ItemSortBy } from "@jellyfin/sdk/lib/models/api";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api";
+import { QUERY_KEYS } from "@src/api/useCommonQuery";
 import { useFetchUser } from "@src/api/useFetchUser";
 import {
   JelloTrackItem,
@@ -28,7 +29,7 @@ export const useFetchAlbumSongs = (
 
       return { tracks };
     },
-    queryKey: ["albumSongs", albumId],
+    queryKey: QUERY_KEYS.albums.songs(albumId),
   });
 
   return albumSongs;

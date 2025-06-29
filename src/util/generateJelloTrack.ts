@@ -55,11 +55,11 @@ export const generateJelloTrack = (
     artworkBlur: extractPrimaryHash(jellyfinTrack.ImageBlurHashes),
     date: jellyfinTrack.PremiereDate ?? "Unknown Date",
     duration: ticksToSeconds(jellyfinTrack.RunTimeTicks),
-    id: jellyfinTrack.Id ?? "Unkown ID",
+    id: jellyfinTrack.Id ?? "Unknown ID",
     index: jellyfinTrack.IndexNumber ?? 0,
     isFavourite: !!jellyfinTrack.UserData?.IsFavorite,
     rating: jellyfinTrack.UserData?.IsFavorite ? RatingType.Heart : undefined,
-    title: jellyfinTrack.Name ?? "Unkown Title",
+    title: jellyfinTrack.Name ?? "Unknown Title",
     url: generateTrackUrl({
       api,
       trackId: jellyfinTrack.Id,

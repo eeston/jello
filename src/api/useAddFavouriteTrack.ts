@@ -1,5 +1,6 @@
 import { UserItemDataDto } from "@jellyfin/sdk/lib/generated-client";
 import { getUserLibraryApi } from "@jellyfin/sdk/lib/utils/api/user-library-api";
+import { QUERY_KEYS } from "@src/api/useCommonQuery";
 import {
   type UseMutationResult,
   useMutation,
@@ -28,11 +29,10 @@ export const useToggleFavouriteTrack = (): UseMutationResult<
         return addFavouriteTrack({ api, itemId: id });
       }
     },
-    onSuccess(data, variables, context) {
+    onSuccess() {
       // update current track metadata
       queryClient.invalidateQueries({
-        // TODO: finetune this
-        queryKey: ["albumSongs"],
+        queryKey: QUERY_KEYS.albums.all,
       });
       queryClient.invalidateQueries({
         // TODO: finetune this

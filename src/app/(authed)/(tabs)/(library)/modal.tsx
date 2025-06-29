@@ -42,7 +42,7 @@ export default function Modal() {
         <ThemedText type="defaultSemiBold">User</ThemedText>
         <TextGroup
           rows={[
-            { leftText: "Username", rightText: user?.data?.Name ?? "Unknonw" },
+            { leftText: "Username", rightText: user?.data?.Name ?? "Unknown" },
             { leftText: "ID", rightText: user?.data?.Id },
           ]}
         />

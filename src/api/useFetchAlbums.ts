@@ -6,6 +6,7 @@ import {
 } from "@jellyfin/sdk/lib/generated-client";
 import { ItemSortBy } from "@jellyfin/sdk/lib/models/api";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api";
+import { QUERY_KEYS } from "@src/api/useCommonQuery";
 import { useFetchUser } from "@src/api/useFetchUser";
 import { getParentId } from "@src/util/getParentId";
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
@@ -20,7 +21,7 @@ export const useFetchAlbums = (
       const result = await fetchAlbums({ api, userId: user.data?.Id ?? "" });
       return result.data;
     },
-    queryKey: ["albums"],
+    queryKey: QUERY_KEYS.albums.list,
   });
 
   return albums;

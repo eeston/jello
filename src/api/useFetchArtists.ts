@@ -1,6 +1,7 @@
 import { Api } from "@jellyfin/sdk";
 import { BaseItemDtoQueryResult } from "@jellyfin/sdk/lib/generated-client";
 import { getArtistsApi } from "@jellyfin/sdk/lib/utils/api/artists-api";
+import { QUERY_KEYS } from "@src/api/useCommonQuery";
 import { useFetchUser } from "@src/api/useFetchUser";
 import { getParentId } from "@src/util/getParentId";
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
@@ -18,7 +19,7 @@ export const useFetchArtists = (
       });
       return result.data;
     },
-    queryKey: ["artists"],
+    queryKey: QUERY_KEYS.artists.list,
   });
 
   return artists;

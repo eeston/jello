@@ -1,5 +1,6 @@
 import { Api } from "@jellyfin/sdk";
 import { getPlaylistsApi } from "@jellyfin/sdk/lib/utils/api/playlists-api";
+import { QUERY_KEYS } from "@src/api/useCommonQuery";
 import { useFetchUser } from "@src/api/useFetchUser";
 import {
   JelloTrackItem,
@@ -31,7 +32,7 @@ export const useFetchPlaylistSongs = (
 
       return { tracks };
     },
-    queryKey: ["playlistSongs", playlistId],
+    queryKey: QUERY_KEYS.playlists.songs(playlistId),
   });
 
   return playlistSongs;
