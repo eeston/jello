@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@douglowder/expo-av-route-picker-view": "^0.0.5",
+    "@expo/ui": "~0.1.1-alpha.9",
     "@hookform/resolvers": "^3.9.1",
     "@jellyfin/sdk": "^0.11.0",
     "@react-native-masked-view/masked-view": "0.3.2",
@@ -50,15 +51,16 @@
     "react-dom": "19.0.0",
     "react-hook-form": "^7.54.0",
     "react-native": "0.79.4",
+    "react-native-awesome-slider": "^2.9.0",
     "react-native-easing-gradient": "^1.1.1",
     "react-native-gesture-handler": "~2.24.0",
+    "react-native-loader-kit": "^3.0.0",
     "react-native-reanimated": "~3.17.4",
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.11.1",
     "react-native-track-player": "https://github.com/doublesymmetry/react-native-track-player.git#feat/media3-newarch",
     "react-native-unistyles": "^2.20.0",
-    "zustand": "^5.0.6",
-    "@expo/ui": "~0.1.1-alpha.9"
+    "zustand": "^5.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",
