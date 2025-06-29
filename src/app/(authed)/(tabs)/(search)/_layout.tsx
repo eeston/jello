@@ -11,6 +11,7 @@ export default function Layout() {
       screenOptions={{
         contentStyle: styles.contentContainer,
         headerBackButtonDisplayMode: "minimal",
+        headerBlurEffect: "prominent",
         headerTintColor: theme.colors.tint,
         headerTransparent: true,
       }}
@@ -18,7 +19,6 @@ export default function Layout() {
       <Stack.Screen
         name="index"
         options={{
-          headerBlurEffect: "prominent",
           headerLargeStyle: { backgroundColor: theme.colors.background },
           headerLargeTitle: true,
           headerSearchBarOptions: {
@@ -54,9 +54,10 @@ export default function Layout() {
       <Stack.Screen
         name="artists/[id]/top-songs"
         options={{
-          headerLargeStyle: { backgroundColor: theme.colors.background },
+          headerBlurEffect: "prominent",
           headerLargeTitle: false,
           headerTitle: "Top Songs",
+          headerTitleStyle: { color: theme.colors.primary },
         }}
       />
     </Stack>
