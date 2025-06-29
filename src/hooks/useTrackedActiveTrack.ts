@@ -11,7 +11,11 @@ export const useTrackedActiveTrack = () => {
       setTrack(currentTrack);
     };
 
-    const events = [Event.PlaybackTrackChanged, Event.PlaybackMetadataReceived];
+    // TODO: check these
+    const events = [
+      Event.PlaybackActiveTrackChanged,
+      Event.MetadataCommonReceived,
+    ];
 
     const unsubscribe = events.map((event) =>
       TrackPlayer.addEventListener(event, fetchTrack),

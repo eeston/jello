@@ -64,7 +64,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         },
         deviceInfo: {
           id: getDeviceId(),
-          name: Device.deviceName,
+          name: Device.deviceName ?? "iPhone",
         },
       }),
     [],

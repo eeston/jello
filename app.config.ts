@@ -40,7 +40,6 @@ export default (_: ConfigContext): ExpoConfig => ({
     // backgroundColor: "#000000",
   },
   name: "Jello",
-  newArchEnabled: false, // https://github.com/doublesymmetry/react-native-track-player/pull/2395
   orientation: "portrait",
   platforms: ["ios"],
   plugins: ["expo-secure-store", "expo-router", "expo-build-properties"],
