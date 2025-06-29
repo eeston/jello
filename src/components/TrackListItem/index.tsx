@@ -1,3 +1,4 @@
+import { Button, ContextMenu } from "@expo/ui/swift-ui";
 import { useToggleFavouriteTrack } from "@src/api/useAddFavouriteTrack";
 import { ThemedText } from "@src/components/ThemedText";
 import { TrackListItemLeft } from "@src/components/TrackListItem/TrackListItemLeft";
@@ -52,13 +53,13 @@ export const TrackListItem = ({
   };
 
   return (
-    <TouchableOpacity onPress={onPress} style={styles.container(withArtwork)}>
+    <View style={styles.container(withArtwork)}>
       <TrackListItemLeft
         index={trackIndex}
         track={track}
         withArtwork={!!withArtwork}
       />
-      <View style={styles.textContainer}>
+      <TouchableOpacity onPress={onPress} style={styles.textContainer}>
         <ThemedText ellipsizeMode="tail" numberOfLines={1}>
           {track.title}
         </ThemedText>
@@ -77,19 +78,28 @@ export const TrackListItem = ({
             })}
           </ThemedText>
         )}
-      </View>
-      <TouchableOpacity
-        onPress={handleOnPressTrackOptions}
-        style={styles.moreButtonContainer}
-      >
-        <SymbolView
-          name="ellipsis"
-          resizeMode="scaleAspectFit"
-          size={14}
-          tintColor={theme.colors.primary}
-        />
       </TouchableOpacity>
-    </TouchableOpacity>
+      <ContextMenu>
+        <ContextMenu.Items>
+          <Button
+            onPress={handleOnPressTrackOptions}
+            systemImage={track.isFavourite ? "star.fill" : "star"}
+          >
+            {track.isFavourite ? "Unfavourite" : "Favourite"}
+          </Button>
+        </ContextMenu.Items>
+        <ContextMenu.Trigger>
+          <View style={styles.moreButtonContainer}>
+            <SymbolView
+              name="ellipsis"
+              resizeMode="scaleAspectFit"
+              size={14}
+              tintColor={theme.colors.primary}
+            />
+          </View>
+        </ContextMenu.Trigger>
+      </ContextMenu>
+    </View>
   );
 };
 
