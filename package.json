@@ -59,7 +59,7 @@
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.11.1",
     "react-native-track-player": "https://github.com/doublesymmetry/react-native-track-player.git#feat/media3-newarch",
-    "react-native-unistyles": "^2.20.0",
+    "react-native-unistyles": "^2.43.0",
     "zustand": "^5.0.6"
   },
   "devDependencies": {
@@ -73,7 +73,7 @@
     "git-cz": "^4.3.0",
     "husky": "^8.0.3",
     "prettier": "^3.1.1",
-    "typescript": "^5.1.3",
+    "typescript": "~5.8.3",
     "vitest": "^3.0.4"
   },
   "overrides": {
