@@ -1,10 +1,8 @@
 import { ThemedText } from "@src/components/ThemedText";
 import { View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
 
 export const EmptyOverlay = () => {
-  const { styles } = useStyles(stylesheet);
-
   return (
     <View style={styles.container}>
       <ThemedText type="subtitle">Nothing to see here...</ThemedText>
@@ -13,7 +11,7 @@ export const EmptyOverlay = () => {
   );
 };
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   container: {
     alignItems: "center",
     flex: 1,

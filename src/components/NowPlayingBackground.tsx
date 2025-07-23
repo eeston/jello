@@ -9,7 +9,7 @@ import Animated, {
   withRepeat,
   withTiming,
 } from "react-native-reanimated";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 // TODO: animate between blurhashes
 export default function NowPlayingBackground({
@@ -17,7 +17,7 @@ export default function NowPlayingBackground({
 }: {
   blurhash?: string;
 }) {
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
   const rotation = useSharedValue(0);
 
   useEffect(() => {
@@ -50,14 +50,14 @@ export default function NowPlayingBackground({
   );
 }
 
-const stylesheet = createStyleSheet((theme, runtime) => ({
+const styles = StyleSheet.create((theme, rt) => ({
   container: {
-    height: runtime.screen.height,
-    left: (runtime.screen.width - runtime.screen.height) / 2,
+    height: rt.screen.height,
+    left: (rt.screen.width - rt.screen.height) / 2,
     position: "absolute",
     right: 0,
     top: 0,
-    width: runtime.screen.height,
+    width: rt.screen.height,
     zIndex: -10,
   },
   image: {

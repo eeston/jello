@@ -24,13 +24,13 @@ import {
 } from "expo-router";
 import { TouchableOpacity, View } from "react-native";
 import Animated from "react-native-reanimated";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 export default function AlbumDetails() {
   // if no id...??
   const { id: albumId } = useLocalSearchParams<{ id: string }>();
   const navigation = useNavigation();
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
   const { api } = useAuth();
   const fetchAlbumDetails = useFetchAlbumDetails(api, albumId);
   const fetchAlbumSongs = useFetchAlbumSongs(api, albumId);
@@ -160,7 +160,7 @@ export default function AlbumDetails() {
   );
 }
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",

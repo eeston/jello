@@ -9,13 +9,12 @@ import { openLinkInBrowser } from "@src/util/openLinkInBrowser";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { ScrollView, View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
 
 export default function Modal() {
   const { api } = useAuth();
   const user = useFetchUser(api);
   const queryClient = useQueryClient();
-  const { styles } = useStyles(stylesheet);
   const signOut = useSignOut();
 
   const handleOnPressSource = () => {
@@ -81,7 +80,7 @@ export default function Modal() {
   );
 }
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   button: { width: "100%" },
   container: {
     backgroundColor: theme.colors.background,

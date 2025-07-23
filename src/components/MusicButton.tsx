@@ -2,7 +2,7 @@ import { ThemedText } from "@src/components/ThemedText";
 import * as Haptics from "expo-haptics";
 import { SFSymbol, SymbolView } from "expo-symbols";
 import { Dimensions, Pressable, View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 const buttonTypes = {
   play: {
@@ -22,7 +22,7 @@ export const MusicButton = ({
   onPress: () => void;
   type: "play" | "shuffle";
 }) => {
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
 
   const handleOnPress = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -49,7 +49,7 @@ export const MusicButton = ({
   );
 };
 
-const stylesheet = createStyleSheet((theme) => {
+const styles = StyleSheet.create((theme) => {
   const size = Dimensions.get("window").width / 2.4; // maybe this is repsonsive between screen sizes??
   return {
     container: {

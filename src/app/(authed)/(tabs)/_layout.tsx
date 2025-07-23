@@ -3,12 +3,11 @@ import { BlurView } from "expo-blur";
 import { LinearGradient } from "expo-linear-gradient";
 import { Tabs } from "expo-router";
 import { SymbolView } from "expo-symbols";
-import { StyleSheet } from "react-native";
 import { easeGradient } from "react-native-easing-gradient";
-import { useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 export default function TabLayout() {
-  const { theme } = useStyles();
+  const { theme } = useUnistyles();
   return (
     <Tabs
       screenOptions={{

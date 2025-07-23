@@ -16,12 +16,12 @@ import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
 import { FlatList, View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 export default function ArtistsList() {
   const { api } = useAuth();
   const artists = useFetchArtists(api);
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
   const { query } = useSearchArtistsStore();
 
   const filteredArtists = artists?.data?.Items?.filter((item) => {
@@ -99,7 +99,7 @@ export default function ArtistsList() {
   );
 }
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   container: {
     paddingHorizontal: theme.spacing.md,
     paddingTop: theme.spacing.sm,

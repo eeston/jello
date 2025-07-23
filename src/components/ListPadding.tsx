@@ -1,16 +1,15 @@
 import { View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
 
 /**
  * @description some list views dont scroll to the bottom so...
  */
 export const ListPadding = () => {
-  const { styles } = useStyles(stylesheet);
   return <View style={styles.container} />;
 };
 
-const stylesheet = createStyleSheet((theme, runtime) => ({
+const styles = StyleSheet.create((theme, rt) => ({
   container: {
-    paddingVertical: runtime.screen.height / 4,
+    paddingVertical: rt.screen.height / 4,
   },
 }));

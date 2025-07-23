@@ -1,14 +1,14 @@
 import { Separator } from "@src/components/Separator";
 import { ThemedText } from "@src/components/ThemedText";
 import { Pressable, StyleProp, View, ViewStyle } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 type TextGroupProps = {
   rows: { leftText: string; onPress?: () => void; rightText?: string }[];
 };
 
 export const TextGroup = ({ rows }: TextGroupProps) => {
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
 
   const textRows = rows.map((row, i) => {
     const isFirst = i === 0;
@@ -41,7 +41,7 @@ export const TextGroup = ({ rows }: TextGroupProps) => {
   return <View style={styles.container}>{textRows}</View>;
 };
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   container: {
     paddingBottom: theme.spacing.lg,
   },

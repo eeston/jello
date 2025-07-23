@@ -1,10 +1,10 @@
 import { ExpoAvRoutePickerView } from "@douglowder/expo-av-route-picker-view";
 import { SymbolView } from "expo-symbols";
 import { TouchableOpacity, View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 export const NowPlayingBottomControls = () => {
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
 
   return (
     <View style={styles.container}>
@@ -54,7 +54,7 @@ export const NowPlayingBottomControls = () => {
   );
 };
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   container: {
     alignItems: "center",
     flexDirection: "row",

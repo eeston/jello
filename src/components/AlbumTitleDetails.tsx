@@ -1,15 +1,13 @@
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client";
 import { ThemedText } from "@src/components/ThemedText";
 import { View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
 
 export const AlbumTitleDetails = ({
   albumDetails,
 }: {
   albumDetails?: BaseItemDto;
 }) => {
-  const { styles } = useStyles(stylesheet);
-
   if (!albumDetails) {
     return null;
   }
@@ -31,7 +29,7 @@ export const AlbumTitleDetails = ({
   );
 };
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   container: {
     //
   },

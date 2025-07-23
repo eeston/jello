@@ -10,10 +10,10 @@ import { Image } from "expo-image";
 import { useRef } from "react";
 import { Animated, View } from "react-native";
 import { useIsPlaying } from "react-native-track-player";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 export default function NowPlayingModal() {
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
   const currentTrack = useTrackedActiveTrack();
   const { playing: isPlaying } = useIsPlaying();
 
@@ -62,30 +62,30 @@ export default function NowPlayingModal() {
   );
 }
 
-const stylesheet = createStyleSheet((theme, runtime) => {
-  const noInset = runtime.insets.bottom === 0;
+const styles = StyleSheet.create((theme, rt) => {
+  const noInset = rt.insets.bottom === 0;
   return {
     artwork: {
       borderRadius: theme.spacing.sm,
-      height: runtime.screen.width - 52,
-      width: runtime.screen.width - 52,
+      height: rt.screen.width - 52,
+      width: rt.screen.width - 52,
     },
     artworkContainer: {
       alignItems: "center",
       ...theme.shadow.lg,
     },
     bottom: {
-      bottom: noInset ? 50 : runtime.insets.bottom + 70,
+      bottom: noInset ? 50 : rt.insets.bottom + 70,
       position: "absolute",
     },
     container: {
-      height: runtime.screen.height,
+      height: rt.screen.height,
       paddingTop: theme.spacing.lg,
     },
     contentContainer: {
       height: "50%",
       justifyContent: "space-around",
-      paddingBottom: noInset ? 100 : runtime.insets.bottom + 70,
+      paddingBottom: noInset ? 100 : rt.insets.bottom + 70,
     },
   };
 });

@@ -11,7 +11,7 @@ import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
 import { Link, useLocalSearchParams, useNavigation } from "expo-router";
 import { useLayoutEffect } from "react";
 import { FlatList, View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
 
 export default function GenreDetails() {
   // if no id...
@@ -19,7 +19,6 @@ export default function GenreDetails() {
     id: string;
     name: string;
   }>();
-  const { styles } = useStyles(stylesheet);
   const navigation = useNavigation();
   const { api } = useAuth();
   const genreAlbums = useFetchGenreAlbums(api, genreId);
@@ -80,7 +79,7 @@ export default function GenreDetails() {
   );
 }
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   albumContainer: {
     paddingBottom: theme.spacing.sm,
   },

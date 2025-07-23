@@ -10,14 +10,13 @@ import { JelloTrackItem } from "@src/util/generateJelloTrack";
 import { playTracks } from "@src/util/playTracks";
 import { useLocalSearchParams } from "expo-router";
 import { FlatList, View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
 
 // TODO: handle all songs
 export default function ArtistTopTracks() {
   const { id: artistId } = useLocalSearchParams<{ id: string }>();
 
   const { api } = useAuth();
-  const { styles } = useStyles(stylesheet);
   const fetchArtistTopSongs = useFetchArtistTopSongs(api, artistId);
 
   const handleOnPressPlay = (index: number) => {
@@ -77,7 +76,7 @@ export default function ArtistTopTracks() {
   );
 }
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   container: {
     paddingHorizontal: theme.spacing.md,
     paddingTop: theme.spacing.sm,

@@ -1,7 +1,7 @@
 import { ThemedText } from "@src/components/ThemedText";
 import { SymbolView } from "expo-symbols";
 import { View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 export function NoSearchResults({
   query,
@@ -10,7 +10,7 @@ export function NoSearchResults({
   query?: string;
   type: "Albums" | "Artists" | "Genres" | "Playlists";
 }) {
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
 
   if (!query) {
     return (
@@ -43,7 +43,7 @@ export function NoSearchResults({
   );
 }
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
     paddingHorizontal: theme.spacing.lg,

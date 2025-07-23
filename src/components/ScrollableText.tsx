@@ -5,11 +5,10 @@ import {
   findNodeHandle,
   NativeModules,
   ScrollView,
-  StyleSheet,
   Text,
   View,
 } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
 
 const { UIManager } = NativeModules;
 
@@ -33,7 +32,6 @@ export const TitleScroll = ({ text, type }: TitleScrollProps) => {
   const containerRef = useRef(null);
   const textRef = useRef(null);
   const timeoutId = useRef<NodeJS.Timeout | null>(null);
-  const { styles } = useStyles(stylesheet);
 
   const textStyle = type === "title" ? styles.textTitle : styles.textSubtitle;
 
@@ -171,7 +169,7 @@ export const TitleScroll = ({ text, type }: TitleScrollProps) => {
   );
 };
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   container: {
     overflow: "hidden",
   },

@@ -7,7 +7,7 @@ import { SymbolView } from "expo-symbols";
 import { ActivityIndicator, Pressable, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import TrackPlayer, { useIsPlaying } from "react-native-track-player";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 const PlayIndicator = ({
   isLoading,
@@ -16,7 +16,7 @@ const PlayIndicator = ({
   isLoading: boolean;
   isPlaying: boolean;
 }) => {
-  const { theme } = useStyles();
+  const { theme } = useUnistyles();
   if (isLoading) {
     return <ActivityIndicator />;
   }
@@ -32,7 +32,7 @@ const PlayIndicator = ({
 };
 
 export const NowPlayingBanner = () => {
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
   const insets = useSafeAreaInsets();
   const { bufferingDuringPlay: isLoading, playing: isPlaying } = useIsPlaying();
   const currentTrack = useTrackedActiveTrack();
@@ -130,13 +130,14 @@ export const NowPlayingBanner = () => {
   );
 };
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme, rt) => ({
   artwork: {
     borderRadius: theme.spacing.xs,
     height: 40,
     width: 40,
   },
   container: {
+    bottom: rt.insets.bottom + theme.spacing.xxxl, // TODO check this
     height: 56,
     left: 0,
     position: "absolute",

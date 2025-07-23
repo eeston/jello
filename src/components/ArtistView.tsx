@@ -16,13 +16,7 @@ import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import { SymbolView } from "expo-symbols";
 import { useLayoutEffect } from "react";
-import {
-  ActivityIndicator,
-  Dimensions,
-  Pressable,
-  StyleSheet,
-  View,
-} from "react-native";
+import { ActivityIndicator, Dimensions, Pressable, View } from "react-native";
 import { easeGradient } from "react-native-easing-gradient";
 import Animated, {
   interpolate,
@@ -30,7 +24,7 @@ import Animated, {
   useAnimatedStyle,
   useScrollViewOffset,
 } from "react-native-reanimated";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 const HEADER_HEIGHT = Dimensions.get("window").width;
 export const ArtistView = ({
@@ -47,7 +41,7 @@ export const ArtistView = ({
   const navigation = useNavigation();
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollViewOffset(scrollRef);
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
   const { api } = useAuth();
 
   const fetchArtistAlbums = useFetchArtistAlbums(api, artistId);
@@ -222,7 +216,7 @@ export const ArtistView = ({
   );
 };
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   blurContainer: {
     bottom: 0,
     height: theme.spacing.xxl * 2,

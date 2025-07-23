@@ -16,11 +16,11 @@ import { playTracks } from "@src/util/playTracks";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
 import { FlatList, View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 export default function LibraryList() {
   const { api } = useAuth();
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
 
   const { query } = useSearchLibraryStore();
   const results = useSearchLibrary(api, query);
@@ -183,7 +183,7 @@ export default function LibraryList() {
   );
 }
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   albumImage: {
     borderRadius: theme.spacing.xxs,
     height: theme.spacing.xxl,

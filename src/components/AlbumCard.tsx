@@ -3,9 +3,9 @@ import { spacing } from "@src/theme/common";
 import { Image } from "expo-image";
 import { Pressable, View } from "react-native";
 import {
-  createStyleSheet,
+  StyleSheet,
   UnistylesRuntime,
-  useStyles,
+  useUnistyles,
 } from "react-native-unistyles";
 
 export enum AlbumCardSize {
@@ -33,7 +33,7 @@ export const AlbumCard = ({
   subTitle,
   title,
 }: AlbumCardProps) => {
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
   return (
     <Pressable onPress={onPress} style={styles.container(large)}>
       <Image
@@ -57,7 +57,7 @@ export const AlbumCard = ({
   );
 };
 
-const stylesheet = createStyleSheet((theme) => {
+const styles = StyleSheet.create((theme) => {
   return {
     container: (large) => ({
       width: large ? AlbumCardSize.large : AlbumCardSize.small,

@@ -1,7 +1,7 @@
 import * as Haptics from "expo-haptics";
 import React, { PropsWithChildren } from "react";
 import { ActivityIndicator, Pressable, View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
 
 import { ThemedText } from "./ThemedText";
 
@@ -25,8 +25,6 @@ export const Button: React.FC<PropsWithChildren<ButtonProps>> = ({
   title,
   ...props
 }) => {
-  const { styles } = useStyles(stylesheet);
-
   const handleOnPress = () => {
     if (!isLoading && !isDisabled && onPress) {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -59,7 +57,7 @@ export const Button: React.FC<PropsWithChildren<ButtonProps>> = ({
   );
 };
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   button: {
     alignItems: "center",
     backgroundColor: theme.colors.tint,

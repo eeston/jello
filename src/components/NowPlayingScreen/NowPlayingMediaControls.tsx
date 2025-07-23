@@ -2,14 +2,14 @@ import { useTrackedActiveTrack } from "@src/hooks/useTrackedActiveTrack";
 import { SymbolView } from "expo-symbols";
 import { ActivityIndicator, TouchableOpacity, View } from "react-native";
 import TrackPlayer, { useIsPlaying } from "react-native-track-player";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 export const NowPlayingMediaControls = ({
   isLiveStream,
 }: {
   isLiveStream: boolean;
 }) => {
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
   const currentTrack = useTrackedActiveTrack();
   const { bufferingDuringPlay: isLoading, playing: isPlaying } = useIsPlaying();
 
@@ -80,7 +80,7 @@ export const NowPlayingMediaControls = ({
   );
 };
 
-const stylesheet = createStyleSheet((theme, runtime) => ({
+const styles = StyleSheet.create((theme, rt) => ({
   container: {
     flexDirection: "row",
     justifyContent: "space-around",

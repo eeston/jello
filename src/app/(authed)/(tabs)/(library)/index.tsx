@@ -16,7 +16,7 @@ import { Link } from "expo-router";
 import { type SFSymbol, SymbolView } from "expo-symbols";
 import { useState } from "react";
 import { FlatList, RefreshControl, View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 type ItemType = {
   icon: SFSymbol;
@@ -54,7 +54,7 @@ const items: ItemType[] = [
 ];
 
 export default function LibraryDetails() {
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
   const { api } = useAuth();
   const recentlyAddedAlbums = useFetchRecentlyAddedAlbums(api);
   const queryClient = useQueryClient();
@@ -116,7 +116,7 @@ export default function LibraryDetails() {
   );
 }
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   container: {
     paddingBottom: theme.spacing.xxxl,
     paddingHorizontal: theme.spacing.md,
@@ -143,7 +143,6 @@ const RecentlyAdded = ({
 }: {
   recentlyAddedAlbums?: BaseItemDto[];
 }) => {
-  const { styles } = useStyles(recentlyAddedStylesheet);
   const { api } = useAuth();
 
   const renderItem = ({ item }: { item: BaseItemDto }) => {
@@ -152,7 +151,7 @@ const RecentlyAdded = ({
       return;
     }
     return (
-      <View style={styles.albumContainer}>
+      <View style={recentlyAddedStylesheet.albumContainer}>
         <Link
           asChild
           href={{
@@ -181,7 +180,7 @@ const RecentlyAdded = ({
         Recently Added
       </ThemedText>
       <FlatList
-        columnWrapperStyle={styles.columnWrapper}
+        columnWrapperStyle={recentlyAddedStylesheet.columnWrapper}
         data={recentlyAddedAlbums}
         numColumns={2}
         renderItem={renderItem}
@@ -193,7 +192,7 @@ const RecentlyAdded = ({
   );
 };
 
-const recentlyAddedStylesheet = createStyleSheet((theme) => ({
+const recentlyAddedStylesheet = StyleSheet.create((theme) => ({
   albumContainer: {
     paddingBottom: theme.spacing.sm,
   },

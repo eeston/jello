@@ -14,10 +14,10 @@ import { Image } from "expo-image";
 import { Link } from "expo-router";
 import { SymbolView } from "expo-symbols";
 import { FlatList, TouchableOpacity, View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 export default function PlaylistsList() {
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
   const { api } = useAuth();
   const playlists = useFetchPlaylists(api);
   const { query } = useSearchPlaylistsStore();
@@ -81,7 +81,7 @@ export default function PlaylistsList() {
 }
 
 const FavouriteSongsPlaylistItem = () => {
-  const { theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
 
   return (
     <Link
@@ -120,7 +120,7 @@ const FavouriteSongsPlaylistItem = () => {
   );
 };
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   container: {
     paddingHorizontal: theme.spacing.md,
     paddingTop: theme.spacing.sm,

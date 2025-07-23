@@ -1,6 +1,3 @@
-import "@src/theme/unistyles"; // must be first thing imported
-
-// eslint-disable-next-line perfectionist/sort-imports
 import { playbackService } from "@src/services/player";
 import { AuthProvider } from "@src/store/AuthContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -16,7 +13,7 @@ import TrackPlayer, {
   IOSCategoryOptions,
   RatingType,
 } from "react-native-track-player";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 TrackPlayer.registerPlaybackService(() => playbackService);
 
@@ -82,7 +79,7 @@ const queryClient = new QueryClient({
 });
 
 function Layout() {
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
   return (
     <StrictMode>
       <GestureHandlerRootView style={{ flex: 1 }}>
@@ -124,7 +121,7 @@ function Layout() {
   );
 }
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   contentContainer: {
     backgroundColor: theme.colors.background,
   },

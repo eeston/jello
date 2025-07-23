@@ -9,10 +9,9 @@ import { useAuth } from "@src/store/AuthContext";
 import { router } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
 import { Alert, SafeAreaView, TextInput, View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
 
 export default function LoginScreen() {
-  const { styles } = useStyles(stylesheet);
   const { control, handleSubmit } = useForm<LoginSchemaType>({
     resolver: zodResolver(LoginSchema),
   });
@@ -124,7 +123,7 @@ export default function LoginScreen() {
   );
 }
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   buttonContainer: { width: "100%" },
   container: {
     flex: 1,

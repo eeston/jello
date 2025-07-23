@@ -1,9 +1,9 @@
 import { ThemedText } from "@src/components/ThemedText";
 import { ActivityIndicator, View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 export const LoadingOverlay = () => {
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
 
   return (
     <View style={styles.container}>
@@ -19,7 +19,7 @@ export const LoadingOverlay = () => {
   );
 };
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   container: {
     alignItems: "center",
     flex: 1,

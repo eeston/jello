@@ -8,7 +8,7 @@ import { useAuth } from "@src/store/AuthContext";
 import { JelloTrackItem } from "@src/util/generateJelloTrack";
 import { SymbolView } from "expo-symbols";
 import { TouchableOpacity, View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 export const TrackListItem = ({
   onPress,
@@ -39,7 +39,7 @@ export const TrackListItem = ({
    */
   withArtwork?: boolean;
 }) => {
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
   const { api } = useAuth();
   const toggleFavouriteTrack = useToggleFavouriteTrack();
 
@@ -103,7 +103,7 @@ export const TrackListItem = ({
   );
 };
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   container: (large) => ({
     alignItems: "center",
     flexDirection: "row",

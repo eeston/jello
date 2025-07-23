@@ -2,7 +2,7 @@ import { ThemedText } from "@src/components/ThemedText";
 import { SymbolView } from "expo-symbols";
 import { TouchableOpacity, View } from "react-native";
 import { TrackMetadataBase } from "react-native-track-player";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 export const NowPlayingTitle = ({
   artist,
@@ -15,7 +15,7 @@ export const NowPlayingTitle = ({
   isFavourite: TrackMetadataBase["isFavourite"];
   title: TrackMetadataBase["title"];
 }) => {
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
   // const { api } = useAuth();
   // const toggleFavouriteTrack = useToggleFavouriteTrack();
 
@@ -90,7 +90,7 @@ export const NowPlayingTitle = ({
   );
 };
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   buttonsContainer: {
     alignItems: "center",
     flexDirection: "row",

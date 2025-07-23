@@ -2,10 +2,9 @@ import { NowPlayingBanner } from "@src/components/NowPlayingBanner";
 import { useIsSignedIn } from "@src/store/AuthContext";
 import { Redirect, Stack } from "expo-router";
 import { View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
 
 export default function AppLayout() {
-  const { styles } = useStyles(stylesheet);
   const isSignedIn = useIsSignedIn();
 
   // You can keep the splash screen open, or render a loading screen like we do here.
@@ -39,7 +38,7 @@ export default function AppLayout() {
   );
 }
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
   },

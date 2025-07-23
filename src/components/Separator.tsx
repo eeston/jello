@@ -1,5 +1,5 @@
-import { StyleSheet, View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { View } from "react-native";
+import { StyleSheet } from "react-native-unistyles";
 
 type SeparatorProps = {
   color?: string;
@@ -8,8 +8,6 @@ type SeparatorProps = {
 };
 
 export const Separator = ({ color, marginLeft = 0 }: SeparatorProps) => {
-  const { styles } = useStyles(stylesheet);
-
   return (
     <View
       style={[
@@ -20,7 +18,7 @@ export const Separator = ({ color, marginLeft = 0 }: SeparatorProps) => {
   );
 };
 
-const stylesheet = createStyleSheet((theme) => {
+const styles = StyleSheet.create((theme) => {
   return {
     container: {
       borderColor: theme.colors.translucent,

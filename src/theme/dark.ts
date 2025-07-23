@@ -8,6 +8,7 @@ export default {
     tint: "#f94c57", // red
     translucent: "rgba(255, 255, 255, 0.1)", // lightgrey transparent
   },
+  // TODO: these don't belong here
   shadow,
   spacing,
   symbol,

@@ -6,7 +6,7 @@ import {
   View,
   ViewStyle,
 } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
 
 interface ListItemActionProps {
   Component?: ReactElement;
@@ -23,7 +23,6 @@ interface ListItemProps extends PressableProps {
 }
 
 export const ListItem = (props: ListItemProps) => {
-  const { styles } = useStyles(stylesheet);
   const {
     containerStyle,
     height = 48,
@@ -59,7 +58,7 @@ const ListItemFragment = ({ Component }: ListItemActionProps) => {
   return Component ?? null;
 };
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   touchable: {
     flexDirection: "row",
     justifyContent: "space-between",

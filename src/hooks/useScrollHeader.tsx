@@ -5,7 +5,7 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from "react-native-reanimated";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
 
 interface UseScrollHeaderProps {
   fadeEnd?: number;
@@ -20,7 +20,6 @@ export const useScrollHeader = ({
   navigation,
   title,
 }: UseScrollHeaderProps) => {
-  const { styles } = useStyles(stylesheet);
   const scrollY = useSharedValue(0);
 
   const scrollHandler = useAnimatedScrollHandler({
@@ -53,7 +52,7 @@ export const useScrollHeader = ({
   };
 };
 
-const stylesheet = createStyleSheet(() => ({
+const styles = StyleSheet.create(() => ({
   header: {
     // these seem to be the default styles for iOS headers
     fontSize: 17,

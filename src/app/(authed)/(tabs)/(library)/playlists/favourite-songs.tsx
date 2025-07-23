@@ -14,12 +14,12 @@ import { useNavigation } from "expo-router";
 import { SymbolView } from "expo-symbols";
 import { View } from "react-native";
 import Animated from "react-native-reanimated";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 export default function PlaylistDetails() {
   // if no id...??
   const navigation = useNavigation();
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
   const { api } = useAuth();
 
   const fetchFavouriteSongs = useFetchFavouriteSongs(api);
@@ -111,7 +111,7 @@ export default function PlaylistDetails() {
   );
 }
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",

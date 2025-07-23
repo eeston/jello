@@ -11,12 +11,11 @@ import { useAuth } from "@src/store/AuthContext";
 import { useSearchGenresStore } from "@src/store/useSearchStore";
 import { Link } from "expo-router";
 import { FlatList, View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
 
 export default function GenresList() {
   const { api } = useAuth();
   const genres = useFetchGenres(api);
-  const { styles } = useStyles(stylesheet);
   const { query } = useSearchGenresStore();
 
   const filteredGenres = genres?.data?.Items?.filter((item) => {
@@ -71,7 +70,7 @@ export default function GenresList() {
   );
 }
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   container: {
     paddingHorizontal: theme.spacing.md,
     paddingTop: theme.spacing.sm,

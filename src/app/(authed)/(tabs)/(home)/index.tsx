@@ -10,10 +10,10 @@ import { delay } from "@src/util/delay";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { RefreshControl, ScrollView } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 export default function Home() {
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
   const { api } = useAuth();
   const queryClient = useQueryClient();
   const fetchRecentlyPlayedAlbums = useFetchRecentlyPlayedAlbums(api);
@@ -83,7 +83,7 @@ export default function Home() {
   );
 }
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   container: {
     //
   },

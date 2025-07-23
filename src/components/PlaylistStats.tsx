@@ -3,7 +3,7 @@ import { ThemedText } from "@src/components/ThemedText";
 import { JelloTrackItem } from "@src/util/generateJelloTrack";
 import { format, parseISO, secondsToMinutes } from "date-fns";
 import { View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
 
 export const PlaylistStats = ({
   playlistDetails,
@@ -12,8 +12,6 @@ export const PlaylistStats = ({
   playlistDetails?: BaseItemDto;
   playlistSongs?: JelloTrackItem[];
 }) => {
-  const { styles } = useStyles(stylesheet);
-
   if (!playlistSongs?.length) {
     return null;
   }
@@ -43,7 +41,7 @@ export const PlaylistStats = ({
   );
 };
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   container: {
     paddingVertical: theme.spacing.xs,
   },

@@ -1,9 +1,9 @@
 import { SymbolView } from "expo-symbols";
 import { View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 export const RightChevron = () => {
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
 
   return (
     <View style={styles.container}>
@@ -18,7 +18,7 @@ export const RightChevron = () => {
   );
 };
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   container: {
     justifyContent: "center",
   },

@@ -5,14 +5,13 @@ import { View } from "react-native";
 import { Slider } from "react-native-awesome-slider";
 import { useSharedValue } from "react-native-reanimated";
 import TrackPlayer, { useProgress } from "react-native-track-player";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
 
 export const NowPlayingProgress = ({
   isLiveStream,
 }: {
   isLiveStream: boolean;
 }) => {
-  const { styles } = useStyles(stylesheet);
   const { duration, position } = useProgress();
 
   const isSliding = useSharedValue(false);
@@ -88,7 +87,7 @@ export const NowPlayingProgress = ({
   );
 };
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   container: {
     paddingHorizontal: theme.spacing.xl,
     width: "100%",

@@ -1,10 +1,8 @@
-import { Dimensions, ScrollView, StyleSheet } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { Dimensions, ScrollView } from "react-native";
+import { StyleSheet } from "react-native-unistyles";
 
 const HEADER_HEIGHT = Dimensions.get("window").width;
 export const ArtworkView = ({}) => {
-  const { styles } = useStyles(stylesheet);
-
   return (
     <ScrollView style={styles.container}>
       {/* <ArtworkViewHeader
@@ -28,7 +26,7 @@ export const ArtworkView = ({}) => {
   );
 };
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   blurContainer: {
     bottom: 0,
     left: 0,

@@ -3,10 +3,10 @@ import { SymbolView } from "expo-symbols";
 import { View } from "react-native";
 import { Slider } from "react-native-awesome-slider";
 import { useSharedValue } from "react-native-reanimated";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 export const NowPlayingVolume = () => {
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
   const { updateVolume, volume } = useVolume();
 
   const progress = useSharedValue(0);
@@ -54,7 +54,7 @@ export const NowPlayingVolume = () => {
   );
 };
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   container: {
     alignItems: "center",
     flexDirection: "row",

@@ -4,10 +4,10 @@ import { Image } from "expo-image";
 import { Link } from "expo-router";
 import { SymbolView } from "expo-symbols";
 import { Pressable, SafeAreaView, View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 export default function Page() {
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -66,7 +66,7 @@ export default function Page() {
   );
 }
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
     marginHorizontal: theme.spacing.lg,

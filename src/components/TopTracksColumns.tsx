@@ -12,7 +12,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 const WINDOW_WIDTH = Dimensions.get("window").width;
 const ITEMS_PER_COLUMN = 4;
@@ -25,7 +25,7 @@ export const TopTracksColumns = ({
   artistId: string;
   tracks?: JelloTrackItem[];
 }) => {
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
 
   if (!tracks?.length) {
     return null;
@@ -119,7 +119,7 @@ export const TopTracksColumns = ({
   );
 };
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   column: {
     paddingRight: theme.spacing.md,
     width: COLUMN_WIDTH,

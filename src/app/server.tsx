@@ -8,10 +8,9 @@ import { router } from "expo-router";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Alert, SafeAreaView, TextInput, View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
 
 export default function ServerScreen() {
-  const { styles } = useStyles(stylesheet);
   const { control, handleSubmit } = useForm<ServerSchemaType>({
     resolver: zodResolver(ServerSchema),
   });
@@ -98,7 +97,7 @@ export default function ServerScreen() {
   );
 }
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   buttonContainer: { paddingBottom: theme.spacing.xs, width: "100%" },
   container: {
     flex: 1,

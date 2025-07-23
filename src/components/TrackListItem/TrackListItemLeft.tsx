@@ -5,7 +5,7 @@ import { SymbolView } from "expo-symbols";
 import { View } from "react-native";
 import LoaderKit from "react-native-loader-kit";
 import { useActiveTrack } from "react-native-track-player";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 export const TrackListItemLeft = ({
   index,
@@ -16,7 +16,7 @@ export const TrackListItemLeft = ({
   track: JelloTrackItem;
   withArtwork: boolean;
 }) => {
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
   const activeTrack = useActiveTrack();
 
   const isCurrentTrack = activeTrack?.id === track.id;
@@ -69,7 +69,7 @@ export const TrackListItemLeft = ({
   }
 };
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   artworkContainer: { paddingRight: theme.spacing.sm },
   container: { width: 30 },
   favouriteStar: { left: -theme.spacing.xxs, position: "absolute" },

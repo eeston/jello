@@ -5,7 +5,7 @@ import { Image } from "expo-image";
 import { SymbolView } from "expo-symbols";
 import { FlatList, Pressable, View } from "react-native";
 import TrackPlayer, { TrackType } from "react-native-track-player";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
 
 // TODO: this will most likely change
 const RADIO_STREAMS = [
@@ -22,8 +22,6 @@ const RADIO_STREAMS = [
 ];
 
 export default function Radio() {
-  const { styles } = useStyles(stylesheet);
-
   const renderItem = ({ item }) => {
     const handleOnPressRadio = async () => {
       const radioData = await fetchRadioInfo({
@@ -91,7 +89,7 @@ export default function Radio() {
   );
 }
 
-const stylesheet = createStyleSheet((theme, runtime) => ({
+const styles = StyleSheet.create((theme, rt) => ({
   blurContainer: {
     bottom: 0,
     left: 0,
@@ -105,7 +103,7 @@ const stylesheet = createStyleSheet((theme, runtime) => ({
     paddingTop: theme.spacing.sm,
   },
   radioArtwork: {
-    height: runtime.screen.width - theme.spacing.md * 2,
+    height: rt.screen.width - theme.spacing.md * 2,
   },
   radioContainer: {
     borderRadius: theme.spacing.md,

@@ -9,10 +9,10 @@ import {
 import { Stack } from "expo-router";
 import { StyleProp } from "react-native";
 import { SearchBarProps } from "react-native-screens";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 export default function Layout() {
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
   const { setQuery: setAlbumsQuery } = useSearchAlbumsStore();
   const { setQuery: setArtistsQuery } = useSearchArtistsStore();
   const { setQuery: setGenresQuery } = useSearchGenresStore();
@@ -172,7 +172,7 @@ export default function Layout() {
   );
 }
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   contentContainer: {
     backgroundColor: theme.colors.background,
   },

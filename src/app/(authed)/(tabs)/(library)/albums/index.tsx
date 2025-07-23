@@ -10,10 +10,9 @@ import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
 import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
 import { Link } from "expo-router";
 import { FlatList, View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
 
 export default function AlbumsList() {
-  const { styles } = useStyles(stylesheet);
   const { api } = useAuth();
   const albums = useFetchAlbums(api);
   const { query } = useSearchAlbumsStore();
@@ -74,7 +73,7 @@ export default function AlbumsList() {
   );
 }
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   albumContainer: {
     paddingBottom: theme.spacing.sm,
   },

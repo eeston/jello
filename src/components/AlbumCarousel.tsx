@@ -10,7 +10,7 @@ import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
 import { UseQueryResult } from "@tanstack/react-query";
 import { Link } from "expo-router";
 import { FlatList, View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 export const AlbumCarousel = ({
   identifier,
@@ -25,7 +25,7 @@ export const AlbumCarousel = ({
   request: UseQueryResult<BaseItemDtoQueryResult, Error>;
   title: string;
 }) => {
-  const { styles, theme } = useStyles(stylesheet);
+  const { theme } = useUnistyles();
   const { api } = useAuth();
 
   const CARD_WIDTH = large ? AlbumCardSize.large : AlbumCardSize.small;
@@ -85,7 +85,7 @@ export const AlbumCarousel = ({
   );
 };
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   container: {},
   flatlistContent: {
     paddingHorizontal: theme.spacing.md,
