@@ -2,7 +2,7 @@
   "name": "jello",
   "main": "index.ts",
   "author": "John Easton <john@easton.dev>",
-  "version": "0.0.97",
+  "version": "0.0.98",
   "scripts": {
     "start": "expo run:ios",
     "prebuild": "expo prebuild -p ios --clean",
