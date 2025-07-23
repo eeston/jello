@@ -3,10 +3,10 @@ import { BaseItemKind } from "@jellyfin/sdk/lib/generated-client";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api";
 import { useFetchUser } from "@src/api/useFetchUser";
 import {
-  JelloTrackItem,
   generateJelloTrack,
+  JelloTrackItem,
 } from "@src/util/generateJelloTrack";
-import { UseQueryResult, useQuery } from "@tanstack/react-query";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 export const useFetchFavouriteSongs = (
   api: Api,

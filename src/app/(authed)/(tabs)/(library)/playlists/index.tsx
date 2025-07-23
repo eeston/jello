@@ -65,13 +65,13 @@ export default function PlaylistsList() {
 
   return (
     <FlatList
+      contentContainerStyle={styles.container}
+      contentInsetAdjustmentBehavior="automatic"
+      data={filteredPlaylists}
       ItemSeparatorComponent={() => <Separator marginLeft={100} />}
       ListEmptyComponent={<NoSearchResults query={query} type="Playlists" />}
       ListFooterComponent={ListPadding}
       ListHeaderComponent={<FavouriteSongsPlaylistItem />}
-      contentContainerStyle={styles.container}
-      contentInsetAdjustmentBehavior="automatic"
-      data={filteredPlaylists}
       renderItem={renderItem}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}

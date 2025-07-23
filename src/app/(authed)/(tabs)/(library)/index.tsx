@@ -94,6 +94,9 @@ export default function LibraryDetails() {
 
   return (
     <FlatList
+      contentContainerStyle={styles.container}
+      contentInsetAdjustmentBehavior="automatic"
+      data={items}
       ItemSeparatorComponent={() => <Separator marginLeft={40} />}
       ListFooterComponent={
         <View>
@@ -103,9 +106,6 @@ export default function LibraryDetails() {
           />
         </View>
       }
-      contentContainerStyle={styles.container}
-      contentInsetAdjustmentBehavior="automatic"
-      data={items}
       refreshControl={
         <RefreshControl onRefresh={handleRefresh} refreshing={isRefreshing} />
       }

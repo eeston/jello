@@ -9,7 +9,7 @@ import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api";
 import { QUERY_KEYS } from "@src/api/useCommonQuery";
 import { useFetchUser } from "@src/api/useFetchUser";
 import { getParentId } from "@src/util/getParentId";
-import { UseQueryResult, useQuery } from "@tanstack/react-query";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 export const useFetchAlbums = (
   api: Api,

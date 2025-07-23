@@ -8,7 +8,7 @@ import { ItemSortBy } from "@jellyfin/sdk/lib/models/api";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api";
 import { useFetchUser } from "@src/api/useFetchUser";
 import { getParentId } from "@src/util/getParentId";
-import { UseQueryResult, useQuery } from "@tanstack/react-query";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 export const useFetchArtistFavouriteAlbums = (
   api: Api,

@@ -3,7 +3,7 @@ import {
   STORE_SERVER_ADDRESS_KEY,
 } from "@src/constants";
 import { useAuth } from "@src/store/AuthContext";
-import { type UseMutationResult, useMutation } from "@tanstack/react-query";
+import { useMutation, type UseMutationResult } from "@tanstack/react-query";
 import * as SecureStore from "expo-secure-store";
 
 type CreateApiWithTokenType = {

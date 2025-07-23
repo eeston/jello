@@ -45,6 +45,8 @@ export default function ArtistsList() {
         }}
       >
         <ListItem
+          height={ROW_HEIGHT}
+          key={item.Id}
           LeftComponent={
             <View style={styles.listItemLeftContainer}>
               <Image
@@ -66,8 +68,6 @@ export default function ArtistsList() {
             </View>
           }
           RightComponent={<RightChevron />}
-          height={ROW_HEIGHT}
-          key={item.Id}
         />
       </Link>
     );
@@ -83,13 +83,13 @@ export default function ArtistsList() {
 
   return (
     <FlatList
-      ItemSeparatorComponent={() => <Separator marginLeft={60} />}
-      ListEmptyComponent={<NoSearchResults query={query} type="Artists" />}
-      ListFooterComponent={ListPadding}
       contentContainerStyle={styles.container}
       contentInsetAdjustmentBehavior="automatic"
       data={filteredArtists}
       initialNumToRender={5}
+      ItemSeparatorComponent={() => <Separator marginLeft={60} />}
+      ListEmptyComponent={<NoSearchResults query={query} type="Artists" />}
+      ListFooterComponent={ListPadding}
       maxToRenderPerBatch={10}
       renderItem={renderItem}
       showsHorizontalScrollIndicator={false}

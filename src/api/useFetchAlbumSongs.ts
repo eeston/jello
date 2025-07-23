@@ -4,10 +4,10 @@ import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api";
 import { QUERY_KEYS } from "@src/api/useCommonQuery";
 import { useFetchUser } from "@src/api/useFetchUser";
 import {
-  JelloTrackItem,
   generateJelloTrack,
+  JelloTrackItem,
 } from "@src/util/generateJelloTrack";
-import { UseQueryResult, useQuery } from "@tanstack/react-query";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 export const useFetchAlbumSongs = (
   api: Api,

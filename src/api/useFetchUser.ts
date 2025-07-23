@@ -1,7 +1,7 @@
 import { Api } from "@jellyfin/sdk";
 import { UserDto } from "@jellyfin/sdk/lib/generated-client";
 import { getUserApi } from "@jellyfin/sdk/lib/utils/api/user-api";
-import { UseQueryResult, useQuery } from "@tanstack/react-query";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 export const useFetchUser = (api: Api): UseQueryResult<UserDto, Error> => {
   const user = useQuery({

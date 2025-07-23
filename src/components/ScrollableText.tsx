@@ -2,12 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   Animated,
   Easing,
+  findNodeHandle,
   NativeModules,
   ScrollView,
   StyleSheet,
   Text,
   View,
-  findNodeHandle,
 } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
@@ -27,7 +27,7 @@ type TitleScrollProps = {
 export const TitleScroll = ({ text, type }: TitleScrollProps) => {
   const [contentFits, setContentFits] = useState(true);
   const [textWidth, setTextWidth] = useState(0);
-  // eslint-disable-next-line react-compiler/react-compiler
+
   const animatedValue = useRef(new Animated.Value(0)).current;
   const animation = useRef<Animated.CompositeAnimation | null>(null);
   const containerRef = useRef(null);

@@ -8,7 +8,7 @@ import { fetchAlbums } from "@src/api/useFetchAlbums";
 import { fetchArtists } from "@src/api/useFetchArtists";
 import { useFetchUser } from "@src/api/useFetchUser";
 import { generateJelloTrack } from "@src/util/generateJelloTrack";
-import { UseQueryResult, useQuery } from "@tanstack/react-query";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
 export const useSearchLibrary = (

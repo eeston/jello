@@ -7,8 +7,8 @@ import * as Device from "expo-device";
 import * as SecureStore from "expo-secure-store";
 import * as SplashScreen from "expo-splash-screen";
 import {
-  ReactNode,
   createContext,
+  ReactNode,
   useContext,
   useEffect,
   useMemo,
@@ -18,6 +18,7 @@ import {
 import { name, version } from "../../package.json";
 
 type AuthContextType =
+  | undefined
   | {
       api: Api | null;
       createApi: (params: { serverAddress: string }) => void;
@@ -28,8 +29,7 @@ type AuthContextType =
       isSignedIn: boolean;
       jellyfin: Jellyfin;
       rmApi: () => void;
-    }
-  | undefined;
+    };
 
 const getDeviceId = () => {
   let deviceId = SecureStore.getItem(STORE_CLIENT_DEVICE_ID);

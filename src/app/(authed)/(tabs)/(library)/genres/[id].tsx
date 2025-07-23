@@ -65,13 +65,13 @@ export default function GenreDetails() {
 
   return (
     <FlatList
-      ListEmptyComponent={<NoSearchResults query={query} type="Genres" />}
-      ListFooterComponent={<ListPadding />}
       columnWrapperStyle={styles.columnWrapper}
       contentContainerStyle={styles.container}
       contentInsetAdjustmentBehavior="automatic"
       data={filteredAlbums}
       keyExtractor={(item) => item?.Id ?? ""}
+      ListEmptyComponent={<NoSearchResults query={query} type="Genres" />}
+      ListFooterComponent={<ListPadding />}
       numColumns={2}
       renderItem={renderItem}
       showsHorizontalScrollIndicator={false}

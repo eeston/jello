@@ -61,13 +61,13 @@ export default function ArtistTopTracks() {
 
   return (
     <FlatList
-      ItemSeparatorComponent={() => <Separator marginLeft={60} />}
-      ListEmptyComponent={<NoSearchResults type="Artists" />}
-      ListFooterComponent={ListPadding}
       contentContainerStyle={styles.container}
       contentInsetAdjustmentBehavior="automatic"
       data={fetchArtistTopSongs?.data?.tracks ?? []}
       initialNumToRender={5}
+      ItemSeparatorComponent={() => <Separator marginLeft={60} />}
+      ListEmptyComponent={<NoSearchResults type="Artists" />}
+      ListFooterComponent={ListPadding}
       maxToRenderPerBatch={10}
       renderItem={renderItem}
       showsHorizontalScrollIndicator={false}

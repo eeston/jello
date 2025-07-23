@@ -17,7 +17,6 @@ export default function NowPlayingModal() {
   const currentTrack = useTrackedActiveTrack();
   const { playing: isPlaying } = useIsPlaying();
 
-  // eslint-disable-next-line react-compiler/react-compiler
   const albumArtworkScale = useRef(new Animated.Value(1)).current;
   useSpringAnimation(albumArtworkScale, isPlaying ? 1.0 : 0.7, {
     bounciness: isPlaying ? 10 : 1,

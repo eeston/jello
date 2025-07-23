@@ -9,7 +9,7 @@ import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api";
 import { useFetchUser } from "@src/api/useFetchUser";
 import { FETCH_LIBRARY_RECENTLY_ADDED_COUNT_LIMIT } from "@src/constants";
 import { getParentId } from "@src/util/getParentId";
-import { UseQueryResult, useQuery } from "@tanstack/react-query";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 export const useFetchRecentlyAddedAlbums = (
   api: Api,

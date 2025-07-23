@@ -3,8 +3,8 @@ import { spacing } from "@src/theme/common";
 import { Image } from "expo-image";
 import { Pressable, View } from "react-native";
 import {
-  UnistylesRuntime,
   createStyleSheet,
+  UnistylesRuntime,
   useStyles,
 } from "react-native-unistyles";
 

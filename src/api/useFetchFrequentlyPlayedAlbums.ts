@@ -13,7 +13,7 @@ import {
   FETCH_REQUEST_COUNT_LIMIT,
 } from "@src/constants";
 import { getParentId } from "@src/util/getParentId";
-import { UseQueryResult, useQuery } from "@tanstack/react-query";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 export const useFetchFrequentlyPlayedAlbums = (
   api: Api,

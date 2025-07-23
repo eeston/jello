@@ -16,6 +16,7 @@ export const generateTrackUrl = ({
   }
 
   const params = new URLSearchParams({
+    api_key: api?.accessToken,
     AudioCodec: "aac",
     Container:
       "opus,webm|opus,ts|mp3,mp3,aac,m4a|aac,m4b|aac,flac,webma,webm|webma,wav,ogg",
@@ -28,7 +29,6 @@ export const generateTrackUrl = ({
     TranscodingContainer: "mp4",
     TranscodingProtocol: "hls",
     UserId: userId,
-    api_key: api?.accessToken,
   });
 
   const url = `${api?.basePath}/Audio/${trackId}/universal?${params.toString()}`;

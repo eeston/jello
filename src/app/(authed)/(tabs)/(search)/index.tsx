@@ -40,6 +40,8 @@ export default function LibraryList() {
           }}
         >
           <ListItem
+            height={ROW_HEIGHT}
+            key={item.Id}
             LeftComponent={
               <View style={styles.listItemLeftContainer}>
                 <Image
@@ -70,8 +72,6 @@ export default function LibraryList() {
               </View>
             }
             RightComponent={<RightChevron />}
-            height={ROW_HEIGHT}
-            key={item.Id}
           />
         </Link>
       );
@@ -85,6 +85,8 @@ export default function LibraryList() {
           }}
         >
           <ListItem
+            height={ROW_HEIGHT}
+            key={item.Id}
             LeftComponent={
               <View style={styles.listItemLeftContainer}>
                 <Image
@@ -115,8 +117,6 @@ export default function LibraryList() {
               </View>
             }
             RightComponent={<RightChevron />}
-            height={ROW_HEIGHT}
-            key={item.Id}
           />
         </Link>
       );
@@ -125,6 +125,9 @@ export default function LibraryList() {
       const track = item as JelloTrackItem;
       return (
         <ListItem
+          // RightComponent={<RightChevron />}
+          height={ROW_HEIGHT}
+          key={item.Id}
           // TODO: add context menu
           LeftComponent={
             <View style={styles.listItemLeftContainer}>
@@ -155,9 +158,6 @@ export default function LibraryList() {
               </View>
             </View>
           }
-          // RightComponent={<RightChevron />}
-          height={ROW_HEIGHT}
-          key={item.Id}
           onPress={() => handleOnPressPlayTrack(track)}
         />
       );
@@ -171,11 +171,11 @@ export default function LibraryList() {
 
   return (
     <FlatList
-      ItemSeparatorComponent={() => <Separator marginLeft={60} />}
-      ListFooterComponent={ListPadding}
       contentContainerStyle={styles.container}
       contentInsetAdjustmentBehavior="automatic"
       data={results?.data?.Items}
+      ItemSeparatorComponent={() => <Separator marginLeft={60} />}
+      ListFooterComponent={ListPadding}
       renderItem={renderItem}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}

@@ -1,11 +1,11 @@
 import { Text, type TextProps } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
-export type ThemedTextProps = {
+export type ThemedTextProps = TextProps & {
   darkColor?: string;
   lightColor?: string;
   type?: "default" | "defaultSemiBold" | "link" | "subtitle" | "title";
-} & TextProps;
+};
 
 export function ThemedText({
   darkColor,

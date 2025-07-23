@@ -70,11 +70,11 @@ export const AlbumCarousel = ({
         {title}
       </ThemedText>
       <FlatList
-        ItemSeparatorComponent={() => <View style={styles.separator} />}
         contentContainerStyle={styles.flatlistContent}
         data={request.data?.Items}
         decelerationRate="fast"
         horizontal
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
         renderItem={renderItem}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}

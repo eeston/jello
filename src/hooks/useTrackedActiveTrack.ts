@@ -3,7 +3,7 @@ import TrackPlayer, { Event, Track } from "react-native-track-player";
 
 // https://github.com/doublesymmetry/react-native-track-player/issues/2158
 export const useTrackedActiveTrack = () => {
-  const [track, setTrack] = useState<Track | null | undefined>(null);
+  const [track, setTrack] = useState<null | Track | undefined>(null);
 
   useEffect(() => {
     const fetchTrack = async () => {

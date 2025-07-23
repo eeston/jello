@@ -11,30 +11,30 @@ import {
   type TrackType as RntpTrackType,
 } from "react-native-track-player";
 
-export type JelloTrackItem = {
-  /**
-   * @description album artwork blurhash
-   */
-  artworkBlur: string;
+export type JelloTrackItem = RntpAddTrack &
+  RntpTrack &
+  RntpTrackMetadataBase & {
+    /**
+     * @description album artwork blurhash
+     */
+    artworkBlur: string;
 
-  /**
+    /**
 
    * @description jellyfin id
    */
-  id: string;
+    id: string;
 
-  /**
-   * @description album index
-   */
-  index: number;
+    /**
+     * @description album index
+     */
+    index: number;
 
-  /**
-   * @description album index
-   */
-  isFavourite: boolean;
-} & RntpAddTrack &
-  RntpTrack &
-  RntpTrackMetadataBase;
+    /**
+     * @description album index
+     */
+    isFavourite: boolean;
+  };
 
 export const generateJelloTrack = (
   jellyfinTrack: BaseItemDto,

@@ -40,13 +40,13 @@ export default function GenresList() {
         }}
       >
         <ListItem
+          key={item.Id}
           LeftComponent={
             <View style={styles.leftItemContainer}>
               <ThemedText style={styles.text}>{item.Name}</ThemedText>
             </View>
           }
           RightComponent={<RightChevron />}
-          key={item.Id}
         />
       </Link>
     );
@@ -58,12 +58,12 @@ export default function GenresList() {
 
   return (
     <FlatList
-      ItemSeparatorComponent={() => <Separator />}
-      ListEmptyComponent={<NoSearchResults query={query} type="Genres" />}
-      ListFooterComponent={ListPadding}
       contentContainerStyle={styles.container}
       contentInsetAdjustmentBehavior="automatic"
       data={filteredGenres}
+      ItemSeparatorComponent={() => <Separator />}
+      ListEmptyComponent={<NoSearchResults query={query} type="Genres" />}
+      ListFooterComponent={ListPadding}
       renderItem={renderItem}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}

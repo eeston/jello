@@ -15,20 +15,20 @@ interface ListItemActionProps {
 }
 
 interface ListItemProps extends PressableProps {
-  LeftComponent?: ReactElement;
-  RightComponent?: ReactElement;
   containerStyle?: StyleProp<ViewStyle>;
   height?: number;
+  LeftComponent?: ReactElement;
+  RightComponent?: ReactElement;
   style?: StyleProp<ViewStyle>;
 }
 
 export const ListItem = (props: ListItemProps) => {
   const { styles } = useStyles(stylesheet);
   const {
-    LeftComponent,
-    RightComponent,
     containerStyle,
     height = 48,
+    LeftComponent,
+    RightComponent,
     style,
     ...PressableProps
   } = props;

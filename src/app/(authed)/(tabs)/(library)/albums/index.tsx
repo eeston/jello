@@ -59,13 +59,13 @@ export default function AlbumsList() {
 
   return (
     <FlatList
-      ListEmptyComponent={<NoSearchResults query={query} type="Albums" />}
-      ListFooterComponent={ListPadding}
       columnWrapperStyle={styles.columnWrapper}
       contentContainerStyle={styles.container}
       contentInsetAdjustmentBehavior="automatic"
       data={filteredAlbums}
       keyExtractor={(item) => String(item.Id)}
+      ListEmptyComponent={<NoSearchResults query={query} type="Albums" />}
+      ListFooterComponent={ListPadding}
       numColumns={2}
       renderItem={renderItem}
       showsHorizontalScrollIndicator={false}

@@ -80,10 +80,10 @@ export default function Radio() {
 
   return (
     <FlatList
-      ItemSeparatorComponent={() => <View style={styles.seperator} />}
       contentContainerStyle={styles.container}
       contentInsetAdjustmentBehavior="automatic"
       data={RADIO_STREAMS}
+      ItemSeparatorComponent={() => <View style={styles.seperator} />}
       renderItem={renderItem}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}

@@ -1,6 +1,6 @@
 import { Api } from "@jellyfin/sdk";
 import { AuthenticationResult } from "@jellyfin/sdk/lib/generated-client";
-import { type UseMutationResult, useMutation } from "@tanstack/react-query";
+import { useMutation, type UseMutationResult } from "@tanstack/react-query";
 import { type AxiosResponse } from "axios";
 
 type AuthenticateUserByNameType = {

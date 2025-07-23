@@ -6,7 +6,7 @@ import {
 import { getSuggestionsApi } from "@jellyfin/sdk/lib/utils/api/suggestions-api";
 import { useFetchUser } from "@src/api/useFetchUser";
 import { FETCH_HOME_ITEM_COUNT_LIMIT } from "@src/constants";
-import { UseQueryResult, useQuery } from "@tanstack/react-query";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 export const useFetchSuggestedAlbums = (
   api: Api,
