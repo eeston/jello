@@ -1,8 +1,7 @@
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client";
 import { useFetchRecentlyAddedAlbums } from "@src/api/useFetchRecentlyAddedAlbums";
-import { AlbumCard } from "@src/components/AlbumCard";
+import { AlbumColumnList } from "@src/components/AlbumColumnList";
 import { ListItem } from "@src/components/ListItem";
-import { ListPadding } from "@src/components/ListPadding";
 import { LoadingOverlay } from "@src/components/LoadingOverlay";
 import { RightChevron } from "@src/components/RightChevron";
 import { Separator } from "@src/components/Separator";
@@ -75,6 +74,7 @@ export default function LibraryDetails() {
     return (
       <Link asChild href={item.screen}>
         <ListItem
+          containerStyle={styles.container}
           LeftComponent={
             <View style={styles.leftItemComponentContainer}>
               <SymbolView
@@ -83,7 +83,9 @@ export default function LibraryDetails() {
                 size={theme.symbol.md}
                 tintColor={theme.colors.tint}
               />
-              <ThemedText style={styles.title}>{item.title}</ThemedText>
+              <ThemedText style={{ fontSize: 20, paddingLeft: 16 }}>
+                {item.title}
+              </ThemedText>
             </View>
           }
           RightComponent={<RightChevron />}
@@ -94,7 +96,7 @@ export default function LibraryDetails() {
 
   return (
     <FlatList
-      contentContainerStyle={styles.container}
+      // contentContainerStyle={styles.container}
       contentInsetAdjustmentBehavior="automatic"
       data={items}
       ItemSeparatorComponent={() => <Separator marginLeft={40} />}
@@ -118,9 +120,7 @@ export default function LibraryDetails() {
 
 const styles = StyleSheet.create((theme) => ({
   container: {
-    paddingBottom: theme.spacing.xxxl,
     paddingHorizontal: theme.spacing.md,
-    paddingTop: theme.spacing.sm,
   },
   leftItemComponentContainer: {
     alignItems: "center",
@@ -134,7 +134,8 @@ const styles = StyleSheet.create((theme) => ({
   },
   title: {
     fontSize: 20,
-    paddingLeft: theme.spacing.md,
+    paddingBottom: theme.spacing.sm,
+    paddingTop: theme.spacing.md,
   },
 }));
 
@@ -143,33 +144,6 @@ const RecentlyAdded = ({
 }: {
   recentlyAddedAlbums?: BaseItemDto[];
 }) => {
-  const { api } = useAuth();
-
-  const renderItem = ({ item }: { item: BaseItemDto }) => {
-    if (!item.Id) {
-      // appease typescript
-      return;
-    }
-    return (
-      <View style={recentlyAddedStylesheet.albumContainer}>
-        <Link
-          asChild
-          href={{
-            params: { id: item.Id },
-            pathname: "/(authed)/(tabs)/(library)/albums/[id]",
-          }}
-        >
-          <AlbumCard
-            imageHash={extractPrimaryHash(item?.ImageBlurHashes)}
-            imageUrl={generateArtworkUrl({ api, id: item.Id })}
-            subTitle={item.AlbumArtist ?? "Unknown Artist"}
-            title={item.Name ?? "Unknown Album"}
-          />
-        </Link>
-      </View>
-    );
-  };
-
   if (!recentlyAddedAlbums) {
     return null;
   }
@@ -179,31 +153,7 @@ const RecentlyAdded = ({
       <ThemedText style={styles.title} type="subtitle">
         Recently Added
       </ThemedText>
-      <FlatList
-        columnWrapperStyle={recentlyAddedStylesheet.columnWrapper}
-        data={recentlyAddedAlbums}
-        numColumns={2}
-        renderItem={renderItem}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-      />
-      <ListPadding />
+      <AlbumColumnList albums={recentlyAddedAlbums} />
     </View>
   );
 };
-
-const recentlyAddedStylesheet = StyleSheet.create((theme) => ({
-  albumContainer: {
-    paddingBottom: theme.spacing.sm,
-  },
-  columnWrapper: {
-    justifyContent: "space-between",
-  },
-  container: {
-    //
-  },
-  title: {
-    paddingBottom: theme.spacing.xs,
-    paddingTop: theme.spacing.lg,
-  },
-}));

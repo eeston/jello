@@ -1,5 +1,6 @@
 import { BaseItemDto } from "@jellyfin/sdk/lib/generated-client";
 import { useFetchPlaylists } from "@src/api/useFetchPlaylists";
+import { FavouriteSongsPlaylistItem } from "@src/components/ListItem/FavouriteSongsPlaylistItem";
 import { ListPadding } from "@src/components/ListPadding";
 import { LoadingOverlay } from "@src/components/LoadingOverlay";
 import { NoSearchResults } from "@src/components/NoResults";
@@ -79,46 +80,6 @@ export default function PlaylistsList() {
     />
   );
 }
-
-const FavouriteSongsPlaylistItem = () => {
-  const { theme } = useUnistyles();
-
-  return (
-    <Link
-      asChild
-      href={{
-        pathname: "/playlists/favourite-songs",
-      }}
-    >
-      <TouchableOpacity
-        style={{ flexDirection: "row", justifyContent: "space-between" }}
-      >
-        <View style={{ alignItems: "center", flexDirection: "row" }}>
-          <View
-            style={{
-              alignItems: "center",
-              backgroundColor: theme.colors.translucent,
-              borderRadius: theme.spacing.xs,
-              height: 80,
-              justifyContent: "center",
-              marginRight: theme.spacing.md,
-              width: 80,
-            }}
-          >
-            <SymbolView
-              name="star.fill"
-              resizeMode="scaleAspectFit"
-              size={50}
-              tintColor={theme.colors.tint}
-            />
-          </View>
-          <ThemedText>Favourite Songs</ThemedText>
-        </View>
-        <RightChevron />
-      </TouchableOpacity>
-    </Link>
-  );
-};
 
 const styles = StyleSheet.create((theme) => ({
   container: {

@@ -1,7 +1,7 @@
 import { ThemedText } from "@src/components/ThemedText";
 import * as Haptics from "expo-haptics";
 import { SFSymbol, SymbolView } from "expo-symbols";
-import { Dimensions, Pressable, View } from "react-native";
+import { Pressable, View } from "react-native";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 const buttonTypes = {
@@ -50,14 +50,12 @@ export const MusicButton = ({
 };
 
 const styles = StyleSheet.create((theme) => {
-  const size = Dimensions.get("window").width / 2.4; // maybe this is repsonsive between screen sizes??
   return {
     container: {
       backgroundColor: theme.colors.translucent,
       borderRadius: theme.spacing.xs,
-      overflow: "hidden",
+      flex: 1,
       paddingVertical: theme.spacing.sm,
-      width: size,
     },
     inner: {
       alignItems: "center",

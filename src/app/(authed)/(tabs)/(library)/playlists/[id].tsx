@@ -128,7 +128,9 @@ export default function PlaylistDetails() {
 const styles = StyleSheet.create((theme) => ({
   buttonContainer: {
     flexDirection: "row",
+    gap: theme.spacing.sm,
     justifyContent: "space-around",
+    paddingHorizontal: theme.spacing.md,
   },
   container: { paddingVertical: theme.spacing.md },
   detailsContainer: { alignItems: "center", paddingVertical: theme.spacing.md },

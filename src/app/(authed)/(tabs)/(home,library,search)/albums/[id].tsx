@@ -16,12 +16,7 @@ import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
 import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
 import { playTracks } from "@src/util/playTracks";
 import { Image } from "expo-image";
-import {
-  Link,
-  useLocalSearchParams,
-  useNavigation,
-  useSegments,
-} from "expo-router";
+import { Link, useLocalSearchParams, useNavigation } from "expo-router";
 import { TouchableOpacity, View } from "react-native";
 import Animated from "react-native-reanimated";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
@@ -39,8 +34,6 @@ export default function AlbumDetails() {
     fetchAlbumDetails?.data?.ParentId,
     fetchAlbumDetails?.data?.Id,
   );
-  const segments = useSegments() as string[];
-  const isLibrary = segments.includes("(library)");
 
   const { scrollHandler } = useScrollHeader({
     navigation,
@@ -147,7 +140,6 @@ export default function AlbumDetails() {
       </View>
       <AlbumCarousel
         identifier="Id"
-        pathname={isLibrary ? "library" : "home"}
         replace
         request={fetchMoreAlbums}
         title={`More by ${fetchAlbumDetails?.data?.AlbumArtist}...`}
@@ -163,7 +155,9 @@ export default function AlbumDetails() {
 const styles = StyleSheet.create((theme) => ({
   buttonContainer: {
     flexDirection: "row",
+    gap: theme.spacing.sm,
     justifyContent: "space-around",
+    paddingHorizontal: theme.spacing.md,
   },
   container: { paddingVertical: theme.spacing.xs },
   detailsContainer: { alignItems: "center", padding: theme.spacing.md },
