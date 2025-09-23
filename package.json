@@ -55,12 +55,12 @@
     "react-native-edge-to-edge": "^1.6.2",
     "react-native-gesture-handler": "~2.24.0",
     "react-native-loader-kit": "^3.0.0",
-    "react-native-nitro-modules": "^0.26.4",
-    "react-native-reanimated": "~3.17.4",
+    "react-native-nitro-modules": "^0.29.6",
+    "react-native-reanimated": "~3.19.1",
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.11.1",
     "react-native-track-player": "https://github.com/doublesymmetry/react-native-track-player.git#feat/media3-newarch",
-    "react-native-unistyles": "^3.0.7",
+    "react-native-unistyles": "^3.0.13",
     "zustand": "^5.0.6"
   },
   "devDependencies": {
