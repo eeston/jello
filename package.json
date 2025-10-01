@@ -4,7 +4,7 @@
   "author": "John Easton <john@easton.dev>",
   "version": "0.0.98",
   "scripts": {
-    "start": "expo run:ios",
+    "start": "expo run:ios --device",
     "prebuild": "expo prebuild -p ios --clean",
     "build": "eas build -p ios --local",
     "tidy": "npm run fmt && npm run lint",

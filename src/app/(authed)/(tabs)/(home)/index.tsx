@@ -61,6 +61,7 @@ export default function Home() {
       {/* Recently played albums */}
       <AlbumCarousel
         identifier="AlbumId"
+        linkTo="/recently-played"
         request={fetchRecentlyPlayedAlbums}
         title="Recently Played"
       />
@@ -68,6 +69,7 @@ export default function Home() {
       {/* Top played albums */}
       <AlbumCarousel
         identifier="AlbumId"
+        linkTo="/frequently-played"
         request={fetchFrequentlyPlayedAlbums}
         title="Frequently Played"
       />
@@ -75,6 +77,7 @@ export default function Home() {
       {/* Favourite albums */}
       <AlbumCarousel
         identifier="Id"
+        linkTo="/favourite-albums"
         request={fetchFavouriteAlbums}
         title="Favourite Albums"
       />

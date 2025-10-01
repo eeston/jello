@@ -3,24 +3,27 @@ import {
   BaseItemDtoQueryResult,
 } from "@jellyfin/sdk/lib/generated-client";
 import { AlbumCard, AlbumCardSize } from "@src/components/AlbumCard";
+import { RightChevron } from "@src/components/RightChevron";
 import { ThemedText } from "@src/components/ThemedText";
 import { useAuth } from "@src/store/AuthContext";
 import { extractPrimaryHash } from "@src/util/extractPrimaryHash";
 import { generateArtworkUrl } from "@src/util/generateArtworkUrl";
 import { UseQueryResult } from "@tanstack/react-query";
 import { Link } from "expo-router";
-import { FlatList, View } from "react-native";
+import { FlatList, Pressable, View } from "react-native";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 export const AlbumCarousel = ({
   identifier,
   large,
+  linkTo,
   replace,
   request,
   title,
 }: {
   identifier: "AlbumId" | "Id";
   large?: boolean;
+  linkTo?: "/favourite-albums" | "/frequently-played" | "/recently-played"; // TODO: how to get types?
   replace?: boolean;
   request: UseQueryResult<BaseItemDtoQueryResult, Error>;
   title: string;
@@ -66,9 +69,21 @@ export const AlbumCarousel = ({
 
   return (
     <View style={styles.container}>
-      <ThemedText style={styles.title} type="subtitle">
-        {title}
-      </ThemedText>
+      {linkTo ? (
+        <Link asChild href={linkTo}>
+          <Pressable style={{ alignItems: "center", flexDirection: "row" }}>
+            <ThemedText style={styles.title} type="subtitle">
+              {title}
+            </ThemedText>
+            <RightChevron />
+          </Pressable>
+        </Link>
+      ) : (
+        <ThemedText style={styles.title} type="subtitle">
+          {title}
+        </ThemedText>
+      )}
+
       <FlatList
         contentContainerStyle={styles.flatlistContent}
         data={request.data?.Items}
